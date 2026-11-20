@@ -59,7 +59,7 @@ namespace WordRPG.Game
         // 처음에 고른 외울 단어장 (#273, GDD 9-12). 빈 id = 아직 안 고름(새 게임) → 필드에서 한 번 고르는 화면. 고른 뒤엔 바꾸지 않음
         public string CourseId { get; private set; } = "";
         public WordCourse Course { get; private set; } // null = 기본 단어장(수능·내신) 그대로
-        public bool NeedsCourseChoice => string.IsNullOrEmpty(CourseId);
+        public bool NeedsCourseChoice => WordCourses.Choosable && string.IsNullOrEmpty(CourseId); // 고르기를 끈 게임(#5)은 묻지 않고 기본 단어장
 
         // 단어장을 정한다: 지역의 단어가 바로 이 단어장의 것으로 (WordCourses.Active). null = 수능·내신
         public void ChooseCourse(WordCourse course)
@@ -111,6 +111,7 @@ namespace WordRPG.Game
             var session = new GameSession(CreateHero(heroData, level ?? heroData.StartLevel), new Inventory(), new VocabularyProgress(),
                 new PlayerRecord(), new WorldState());
             session.Notices.MarkAll();
+            if (!WordCourses.Choosable) session.CourseId = WordCourses.DefaultId; // 고르기를 끈 게임(#5): 처음부터 기본 단어장으로 적어 둠
             return session;
         }
 
@@ -335,7 +336,7 @@ namespace WordRPG.Game
             bool started = data.Vocabulary.Entries.Count > 0 || data.Record.BattlesFought > 0 || !string.IsNullOrEmpty(data.HeroLook);
             if (string.IsNullOrEmpty(id))
             {
-                if (!started) return;
+                if (!started && WordCourses.Choosable) return;
                 id = WordCourses.DefaultId;
             }
             var course = database != null ? database.FindCourse(id) : null;

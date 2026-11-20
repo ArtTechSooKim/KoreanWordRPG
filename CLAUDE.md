@@ -43,8 +43,11 @@
 ## 출시 전에 바꿀 것 (아직 영단어RPG 것이 남아 있음)
 
 - 번들 ID **임시** `com.arttechsoo.koreanwordrpg` (`MobileBuild.PackageName`) — 앱스토어 커넥트·구글플레이 콘솔에 등록하는 순간 못 바꾸므로 **등록 전에 사용자 확인**
-- **유료 앱이라 정식판 결제를 끔** (아직 영단어RPG 그대로): 정식판 잠금 `FieldArea.requiresFullVersion`·`PaywallView`·설정 > 정식판·타이틀 [정식판]·구매 복원·`UnityIapStore`·
-  테스터 메뉴 '무료 상태로' → 늘 정식판으로. 정식판 특전(`FullVersionGift`)은 **없앰** (사용자 2026-11-20). `Entitlements.FullVersion` 상품 id는 쓰지 않음.
+- **유료 앱 — 정식판 결제 끔 (#5 완료)**: 판매 방식 스위치 `Entitlements.PaidApp = true`(누구나 정식판 → 잠금·안내 창 안 뜸 · 타이틀 [정식판] 숨김 · 설정 정식판 칸 없음 ·
+  스토어 연결 안 함 `GameManager.Store = null` · 정식판 특전 없음(사용자) · 테스터 [무료 상태로] 숨김). 단어장 고르기 스위치 `WordCourses.Choosable = false`(새 게임은 기본 단어장으로 적힘).
+  코드는 지우지 않고 스위치로 끔 — **테스트 전체는 `SaleModeSetup`(테스트 폴더마다)이 엔진 방식(무료 + 정식판·고르기)으로 돌리고, 이 게임의 출시 설정은 `PaidAppTests`·`PaidAppScreenTests`가 검사**.
+  새 테스트가 이 게임 설정을 봐야 하면 SetUp에서 `SaleModeSetup.Shipped()`, TearDown에서 `Apply()`. Unity IAP 패키지는 남아 있음(안 씀 — 앱 크기를 줄이려면 나중에 뺌).
+  출시 때: 앱스토어 커넥트 '유료 앱 계약'(Paid Applications Agreement)·세금·은행 정보가 필요 (사용자). `Entitlements.FullVersion` 상품 id는 쓰지 않음.
   가격 1,000원은 앱스토어 커넥트 가격표에서 고름 (정확히 1,000원이 없으면 가장 가까운 값 — 등록할 때 사용자와 확인, 다른 나라 가격은 애플이 맞춰 줌)
 - `ReviewPrompt.AppStoreId`: 앱을 앱스토어에 만든 뒤 번호 (그 전엔 비어 있어 아이폰 후기 링크가 안 열림)
 - 앱 버전 0.1 (출시 때 사용자와 정함). 안드로이드 빌드 파일 이름은 아직 `WordRPG-…`

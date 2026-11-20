@@ -197,6 +197,7 @@ namespace WordRPG.UI
         public void Show(GameSettings gameSettings, Action settingsChanged, Action deleteSave, Action replayTutorial = null,
             PurchaseHooks purchaseHooks = null, Action replayIntro = null, Action openTester = null)
         {
+            if (global::WordRPG.Game.Entitlements.PaidApp) purchaseHooks = null; // 유료 앱(#5): 정식판 칸 없음
             if (purchase?.Owned != null) purchase.Owned.Changed -= RefreshPurchase;
             purchase = purchaseHooks;
             purchaseSection.SetActive(purchase != null);

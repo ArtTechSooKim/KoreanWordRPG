@@ -331,6 +331,7 @@ namespace WordRPG.UI
         private void GiveFullVersionGift()
         {
             if (database == null || entitlements == null || session == null) return;
+            if (Entitlements.PaidApp) return; // 유료 앱(#5 사용자: 정식판 특전 없앰) — 따로 산 것이 없으니 특전도 없음
             var given = FullVersionGift.Claim(session, entitlements.HasFullVersion, database.FullVersionGift);
             if (given.Count == 0) return;
             FullVersionGiftsGiven++;

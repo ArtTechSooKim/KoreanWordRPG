@@ -143,6 +143,7 @@ namespace WordRPG.UI
             status.text = $"{hero.DisplayName} Lv.{hero.Level}{party} · {session.Inventory.Gold:N0}골드 · 성유물 {hero.Relics.Count}개";
             UiKit.LabelOf(quietButton).text = TesterTools.IsAlwaysQuiet(session) ? "살금살금 끄기" : "살금살금 상시";
             UiKit.LabelOf(freeButton).text = owned != null && owned.TesterFree ? "정식판으로" : "무료 상태로";
+            freeButton.gameObject.SetActive(!Entitlements.PaidApp); // 유료 앱(#5)엔 무료 상태가 없음
             foreach (var book in TesterTools.Books(Areas))
             {
                 var row = wordSection.Find($"TesterBook_{book.RegionId}");

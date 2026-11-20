@@ -97,6 +97,10 @@ namespace WordRPG.Words
     {
         public const string DefaultId = "suneung";
 
+        // 처음에 단어장을 고르게 할지 (Korean Word RPG #5 — 사용자: 고르기 끔, 모두 기본 단어장 = 한국어 단어).
+        // true = 영단어RPG처럼 새 게임에서 한 번 고름 (엔진 기능 — 테스트 전체는 이 방식, 끈 방식은 PaidAppTests)
+        public static bool Choosable = false;
+
         public static WordCourse Active { get; set; }
     }
 }

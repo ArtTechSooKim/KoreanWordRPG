@@ -16,7 +16,12 @@ namespace WordRPG.Game
         // 새로 생겼을 때만 (저장·화면 갱신용)
         public event Action Changed;
 
-        public bool HasFullVersion => Owns(FullVersion);
+        // 이 게임의 판매 방식 (Korean Word RPG #5 — 사용자: 처음부터 유료 앱 1,000원). true = 산 앱이라 누구나 늘 정식판:
+        // 정식판 잠금·안내 창·설정의 정식판 칸·타이틀 [정식판]·구매 복원·스토어 연결·정식판 특전·테스터 [무료 상태로]가 모두 꺼짐.
+        // false = 영단어RPG의 '앞 지역 무료 + 정식판 인앱 결제' (엔진 기능 — 테스트 전체는 이 방식, 유료 앱 방식은 PaidAppTests)
+        public static bool PaidApp = true;
+
+        public bool HasFullVersion => PaidApp || Owns(FullVersion);
         public bool Owns(string productId) => !string.IsNullOrEmpty(productId) && owned.Contains(productId);
 
         public bool Grant(string productId)

@@ -67,7 +67,8 @@ namespace WordRPG.Game
             if (SaveDirectoryOverride == null) Settings = GameSettings.FromJson(PlayerPrefs.GetString(SettingsKey, ""));
             if (SaveDirectoryOverride == null) Entitlements = Entitlements.FromStorage(PlayerPrefs.GetString(EntitlementsKey, ""));
             Entitlements.Changed += SaveEntitlements;
-            Store = StoreOverride ?? (Application.isBatchMode ? null : ConnectStore());
+            // 유료 앱(#5)은 앱 안에서 살 것이 없어 스토어에 연결하지 않음 (Store = null → 설정·타이틀의 결제 칸도 없음)
+            Store = StoreOverride ?? (Application.isBatchMode || global::WordRPG.Game.Entitlements.PaidApp ? null : ConnectStore());
             LoadOrCreate();
         }
 
