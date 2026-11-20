@@ -16,7 +16,7 @@ namespace WordRPG.Game
         [SerializeField] private string displayName; // 꼬리표. 예: "크리스마스 선물"
         [SerializeField] private string title;       // 첫 창 제목. 예: "메리 크리스마스!"
         [SerializeField] private string quizName;    // 문제 창 꼬리표. 예: "크리스마스 선물 퀴즈"
-        [SerializeField] private string wordsName;   // 첫 창 설명에 들어가는 단어 종류. 예: "크리스마스 영단어"
+        [SerializeField] private string wordsName;   // 첫 창 설명에 들어가는 단어 종류. 예: "크리스마스 한국어 단어"
         [Header("여는 날 (현지 날짜, 끝 날 포함)")]
         [SerializeField] private int startMonth = 12;
         [SerializeField] private int startDay = 1;
@@ -173,7 +173,7 @@ namespace WordRPG.Game
         Ignored // 이미 답했거나 다 풀었음
     }
 
-    // 선물 퀴즈 한 판: 단어장에서 겹치지 않게 고른 단어로 문제 N개 (영단어 → 뜻). 문제마다 한 번만 답함.
+    // 선물 퀴즈 한 판: 단어장에서 겹치지 않게 고른 단어로 문제 N개 (단어 → 뜻 — 이 게임은 한국어 단어 + 로마자 → 영어 뜻). 문제마다 한 번만 답함.
     // 숙련도·도감에는 기록하지 않음 (지역 단어가 아니라서)
     public class GiftQuiz
     {

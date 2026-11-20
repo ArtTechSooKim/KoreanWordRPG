@@ -992,7 +992,7 @@ namespace WordRPG.EditorTools
 
         // 철마다 여는 선물 퀴즈 (#274 사용자): 12월 1~31일에 켜면 크리스마스 단어 3문제 — 기본 선물(특제 상처약 1 + 살금살금 물약 1)
         // + 맞힌 문제마다 하나씩 더, 받기 전엔 무엇인지 비밀, 받은 뒤 개발자의 편지(사용자가 쓴 글 — 고치지 말 것).
-        // 단어 = Words/Events/christmas.csv (Claude가 고르고 뜻을 씀). eventId는 세이브에 '{id}_{연도}'로 적힘 — 출시 뒤 바꾸지 말 것
+        // 단어 = Words/Events/christmas.csv (Claude가 고르고 뜻을 씀 — Korean Word RPG #10: 한국어 크리스마스 단어 + 영어 뜻 + 로마자). eventId는 세이브에 '{id}_{연도}'로 적힘 — 출시 뒤 바꾸지 말 것
         [MenuItem("WordRPG/Data/Build Gift Events")]
         public static void BuildGiftEvents()
         {
@@ -1010,7 +1010,7 @@ namespace WordRPG.EditorTools
                 gift = ScriptableObject.CreateInstance<GiftEvent>();
                 AssetDatabase.CreateAsset(gift, path);
             }
-            gift.Configure("christmas", "크리스마스 선물", "메리 크리스마스!", "크리스마스 선물 퀴즈", "크리스마스 영단어",
+            gift.Configure("christmas", "크리스마스 선물", "메리 크리스마스!", "크리스마스 선물 퀴즈", "크리스마스 한국어 단어",
                 12, 1, 12, 31, 3, book,
                 new[] { new ItemGift(great, 1), new ItemGift(quiet, 1) }, new[] { new ItemGift(great, 1), new ItemGift(quiet, 1) });
             gift.ConfigureLetter(BuildMail("christmas_2026_letter", "크리스마스 편지", "개발자의 편지", "A Christmas Letter from the Developer",

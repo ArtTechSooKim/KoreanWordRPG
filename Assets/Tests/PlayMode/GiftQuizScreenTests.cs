@@ -41,15 +41,16 @@ namespace WordRPG.Tests
             var christmas = ScriptableObject.CreateInstance<WordDatabase>();
             christmas.ReplaceWords(new List<WordEntry>
             {
-                new WordEntry("xmas_reindeer", "reindeer", "순록", "n"),
-                new WordEntry("xmas_sleigh", "sleigh", "썰매", "n"),
-                new WordEntry("xmas_chimney", "chimney", "굴뚝", "n"),
-                new WordEntry("xmas_wreath", "wreath", "화환", "n"),
-                new WordEntry("xmas_candle", "candle", "양초", "n"),
-                new WordEntry("xmas_bell", "bell", "종", "n"),
+                // Korean Word RPG #10: 한국어 단어 + 영어 뜻 + 로마자
+                new WordEntry("xmas_sullok", "순록", "reindeer", "n", romanization: "sullok"),
+                new WordEntry("xmas_sseolmae", "썰매", "sled, sleigh", "n", romanization: "sseolmae"),
+                new WordEntry("xmas_gulttuk", "굴뚝", "chimney", "n", romanization: "gulttuk"),
+                new WordEntry("xmas_santaharabeoji", "산타 할아버지", "Santa Claus", "n", romanization: "santa harabeoji"),
+                new WordEntry("xmas_yangcho", "양초", "candle", "n", romanization: "yangcho"),
+                new WordEntry("xmas_jong", "종", "bell", "n", romanization: "jong"),
             });
             gift = ScriptableObject.CreateInstance<GiftEvent>();
-            gift.Configure("christmas", "크리스마스 선물", "메리 크리스마스!", "크리스마스 선물 퀴즈", "크리스마스 영단어",
+            gift.Configure("christmas", "크리스마스 선물", "메리 크리스마스!", "크리스마스 선물 퀴즈", "크리스마스 한국어 단어",
                 12, 1, 12, 31, 3, christmas,
                 new[] { new ItemGift(great, 1), new ItemGift(quiet, 1) }, new[] { new ItemGift(great, 1), new ItemGift(quiet, 1) });
             letter = ScriptableObject.CreateInstance<MailData>();
@@ -119,6 +120,13 @@ namespace WordRPG.Tests
             Assert.AreEqual(GiftQuizView.Stage.Question, view.Current);
             Assert.AreEqual("1 / 3", view.Counter);
             Assert.AreEqual("뜻은?", view.Ask);
+            // Korean Word RPG #10: 한국어 단어 아래 로마자, 보기는 영어 뜻
+            var asked = gift.Words.Words.Single(w => w.English == view.Word);
+            Assert.AreEqual(asked.Romanization, view.Roman, "단어 아래 로마자");
+            for (int i = 0; i < 4; i++)
+                Assert.IsFalse(System.Text.RegularExpressions.Regex.IsMatch(view.ChoiceText(i), "[가-힣]"), $"보기 {i}는 영어 뜻: {view.ChoiceText(i)}");
+            StringAssert.DoesNotContain("상처약", view.Word + view.Ask + view.Note, "퀴즈 화면에도 선물 이름 없음 (사용자)");
+            StringAssert.DoesNotContain("물약", view.Word + view.Ask + view.Note);
 
             // 1번 맞힘
             int correct = CorrectChoice(view);

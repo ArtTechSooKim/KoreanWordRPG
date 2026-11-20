@@ -34,7 +34,7 @@ namespace WordRPG.Tests
         private static GiftEvent Gift(WordDatabase book, ItemData great, ItemData quiet, int fromMonth = 12, int fromDay = 1, int toMonth = 12, int toDay = 31)
         {
             var gift = ScriptableObject.CreateInstance<GiftEvent>();
-            gift.Configure("christmas", "크리스마스 선물", "메리 크리스마스!", "크리스마스 선물 퀴즈", "크리스마스 영단어",
+            gift.Configure("christmas", "크리스마스 선물", "메리 크리스마스!", "크리스마스 선물 퀴즈", "크리스마스 한국어 단어",
                 fromMonth, fromDay, toMonth, toDay, 3, book,
                 new[] { new ItemGift(great, 1), new ItemGift(quiet, 1) }, new[] { new ItemGift(great, 1), new ItemGift(quiet, 1) });
             return gift;
@@ -191,11 +191,23 @@ namespace WordRPG.Tests
 
             var words = gift.Words.Words;
             Assert.GreaterOrEqual(words.Count, 20);
+            // Korean Word RPG #10: 한국어 크리스마스 단어 + 영어 뜻 + 로마자 (문제 = 단어 아래 로마자 → 영어 뜻)
+            Assert.AreEqual("크리스마스 한국어 단어", gift.WordsName);
+            var regionWords = new HashSet<string>(database.Areas.Where(a => a != null && a.Words != null)
+                .SelectMany(a => a.Words.Words).Select(w => w.English));
             foreach (var word in words)
             {
                 StringAssert.StartsWith("xmas_", word.Id, "선물 퀴즈 단어 id는 xmas_로 (지역 단어와 겹치지 않게)");
                 Assert.IsFalse(string.IsNullOrWhiteSpace(word.Meaning), $"{word.English} 뜻이 비어 있음");
+                Assert.IsTrue(System.Text.RegularExpressions.Regex.IsMatch(word.English, "^[가-힣]+( [가-힣]+)*$"), $"{word.English}: 한국어 단어가 아님");
+                Assert.IsFalse(System.Text.RegularExpressions.Regex.IsMatch(word.Meaning, "[가-힣]"), $"{word.English}: 뜻은 영어로 — {word.Meaning}");
+                Assert.IsFalse(word.Meaning.StartsWith("to "), $"{word.English}: 동사 뜻에 to 없이 (#3)");
+                Assert.IsTrue(System.Text.RegularExpressions.Regex.IsMatch(word.Romanization, "^[a-z]+( [a-z]+)*$"), $"{word.English}: 로마자 '{word.Romanization}'");
+                Assert.AreEqual("xmas_" + word.Romanization.Replace(" ", ""), word.Id, "id = xmas_ + 로마자");
+                Assert.IsFalse(regionWords.Contains(word.English), $"{word.English}는 지역 단어장에 이미 있음 — 새 단어로");
             }
+            foreach (var pos in new[] { "n", "v", "adj" })
+                Assert.GreaterOrEqual(words.Count(w => w.PartOfSpeech == pos), 4, $"{pos} 보기 4개가 같은 품사로 나오게");
             for (int i = 0; i < words.Count; i++)
                 for (int j = i + 1; j < words.Count; j++)
                     Assert.IsFalse(QuizGenerator.MeaningsOverlap(words[i], words[j]), $"{words[i].English}·{words[j].English} 뜻이 겹침 (정답이 둘이 됨)");

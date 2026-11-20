@@ -18,227 +18,255 @@ MonoBehaviour:
   rewards: []
   journal: {fileID: 0}
   words:
-  - id: xmas_reindeer
-    english: reindeer
-    meaning: "\uC21C\uB85D"
+  - id: xmas_seongtanjeol
+    english: "\uC131\uD0C4\uC808"
+    meaning: Christmas Day
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_sleigh
-    english: sleigh
-    meaning: "\uC370\uB9E4"
+    romanization: seongtanjeol
+  - id: xmas_santaharabeoji
+    english: "\uC0B0\uD0C0 \uD560\uC544\uBC84\uC9C0"
+    meaning: Santa Claus
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_chimney
-    english: chimney
-    meaning: "\uAD74\uB69D"
+    romanization: santa harabeoji
+  - id: xmas_sullok
+    english: "\uC21C\uB85D"
+    meaning: reindeer
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_wreath
-    english: wreath
-    meaning: "\uD654\uD658"
+    romanization: sullok
+  - id: xmas_sseolmae
+    english: "\uC370\uB9E4"
+    meaning: sled, sleigh
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_ornament
-    english: ornament
-    meaning: "\uC7A5\uC2DD\uD488"
+    romanization: sseolmae
+  - id: xmas_gulttuk
+    english: "\uAD74\uB69D"
+    meaning: chimney
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_stocking
-    english: stocking
-    meaning: "\uAE34 \uC591\uB9D0"
+    romanization: gulttuk
+  - id: xmas_seonmul
+    english: "\uC120\uBB3C"
+    meaning: gift, present
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_snowflake
-    english: snowflake
-    meaning: "\uB208\uC1A1\uC774"
+    romanization: seonmul
+  - id: xmas_nunsaram
+    english: "\uB208\uC0AC\uB78C"
+    meaning: snowman
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_snowman
-    english: snowman
-    meaning: "\uB208\uC0AC\uB78C"
+    romanization: nunsaram
+  - id: xmas_nunsongi
+    english: "\uB208\uC1A1\uC774"
+    meaning: snowflake
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_candle
-    english: candle
-    meaning: "\uC591\uCD08"
+    romanization: nunsongi
+  - id: xmas_yangcho
+    english: "\uC591\uCD08"
+    meaning: candle
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_carol
-    english: carol
-    meaning: "\uCE90\uB7F4, \uC131\uD0C4 \uB178\uB798"
+    romanization: yangcho
+  - id: xmas_jong
+    english: "\uC885"
+    meaning: bell
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_mistletoe
-    english: mistletoe
-    meaning: "\uACA8\uC6B0\uC0B4\uC774"
+    romanization: jong
+  - id: xmas_byeol
+    english: "\uBCC4"
+    meaning: star
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_fireplace
-    english: fireplace
-    meaning: "\uBCBD\uB09C\uB85C"
+    romanization: byeol
+  - id: xmas_cheonsa
+    english: "\uCC9C\uC0AC"
+    meaning: angel
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_gingerbread
-    english: gingerbread
-    meaning: "\uC0DD\uAC15 \uACFC\uC790"
+    romanization: cheonsa
+  - id: xmas_jangsik
+    english: "\uC7A5\uC2DD"
+    meaning: decoration, ornament
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_present
-    english: present
-    meaning: "\uC120\uBB3C"
+    romanization: jangsik
+  - id: xmas_byeongnallo
+    english: "\uBCBD\uB09C\uB85C"
+    meaning: fireplace
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_frost
-    english: frost
-    meaning: "\uC11C\uB9AC"
+    romanization: byeongnallo
+  - id: xmas_kaereol
+    english: "\uCE90\uB7F4"
+    meaning: carol
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_angel
-    english: angel
-    meaning: "\uCC9C\uC0AC"
+    romanization: kaereol
+  - id: xmas_keikeu
+    english: "\uCF00\uC774\uD06C"
+    meaning: cake
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_bell
-    english: bell
-    meaning: "\uC885"
+    romanization: keikeu
+  - id: xmas_mokdori
+    english: "\uBAA9\uB3C4\uB9AC"
+    meaning: scarf
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_holiday
-    english: holiday
-    meaning: "\uD734\uC77C, \uBA85\uC808"
+    romanization: mokdori
+  - id: xmas_janggap
+    english: "\uC7A5\uAC11"
+    meaning: gloves
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_eve
-    english: eve
-    meaning: "(\uCD95\uC77C\uC758) \uC804\uB0A0 \uBC24, \uC774\uBE0C"
+    romanization: janggap
+  - id: xmas_sowon
+    english: "\uC18C\uC6D0"
+    meaning: wish
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_elf
-    english: elf
-    meaning: "\uC694\uC815"
+    romanization: sowon
+  - id: xmas_saehae
+    english: "\uC0C8\uD574"
+    meaning: New Year
     partOfSpeech: n
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_wrap
-    english: wrap
-    meaning: "\uC2F8\uB2E4, \uD3EC\uC7A5\uD558\uB2E4"
+    romanization: saehae
+  - id: xmas_chukahada
+    english: "\uCD95\uD558\uD558\uB2E4"
+    meaning: celebrate, congratulate
     partOfSpeech: v
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_decorate
-    english: decorate
-    meaning: "\uAFB8\uBBF8\uB2E4, \uC7A5\uC2DD\uD558\uB2E4"
+    romanization: chukahada
+  - id: xmas_kkumida
+    english: "\uAFB8\uBBF8\uB2E4"
+    meaning: decorate
     partOfSpeech: v
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_celebrate
-    english: celebrate
-    meaning: "\uCD95\uD558\uD558\uB2E4, \uAE30\uB150\uD558\uB2E4"
+    romanization: kkumida
+  - id: xmas_pojanghada
+    english: "\uD3EC\uC7A5\uD558\uB2E4"
+    meaning: wrap, pack
     partOfSpeech: v
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_jingle
-    english: jingle
-    meaning: "\uB538\uB791\uB538\uB791 \uC6B8\uB9AC\uB2E4"
+    romanization: pojanghada
+  - id: xmas_banjjagida
+    english: "\uBC18\uC9DD\uC774\uB2E4"
+    meaning: sparkle, twinkle
     partOfSpeech: v
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_sparkle
-    english: sparkle
-    meaning: "\uBC18\uC9DD\uC774\uB2E4"
-    partOfSpeech: v
-    example: 
-    exampleMeaning: 
-    story: 0
-    storyHeading: 
-  - id: xmas_cozy
-    english: cozy
-    meaning: "\uC544\uB291\uD55C"
+    romanization: banjjagida
+  - id: xmas_ttatteutada
+    english: "\uB530\uB73B\uD558\uB2E4"
+    meaning: warm
     partOfSpeech: adj
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_merry
-    english: merry
-    meaning: "\uC990\uAC70\uC6B4, \uBA85\uB791\uD55C"
+    romanization: ttatteutada
+  - id: xmas_chupda
+    english: "\uCDA5\uB2E4"
+    meaning: cold
     partOfSpeech: adj
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
-  - id: xmas_festive
-    english: festive
-    meaning: "\uCD95\uC81C \uBD84\uC704\uAE30\uC758"
+    romanization: chupda
+  - id: xmas_jeulgeopda
+    english: "\uC990\uAC81\uB2E4"
+    meaning: merry, joyful
     partOfSpeech: adj
     example: 
     exampleMeaning: 
     story: 0
     storyHeading: 
+    romanization: jeulgeopda
+  - id: xmas_goyohada
+    english: "\uACE0\uC694\uD558\uB2E4"
+    meaning: silent, calm
+    partOfSpeech: adj
+    example: 
+    exampleMeaning: 
+    story: 0
+    storyHeading: 
+    romanization: goyohada

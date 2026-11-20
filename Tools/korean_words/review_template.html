@@ -71,11 +71,13 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
 <div class="wrap">
   <h1>한국어 단어장 검수</h1>
   <p class="lead">Korean Word RPG에 들어갈 한국어 단어 450개예요. 영단어RPG '누군가의 기록'의 한국어 문장마다 그 안에 나오는 단어를 하나씩 골랐어요. 그래서 예문은 그때 검수한 문장 그대로예요.</p>
+  <p class="lead">[크리스마스] 탭은 12월 선물 퀴즈에 나오는 크리스마스 단어 28개예요 (예문 없이 단어 → 영어 뜻 문제만).</p>
   <p class="lead">영어 뜻이나 로마자가 틀렸거나 어색한 단어만 [고치기]로 적어 주세요. 로마자는 「국어의 로마자 표기법」처럼 소리 나는 대로 적었어요(학교 hakgyo, 신라 Silla). 등급은 국립국어원 「한국어 학습용 어휘 목록」의 초급·중급·고급이에요.</p>
   <div class="bar">
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tab-tier1" aria-selected="true" data-book="tier1">초원·서고<small>150</small></button>
       <button class="tab" role="tab" id="tab-tier2" aria-selected="false" data-book="tier2">숲·정글·동굴<small>300</small></button>
+      <button class="tab" role="tab" id="tab-xmas" aria-selected="false" data-book="xmas">크리스마스<small>28</small></button>
     </div>
     <div class="row2">
       <input id="search" type="search" placeholder="한국어·영어·로마자로 찾기" autocomplete="off">
@@ -89,7 +91,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
 <script>
 const WORDS = __WORDS__;
 // 단어장 하나를 100개씩 묶어서 (다 봤어요 표시를 묶음마다)
-const BOOKS = { tier1: { name: "초원·서고", note: "기록: 일기" }, tier2: { name: "숲·정글·동굴", note: "기록: 생존일지" } };
+const BOOKS = { tier1: { name: "초원·서고", note: "기록: 일기" }, tier2: { name: "숲·정글·동굴", note: "기록: 생존일지" }, xmas: { name: "크리스마스", note: "선물 퀴즈 (12월)" } };
 const CHUNK = 100;
 const POS = { n: "명사", v: "동사", adj: "형용사·관형사", adv: "부사" };
 const LEVEL = { A: "초급", B: "중급", C: "고급", "-": "목록 밖" };
@@ -99,12 +101,13 @@ let done = {};       // 묶음 id → true
 let names = {};      // 적은 사람 id → 이름
 let db = null, user = null, myId = null, openEditor = null;
 
-try { const saved = localStorage.getItem("ko-review-tab"); if (saved === "tier1" || saved === "tier2") tab = saved; } catch (e) {}
+try { const saved = localStorage.getItem("ko-review-tab"); if (saved in BOOKS) tab = saved; } catch (e) {}
 
 function el(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
 
 // 예문의 단어 자리(h = [시작, 길이] — 게임의 KoreanWords와 같은 규칙으로 미리 계산)를 굵게
 function example(w) {
+  if (!w.x) return document.createTextNode("");
   const box = el("div", "ex");
   const line = el("div");
   if (w.h && w.h[0] >= 0) {
