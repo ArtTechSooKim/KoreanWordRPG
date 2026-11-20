@@ -136,7 +136,7 @@ MonoBehaviour:
     romanization: yaksok
   - id: ko_japda
     english: "\uC7A1\uB2E4"
-    meaning: to catch, to grab
+    meaning: catch, grab
     partOfSpeech: v
     example: "\uAC04\uBD80 \uD55C \uC0AC\uB78C\uC774 \uB0B4 \uC190\uC744 \uC7A1\uB354\uB2C8
       \uC774\uB984\uC744 \uC78A\uC5C8\uB2E4."
@@ -146,7 +146,7 @@ MonoBehaviour:
     romanization: japda
   - id: ko_ttaragada
     english: "\uB530\uB77C\uAC00\uB2E4"
-    meaning: to follow (along)
+    meaning: follow (along)
     partOfSpeech: v
     example: "\uC232\uC73C\uB85C \uC774\uC5B4\uC9C0\uB294 \uC624\uC194\uAE38\uC740
       \uB113\uACE0 \uB530\uB77C\uAC00\uAE30 \uC26C\uC6E0\uB2E4."
@@ -206,7 +206,7 @@ MonoBehaviour:
     romanization: jeonyeok
   - id: ko_nota
     english: "\uB193\uB2E4"
-    meaning: to put, to place
+    meaning: put, place
     partOfSpeech: v
     example: "\uC774\uC815\uD45C\uB4E4\uC774 \uC774\uC0C1\uD588\uB2E4. \uB204\uAC00
       \uC62E\uACA8 \uB193\uC740 \uAC83 \uAC19\uC558\uB2E4."
@@ -276,7 +276,7 @@ MonoBehaviour:
     romanization: simgakada
   - id: ko_nanuda
     english: "\uB098\uB204\uB2E4"
-    meaning: to divide, to share
+    meaning: divide, share
     partOfSpeech: v
     example: "\uB9C8\uC9C0\uB9C9 \uBE44\uC2A4\uD0B7\uC744 \uC5EC\uC12F \uC870\uAC01\uC73C\uB85C
       \uB098\uB204\uAE30\uB85C \uD588\uB2E4."
@@ -286,7 +286,7 @@ MonoBehaviour:
     romanization: nanuda
   - id: ko_meokda
     english: "\uBA39\uB2E4"
-    meaning: to eat
+    meaning: eat
     partOfSpeech: v
     example: "\uB178\uC0C8\uAC00 \uB0B4 \uBAAB\uC744 \uBA39\uC5C8\uB2E4."
     exampleMeaning: The mule ate my portion.
@@ -295,7 +295,7 @@ MonoBehaviour:
     romanization: meokda
   - id: ko_jurida
     english: "\uC904\uC774\uB2E4"
-    meaning: to reduce
+    meaning: reduce
     partOfSpeech: v
     example: "\uB098\uB294 \uBA39\uB294 \uC591\uC740 \uCD5C\uB300\uD55C \uC904\uC774\uACE0,
       \uAE30\uB85D\uC740 \uCD5C\uB300\uD55C \uB9CE\uC774 \uD55C\uB2E4."
@@ -325,7 +325,7 @@ MonoBehaviour:
     romanization: bogoseo
   - id: ko_jechulhada
     english: "\uC81C\uCD9C\uD558\uB2E4"
-    meaning: to submit
+    meaning: submit
     partOfSpeech: v
     example: "\uC9D1\uC5D0 \uAC08 \uAE38\uC744 \uCC3E\uC73C\uBA74 \uC81C\uCD9C\uD560
       \uAC83\uC774\uB2E4."
@@ -335,7 +335,7 @@ MonoBehaviour:
     romanization: jechulhada
   - id: ko_barada
     english: "\uBC14\uB77C\uB2E4"
-    meaning: to hope, to wish
+    meaning: hope, wish
     partOfSpeech: v
     example: "\uC774\uAC74 \uCD08\uC548\uC77C \uBFD0\uC774\uB2C8 \uC9C4\uD759 \uC5BC\uB8E9\uC740
       \uC591\uD574\uD574 \uC8FC\uAE38 \uBC14\uB780\uB2E4."
@@ -345,7 +345,7 @@ MonoBehaviour:
     romanization: barada
   - id: ko_matchuda
     english: "\uB9DE\uCD94\uB2E4"
-    meaning: to fit, to match
+    meaning: fit, match
     partOfSpeech: v
     example: "\uC815\uBD80 \uBD80\uCC98\uB294 \uC774\uB7F0 \uACF3\uC5D0\uC11C\uB3C4
       \uBCF4\uACE0\uC11C\uB97C \uC815\uD574\uC9C4 \uD615\uC2DD\uC5D0 \uB9DE\uCD94\uAE38
@@ -366,7 +366,7 @@ MonoBehaviour:
     romanization: honja
   - id: ko_samda
     english: "\uC0B6\uB2E4"
-    meaning: to boil
+    meaning: boil
     partOfSpeech: v
     example: "\uC800\uB141\uC740 \uC774\uB984\uB3C4 \uBAA8\uB974\uB294 \uC7A1\uCD08\uB97C
       \uC0B6\uC740 \uAC83\uC774\uC5C8\uB2E4."
@@ -386,7 +386,7 @@ MonoBehaviour:
     romanization: silsu
   - id: ko_ssipda
     english: "\uC539\uB2E4"
-    meaning: to chew
+    meaning: chew
     partOfSpeech: v
     example: "\uC904\uAE30\uB97C \uC539\uC5C8\uB354\uB2C8 \uD55C \uC2DC\uAC04 \uB3D9\uC548
       \uB2EC\uC774 \uC138 \uAC1C\uB85C \uBCF4\uC600\uB2E4."
@@ -424,7 +424,7 @@ MonoBehaviour:
     romanization: kkaekkeutada
   - id: ko_masida
     english: "\uB9C8\uC2DC\uB2E4"
-    meaning: to drink
+    meaning: drink
     partOfSpeech: v
     example: "\uC18D \uBE48 \uAC08\uB300\uB294 \uB9C8\uC2DC\uAE30 \uC88B\uC740 \uAD00\uC774
       \uB41C\uB2E4."
@@ -434,7 +434,7 @@ MonoBehaviour:
     romanization: masida
   - id: ko_jeotda
     english: "\uC816\uB2E4"
-    meaning: to get wet
+    meaning: get wet
     partOfSpeech: v
     example: "\uC816\uC740 \uB098\uBB34\uB294 \uD615\uD3B8\uC5C6\uB294 \uC5F0\uB8CC\uC9C0\uB9CC
       \uC61B \uBCF4\uACE0\uC11C\uB294 \uC798 \uD0C4\uB2E4."
@@ -464,7 +464,7 @@ MonoBehaviour:
     romanization: amugeot
   - id: ko_ppaeda
     english: "\uBE7C\uB2E4"
-    meaning: to take out, to remove
+    meaning: take out, remove
     partOfSpeech: v
     example: "\uBAA8\uC790\uC5D0\uC11C \uBE80 \uC2E4\uB85C \uC678\uD22C\uB97C \uAFF0\uB9F8\uB2E4."
     exampleMeaning: I sewed my coat with thread from my hat.
@@ -473,7 +473,7 @@ MonoBehaviour:
     romanization: ppaeda
   - id: ko_mukda
     english: "\uBB36\uB2E4"
-    meaning: to tie
+    meaning: tie
     partOfSpeech: v
     example: "\uC774\uC81C \uC9C0\uB098\uB294 \uB098\uBB34\uB9C8\uB2E4 \uCC9C \uC870\uAC01\uC744
       \uBB36\uC5B4 \uD45C\uC2DC\uD55C\uB2E4."
@@ -483,7 +483,7 @@ MonoBehaviour:
     romanization: mukda
   - id: ko_dalda
     english: "\uB2EC\uB2E4"
-    meaning: to hang, to attach
+    meaning: hang, attach
     partOfSpeech: v
     example: "\uB178\uC0C8\uC5D0 \uAF2C\uB9AC\uD45C\uB97C \uB2EC\uC558\uB2E4. \uB0B4
       \uBCF4\uACE0\uC11C\uB97C \uBA39\uC9C0 \uB9D0 \uAC83."
@@ -522,7 +522,7 @@ MonoBehaviour:
     romanization: georeum
   - id: ko_boida
     english: "\uBCF4\uC774\uB2E4"
-    meaning: to be seen, to look
+    meaning: be seen, look
     partOfSpeech: v
     example: "\uC774 \uAC01\uB3C4\uC5D0\uC11C\uB294 \uB098\uBB34\uAC00 \uB2E4 \uB611\uAC19\uC544
       \uBCF4\uC778\uB2E4."
@@ -542,7 +542,7 @@ MonoBehaviour:
     romanization: soyongeopda
   - id: ko_akkida
     english: "\uC544\uB07C\uB2E4"
-    meaning: to save, to spare
+    meaning: save, spare
     partOfSpeech: v
     example: "\uC885\uC774\uB97C \uC544\uB07C\uB824\uACE0 \uC5EC\uBC31\uC5D0 \uC4F4\uB2E4."
     exampleMeaning: I write in the margin to save paper.
@@ -561,7 +561,7 @@ MonoBehaviour:
     romanization: jido
   - id: ko_majuchida
     english: "\uB9C8\uC8FC\uCE58\uB2E4"
-    meaning: to run into
+    meaning: run into
     partOfSpeech: v
     example: "\uC774\uC815\uD45C\uB97C \uB4E0 \uB108\uAD6C\uB9AC\uB97C \uB9C8\uC8FC\uCE60
       \uC904\uC740 \uBAB0\uB790\uB2E4."
@@ -610,7 +610,7 @@ MonoBehaviour:
     romanization: beoseot
   - id: ko_tteuda
     english: "\uB728\uB2E4"
-    meaning: to float
+    meaning: float
     partOfSpeech: v
     example: "\uB208\uC5D0 \uBB3C\uC74C\uD45C\uAC00 \uB72C \uC9D0\uC2B9\uC774 \uB098\uB97C
       \uCCD0\uB2E4\uBD24\uB2E4."
@@ -649,7 +649,7 @@ MonoBehaviour:
     romanization: ja
   - id: ko_igida
     english: "\uC774\uAE30\uB2E4"
-    meaning: to win
+    meaning: win
     partOfSpeech: v
     example: "\uC790\uB85C\uB294 \uBC40\uC744 \uC774\uAE38 \uC218 \uC5C6\uB2E4."
     exampleMeaning: A ruler cannot defeat a snake.
@@ -668,7 +668,7 @@ MonoBehaviour:
     romanization: swipda
   - id: ko_sseureojida
     english: "\uC4F0\uB7EC\uC9C0\uB2E4"
-    meaning: to collapse, to fall down
+    meaning: collapse, fall down
     partOfSpeech: v
     example: "\uD3EC\uC790 \uB3CC\uD48D\uC5D0 \uB098\uB294 \uB0A9\uC791\uD558\uAC8C
       \uC4F0\uB7EC\uC84C\uB2E4."
@@ -707,7 +707,7 @@ MonoBehaviour:
     romanization: jeolban
   - id: ko_umjigida
     english: "\uC6C0\uC9C1\uC774\uB2E4"
-    meaning: to move
+    meaning: move
     partOfSpeech: v
     example: "\uAE00\uC790\uB4E4\uC774 \uC6C0\uC9C1\uC774\uACE0 \uC788\uB294 \uAC83\uC774
       \uBA85\uBC31\uD588\uB2E4."
@@ -717,7 +717,7 @@ MonoBehaviour:
     romanization: umjigida
   - id: ko_bakkwida
     english: "\uBC14\uB00C\uB2E4"
-    meaning: to be changed
+    meaning: be changed
     partOfSpeech: v
     example: "\uD55C \uAD6C\uC808\uC740 \uC77D\uC744 \uB54C\uB9C8\uB2E4 \uBC14\uB00C\uC5C8\uB2E4."
     exampleMeaning: One phrase kept changing each time I read it.
@@ -726,7 +726,7 @@ MonoBehaviour:
     romanization: bakkwida
   - id: ko_tonghada
     english: "\uD1B5\uD558\uB2E4"
-    meaning: to get through, to make sense
+    meaning: get through, make sense
     partOfSpeech: v
     example: "\uC774 \uC232\uC5D0\uC11C\uB294 \uB17C\uB9AC\uAC00 \uD1B5\uD558\uC9C0
       \uC54A\uB294\uB2E4."
@@ -736,7 +736,7 @@ MonoBehaviour:
     romanization: tonghada
   - id: ko_mitda
     english: "\uBBFF\uB2E4"
-    meaning: to believe
+    meaning: believe
     partOfSpeech: v
     example: "\uBBFF\uC740 \uAE38\uC740 \uBAA8\uB450 \uAC70\uC9D3\uC774\uC5C8\uB2E4."
     exampleMeaning: Every path I trust turns out to be false.
@@ -775,7 +775,7 @@ MonoBehaviour:
     romanization: gyuchik
   - id: ko_anda
     english: "\uC549\uB2E4"
-    meaning: to sit
+    meaning: sit
     partOfSpeech: v
     example: "\uCD94\uC704\uAC00 \uC2EC\uD588\uACE0, \uB178\uC0C8\uAC00 \uB0B4 \uC704\uC5D0
       \uC549\uC558\uB2E4."
@@ -795,7 +795,7 @@ MonoBehaviour:
     romanization: geu
   - id: ko_dollida
     english: "\uB3CC\uB9AC\uB2E4"
-    meaning: to turn
+    meaning: turn
     partOfSpeech: v
     example: "\uC694\uB9AC\uC0AC\uB294 \uADF8 \uC0AC\uAC74\uC744 \uB108\uAD6C\uB9AC
       \uD0D3\uC73C\uB85C \uB3CC\uB9B0\uB2E4."
@@ -825,7 +825,7 @@ MonoBehaviour:
     romanization: du
   - id: ko_ssitda
     english: "\uC53B\uB2E4"
-    meaning: to wash
+    meaning: wash
     partOfSpeech: v
     example: "\uBC8C\uCE59\uC740 \uC77C\uC8FC\uC77C \uB3D9\uC548 \uC694\uB9AC \uB0C4\uBE44\uB97C
       \uC53B\uB294 \uAC83\uC774\uC5C8\uB2E4."
@@ -869,7 +869,7 @@ MonoBehaviour:
     romanization: gapjagi
   - id: ko_jujanghada
     english: "\uC8FC\uC7A5\uD558\uB2E4"
-    meaning: to claim, to insist
+    meaning: claim, insist
     partOfSpeech: v
     example: "\uB178\uC0C8\uB294 \uC774\uBC88 \uC5EC\uD589\uC774 \uB3D9\uBB3C \uD559\uB300\uB77C\uACE0
       \uC8FC\uC7A5\uD55C\uB2E4. \uB098\uB3C4 \uC778\uC815\uD560 \uC218\uBC16\uC5D0
@@ -880,7 +880,7 @@ MonoBehaviour:
     romanization: jujanghada
   - id: ko_geonneoda
     english: "\uAC74\uB108\uB2E4"
-    meaning: to cross
+    meaning: cross
     partOfSpeech: v
     example: "\uC11C\uB958\uB97C \uC9C0\uD0A4\uB824\uACE0 \uBC8C\uAC70\uBC97\uACE0
       \uAC15\uC744 \uAC74\uB11C\uB2E4."
@@ -939,7 +939,7 @@ MonoBehaviour:
     romanization: angma
   - id: ko_huhoehada
     english: "\uD6C4\uD68C\uD558\uB2E4"
-    meaning: to regret
+    meaning: regret
     partOfSpeech: v
     example: "\uBE44\uC2A4\uD0B7 \uB9D0\uACE0\uB294 \uD6C4\uD68C\uD558\uC9C0 \uC54A\uB294\uB2E4."
     exampleMeaning: I regret nothing but the biscuits.
@@ -948,7 +948,7 @@ MonoBehaviour:
     romanization: huhoehada
   - id: ko_daehada
     english: "\uB300\uD558\uB2E4"
-    meaning: to treat, to face
+    meaning: treat, face
     partOfSpeech: v
     example: "\uB108\uAD6C\uB9AC\uC5D0 \uB300\uD55C \uB0B4 \uBCF5\uC218\uB294 \uAE38\uACE0
       \uC815\uC911\uD560 \uAC83\uC774\uB2E4."
@@ -958,7 +958,7 @@ MonoBehaviour:
     romanization: daehada
   - id: ko_natanada
     english: "\uB098\uD0C0\uB098\uB2E4"
-    meaning: to appear
+    meaning: appear
     partOfSpeech: v
     example: "\uB2AA \uD558\uB098\uB97C \uADF9\uBCF5\uD558\uBA74 \uB610 \uD558\uB098\uAC00
       \uB098\uD0C0\uB09C\uB2E4."
@@ -968,7 +968,7 @@ MonoBehaviour:
     romanization: natanada
   - id: ko_eopsaeda
     english: "\uC5C6\uC560\uB2E4"
-    meaning: to get rid of
+    meaning: get rid of
     partOfSpeech: v
     example: "\uC774 \uC9C4\uD759\uC744 \uC5C6\uC568 \uC218\uAC00 \uC5C6\uB2E4."
     exampleMeaning: I cannot get rid of this mud.
@@ -977,7 +977,7 @@ MonoBehaviour:
     romanization: eopsaeda
   - id: ko_dakda
     english: "\uB2E6\uB2E4"
-    meaning: to wipe, to polish
+    meaning: wipe, polish
     partOfSpeech: v
     example: "\uB098\uB294 \uC544\uC9C1\uB3C4 \uC544\uCE68\uB9C8\uB2E4 \uBC30\uC9C0\uB97C
       \uB2E6\uB294\uB2E4."
@@ -987,7 +987,7 @@ MonoBehaviour:
     romanization: dakda
   - id: ko_gamsahada
     english: "\uAC10\uC0AC\uD558\uB2E4"
-    meaning: to thank
+    meaning: thank
     partOfSpeech: v
     example: "\uB9C8\uB978 \uC591\uB9D0\uC5D0 \uAC10\uC0AC\uD55C\uB2E4. \uAC00\uC7A5
       \uADC0\uD55C \uBCF4\uBB3C\uC774\uB2E4."
@@ -1026,7 +1026,7 @@ MonoBehaviour:
     romanization: gohyang
   - id: ko_noraehada
     english: "\uB178\uB798\uD558\uB2E4"
-    meaning: to sing
+    meaning: sing
     partOfSpeech: v
     example: "\uC6B0\uB9AC \uC9D1\uC5D0\uC11C\uB294 \uC544\uCE68\uB9C8\uB2E4 \uC8FC\uC804\uC790\uAC00
       \uB178\uB798\uD588\uB2E4."
@@ -1036,7 +1036,7 @@ MonoBehaviour:
     romanization: noraehada
   - id: ko_neukda
     english: "\uB299\uB2E4"
-    meaning: to grow old
+    meaning: grow old
     partOfSpeech: v
     example: "\uB299\uC740 \uB098\uBB34\uAC00 \uC774 \uAE38\uC758 \uC218\uD638\uC790\uC778
       \uAC83 \uAC19\uB2E4."
@@ -1192,7 +1192,7 @@ MonoBehaviour:
     romanization: gonggi
   - id: ko_moeuda
     english: "\uBAA8\uC73C\uB2E4"
-    meaning: to gather, to collect
+    meaning: gather, collect
     partOfSpeech: v
     example: "\uC6B0\uB9AC\uB294 \uD1B5\uB098\uBB34\uC640 \uD615\uD3B8\uC5C6\uB294
       \uC0DD\uAC01\uB4E4\uC744 \uBAA8\uC544 \uBC30\uB97C \uB9CC\uB4E4\uC5C8\uB2E4."
@@ -1282,7 +1282,7 @@ MonoBehaviour:
     romanization: moksori
   - id: ko_deutda
     english: "\uB4E3\uB2E4"
-    meaning: to hear, to listen
+    meaning: hear, listen
     partOfSpeech: v
     example: "\uB098\uB294 \uB610\uB837\uD55C \uB2E8\uC5B4 \uD558\uB098\uB97C \uB4E4\uC5C8\uB2E4.
       \"\uC9D1.\""
@@ -1388,7 +1388,7 @@ MonoBehaviour:
     romanization: jeonhyeo
   - id: ko_ulda
     english: "\uC6B8\uB2E4"
-    meaning: to cry
+    meaning: cry
     partOfSpeech: v
     example: "\uC81C\uB300\uB85C \uB41C \uB2F4\uC694 \uD558\uB098\uB9CC \uC788\uC5B4\uB3C4
       \uAC10\uACA9\uD574\uC11C \uC6B8 \uAC83 \uAC19\uB2E4."
@@ -1419,7 +1419,7 @@ MonoBehaviour:
     romanization: gaeguri
   - id: ko_dallida
     english: "\uB2EC\uB9AC\uB2E4"
-    meaning: to run
+    meaning: run
     partOfSpeech: v
     example: "\uC6B0\uB9AC \uD300\uC740 \uC5ED\uB3D9\uC801\uC774\uB2E4. \uC0AC\uBC29\uC73C\uB85C
       \uB2EC\uB9B0\uB2E4."
@@ -1458,7 +1458,7 @@ MonoBehaviour:
     romanization: bawi
   - id: ko_oda
     english: "\uC624\uB2E4"
-    meaning: to come
+    meaning: come
     partOfSpeech: v
     example: "\uB0B4 \uC9D1\uD68C\uC5D0\uB294 \uB178\uC0C8 \uB9D0\uACE0 \uC544\uBB34\uB3C4
       \uC624\uC9C0 \uC54A\uC558\uB2E4."
@@ -1478,7 +1478,7 @@ MonoBehaviour:
     romanization: cheot
   - id: ko_ppaeatda
     english: "\uBE7C\uC557\uB2E4"
-    meaning: to take away, to rob
+    meaning: take away, rob
     partOfSpeech: v
     example: "\uB178\uC0C8\uAC00 \uD601\uBA85\uC744 \uC77C\uC73C\uCF1C \uC218\uD504\uB97C
       \uBE7C\uC557\uC544 \uAC14\uB2E4."
@@ -1488,7 +1488,7 @@ MonoBehaviour:
     romanization: ppaeatda
   - id: ko_deulda
     english: "\uB4E4\uB2E4"
-    meaning: to carry, to lift
+    meaning: carry, lift
     partOfSpeech: v
     example: "\uC6B0\uB9AC\uB294 \uC870\uC57D\uC744 \uB9FA\uC5C8\uB2E4. \uAC00\uBC29\uC740
       \uB0B4\uAC00 \uB4E4\uACE0, \uB178\uC0C8\uB294 \uC544\uBB34\uAC83\uB3C4 \uB4E4\uC9C0
@@ -1499,7 +1499,7 @@ MonoBehaviour:
     romanization: deulda
   - id: ko_mulda
     english: "\uBB3C\uB2E4"
-    meaning: to bite
+    meaning: bite
     partOfSpeech: v
     example: "\uB178\uC0C8\uB294 \uB098\uB97C \uBB3C\uC9C0 \uC54A\uB294 \uAC83\uC73C\uB85C
       \uB3D9\uC758\uD588\uB2E4."
@@ -1529,7 +1529,7 @@ MonoBehaviour:
     romanization: gonghwaguk
   - id: ko_kkaeda
     english: "\uAE68\uB2E4"
-    meaning: to wake up
+    meaning: wake up
     partOfSpeech: v
     example: "\uC6B0\uB9AC \uC758\uD68C\uB294 \uB178\uC0C8\uAC00 \uAE70 \uB54C\uB9C8\uB2E4
       \uC5F4\uB9B0\uB2E4."
@@ -1539,7 +1539,7 @@ MonoBehaviour:
     romanization: kkaeda
   - id: ko_bandaehada
     english: "\uBC18\uB300\uD558\uB2E4"
-    meaning: to oppose
+    meaning: oppose
     partOfSpeech: v
     example: "\uAC1C\uAD6C\uB9AC \uD68C\uC758\uAC00 \uB098\uB97C \uBC18\uB300\uD558\uAE30\uB85C
       \uD45C\uACB0\uD588\uB2E4."
@@ -1549,7 +1549,7 @@ MonoBehaviour:
     romanization: bandaehada
   - id: ko_eoryeowojida
     english: "\uC5B4\uB824\uC6CC\uC9C0\uB2E4"
-    meaning: to become difficult
+    meaning: become difficult
     partOfSpeech: v
     example: "\uB178\uC0C8\uB9CC \uD22C\uD45C\uAD8C\uC744 \uAC00\uC9C0\uACE0 \uC788\uC73C\uBA74
       \uBBFC\uC8FC\uC8FC\uC758\uB294 \uC5B4\uB824\uC6CC\uC9C4\uB2E4."
@@ -1607,7 +1607,7 @@ MonoBehaviour:
     romanization: saeop
   - id: ko_geuripda
     english: "\uADF8\uB9BD\uB2E4"
-    meaning: to miss (someone)
+    meaning: miss (someone)
     partOfSpeech: adj
     example: "\uB9C8\uB978 \uC591\uB9D0\uC744 \uD30C\uB294 \uC18C\uB9E4\uC810\uB4E4\uC774
       \uADF8\uB9BD\uB2E4."
@@ -1705,7 +1705,7 @@ MonoBehaviour:
     romanization: yumyeong
   - id: ko_gidaehada
     english: "\uAE30\uB300\uD558\uB2E4"
-    meaning: to expect
+    meaning: expect
     partOfSpeech: v
     example: "\uB204\uAD70\uAC00\uB294 \uB178\uC0C8\uB97C \uCE6D\uCC2C\uD574\uC57C
       \uD55C\uB2E4. \uB0B4\uAC00 \uD560 \uAC70\uB77C\uACE0 \uAE30\uB300\uD558\uC9C0\uB294
@@ -1726,7 +1726,7 @@ MonoBehaviour:
     romanization: gongbu
   - id: ko_oreuda
     english: "\uC624\uB974\uB2E4"
-    meaning: to climb, to rise
+    meaning: climb, rise
     partOfSpeech: v
     example: "\uBB3C\uB9AC\uD559\uC801\uC73C\uB85C \uB178\uC0C8\uB294 \uC800\uACF3\uC5D0
       \uC624\uB97C \uC218 \uC5C6\uB2E4. \uD558\uC9C0\uB9CC \uC774 \uB140\uC11D\uC740
@@ -1765,7 +1765,7 @@ MonoBehaviour:
     romanization: sawon
   - id: ko_beotda
     english: "\uBC97\uB2E4"
-    meaning: to take off
+    meaning: take off
     partOfSpeech: v
     example: "\uC2E0\uC131\uD55C \uACF3 \uAC19\uC544\uC11C \uC9C4\uD759 \uBB3B\uC740
       \uBAA8\uC790\uB97C \uBC97\uC5C8\uB2E4."
@@ -1775,7 +1775,7 @@ MonoBehaviour:
     romanization: beotda
   - id: ko_bida
     english: "\uBE44\uB2E4"
-    meaning: to be empty
+    meaning: be empty
     partOfSpeech: v
     example: "\uB3CC\uB85C \uB41C \uC0AC\uC81C\uAC00 \uBE48 \uC11D\uD310\uC744 \uB4E4\uACE0
       \uC788\uC5C8\uB2E4."
@@ -1815,7 +1815,7 @@ MonoBehaviour:
     romanization: gaunde
   - id: ko_ppajida
     english: "\uBE60\uC9C0\uB2E4"
-    meaning: to fall out, to be missing
+    meaning: fall out, be missing
     partOfSpeech: v
     example: "\uAE30\uB465\uB9C8\uB2E4 \uB2E8\uC5B4\uAC00 \uBE60\uC9C4 \uBB38\uC7A5\uC774
       \uC0C8\uACA8\uC838 \uC788\uC5C8\uB2E4."
@@ -1825,7 +1825,7 @@ MonoBehaviour:
     romanization: ppajida
   - id: ko_anida
     english: "\uC544\uB2C8\uB2E4"
-    meaning: to not be
+    meaning: not be
     partOfSpeech: adj
     example: "\uC774 \uC720\uC0B0\uC740 \uC774\uC81C \uB204\uAD6C\uC758 \uAC83\uB3C4
       \uC544\uB2C8\uB2E4."
@@ -1884,7 +1884,7 @@ MonoBehaviour:
     romanization: gisul
   - id: ko_jjikda
     english: "\uCC0D\uB2E4"
-    meaning: to stamp, to take (a photo)
+    meaning: stamp, take (a photo)
     partOfSpeech: v
     example: "\uC548\uCABD\uC5D0 \uAE00\uC790\uAC00 \uCC0D\uD78C \uC810\uD1A0 \uD56D\uC544\uB9AC\uB97C
       \uCC3E\uC558\uB2E4."
@@ -1913,7 +1913,7 @@ MonoBehaviour:
     romanization: seonsaengnim
   - id: ko_silta
     english: "\uC2EB\uB2E4"
-    meaning: to dislike, unpleasant
+    meaning: dislike, unpleasant
     partOfSpeech: adj
     example: "\uC61B \uAD50\uC7A5 \uC120\uC0DD\uB2D8\uC774\uB77C\uBA74 \uC774 \uC5EC\uD589\uC744
       \uC2EB\uC5B4\uD588\uC744 \uAC83\uC774\uB2E4."
@@ -1933,7 +1933,7 @@ MonoBehaviour:
     romanization: jeonseol
   - id: ko_jeokda
     english: "\uC801\uB2E4"
-    meaning: to write down
+    meaning: write down
     partOfSpeech: v
     example: "\uD5C8\uAD6C\uC77C\uC9C0 \uBAB0\uB77C\uB3C4 \uC801\uC5B4 \uB450\uC5C8\uB2E4."
     exampleMeaning: It may be fiction, but I wrote it down.
@@ -1981,7 +1981,7 @@ MonoBehaviour:
     romanization: juje
   - id: ko_mareuda
     english: "\uB9C8\uB974\uB2E4"
-    meaning: to dry
+    meaning: dry
     partOfSpeech: v
     example: "\uC774\uC81C \uB0B4 \uCCA0\uD559\uC740 \uAC04\uB2E8\uD558\uB2E4. \uC591\uB9D0\uC744
       \uB9C8\uB974\uAC8C \uC720\uC9C0\uD560 \uAC83."
@@ -2021,7 +2021,7 @@ MonoBehaviour:
     romanization: choeak
   - id: ko_malhada
     english: "\uB9D0\uD558\uB2E4"
-    meaning: to speak, to say
+    meaning: speak, say
     partOfSpeech: v
     example: "\uACBD\uACC4\uB97C \uB2A6\uCD94\uC9C0 \uB9D0 \uAC83. \uB450\uAEBC\uBE44\uB294
       \uB124\uAC00 \uB9D0\uD558\uB294 \uAC83\uC740 \uBB34\uC5C7\uC774\uB4E0 \uC0BC\uD0A8\uB2E4."
@@ -2130,7 +2130,7 @@ MonoBehaviour:
     romanization: teullimeopda
   - id: ko_wonhada
     english: "\uC6D0\uD558\uB2E4"
-    meaning: to want
+    meaning: want
     partOfSpeech: v
     example: "\uBA85\uC131\uC744 \uC6D0\uD588\uC9C0\uB9CC, \uC774\uC81C\uB294 \uC218\uD504\uB97C
       \uC6D0\uD55C\uB2E4."
@@ -2220,7 +2220,7 @@ MonoBehaviour:
     romanization: sai
   - id: ko_batda
     english: "\uBC1B\uB2E4"
-    meaning: to receive
+    meaning: receive
     partOfSpeech: v
     example: "\uB0B4\uAC00 \uBC1B\uC740 \uD6C8\uB828\uC740 \uC774\uC81C \uC544\uBB34
       \uC4F8\uBAA8\uB3C4 \uC5C6\uB294 \uAC83 \uAC19\uB2E4."
@@ -2250,7 +2250,7 @@ MonoBehaviour:
     romanization: imsi
   - id: ko_mutda
     english: "\uBB3B\uB2E4"
-    meaning: to get stained
+    meaning: get stained
     partOfSpeech: v
     example: "\uB0B4 \uC678\uD22C\uC5D0 \uBB3B\uC740 \uC9C4\uD759 \uC5BC\uB8E9\uC740
       \uC9C0\uC6CC\uC9C0\uC9C0 \uC54A\uC744 \uAC83 \uAC19\uB2E4."
@@ -2260,7 +2260,7 @@ MonoBehaviour:
     romanization: mutda
   - id: ko_danggida
     english: "\uB2F9\uAE30\uB2E4"
-    meaning: to pull
+    meaning: pull
     partOfSpeech: v
     example: "\uB2E4\uB9AC\uB97C \uAC74\uB108\uAE30 \uC804\uC5D0 \uB808\uBC84\uB97C
       \uB2F9\uAE30\uB294 \uAC83\uC774 \uB9E4\uC6B0 \uC911\uC694\uD558\uB2E4."
@@ -2300,7 +2300,7 @@ MonoBehaviour:
     romanization: sayong
   - id: ko_apeuda
     english: "\uC544\uD504\uB2E4"
-    meaning: to hurt, sick
+    meaning: hurt, sick
     partOfSpeech: adj
     example: "\uBAB8\uC758 \uAD00\uC808\uC774 \uB2E4 \uC544\uD504\uB2E4."
     exampleMeaning: Every joint in my body hurts.
@@ -2309,7 +2309,7 @@ MonoBehaviour:
     romanization: apeuda
   - id: ko_matda
     english: "\uB9DE\uB2E4"
-    meaning: to be right
+    meaning: be right
     partOfSpeech: v
     example: "\uB9DE\uB294 \uB9D0\uC744 \uD558\uC790 \uB3CC\uD310\uC774 \uBC00\uB824
       \uC5F4\uB838\uB2E4."
@@ -2338,7 +2338,7 @@ MonoBehaviour:
     romanization: gibon
   - id: ko_mandeulda
     english: "\uB9CC\uB4E4\uB2E4"
-    meaning: to make
+    meaning: make
     partOfSpeech: v
     example: "\uACF5\uC2DD\uC744 \uD558\uB098 \uB9CC\uB4E4\uC5C8\uB2E4. \uAE38\uC744
       \uC783\uC740 \uC0C1\uD0DC\uC5D0 \uBC30\uACE0\uD514\uC744 \uB354\uD558\uBA74
@@ -2408,7 +2408,7 @@ MonoBehaviour:
     romanization: yangmal
   - id: ko_goreuda
     english: "\uACE0\uB974\uB2E4"
-    meaning: to choose
+    meaning: choose
     partOfSpeech: v
     example: "\uC9C4\uD759\uACFC \uBE44 \uC911 \uBB34\uC5C7\uC744 \uACE0\uB97C\uAE4C?
       \uD6C4\uC790\uB97C \uACE8\uB790\uB354\uB2C8 \uB458 \uB2E4 \uC5BB\uC5C8\uB2E4."
@@ -2459,7 +2459,7 @@ MonoBehaviour:
     romanization: gyeolgwa
   - id: ko_kiuda
     english: "\uD0A4\uC6B0\uB2E4"
-    meaning: to raise, to grow
+    meaning: raise, grow
     partOfSpeech: v
     example: "\uC774 \uC815\uAE00\uC740 \uC778\uB0B4\uC2EC\uC774\uB098 \uAD11\uAE30\uB97C
       \uD0A4\uC6B4\uB2E4."
@@ -2479,7 +2479,7 @@ MonoBehaviour:
     romanization: yojeum
   - id: ko_tteoreojida
     english: "\uB5A8\uC5B4\uC9C0\uB2E4"
-    meaning: to fall, to drop
+    meaning: fall, drop
     partOfSpeech: v
     example: "\uC14B\uC9F8 \uB2EC\uBD80\uD130 \uB0B4 \uCCA0\uC790\uAC00 \uB5A8\uC5B4\uC9C0\uAE30
       \uC2DC\uC791\uD588\uB2E4."
@@ -2568,7 +2568,7 @@ MonoBehaviour:
     romanization: gumeong
   - id: ko_bakkuda
     english: "\uBC14\uAFB8\uB2E4"
-    meaning: to exchange, to swap
+    meaning: exchange, swap
     partOfSpeech: v
     example: "\uD2F0\uC288 \uD55C \uC7A5\uB9CC \uC900\uB2E4\uBA74 \uC9C0\uB3C4 \uD55C
       \uC7A5\uACFC\uB3C4 \uBC14\uAFB8\uACA0\uB2E4."
@@ -2597,7 +2597,7 @@ MonoBehaviour:
     romanization: geul
   - id: ko_peojida
     english: "\uD37C\uC9C0\uB2E4"
-    meaning: to spread
+    meaning: spread
     partOfSpeech: v
     example: "\uC5EC\uAE30\uC11C\uB294 \uC78A\uC74C\uC774 \uBC14\uC774\uB7EC\uC2A4\uCC98\uB7FC
       \uD37C\uC9C4\uB2E4."
@@ -2607,7 +2607,7 @@ MonoBehaviour:
     romanization: peojida
   - id: ko_deopda
     english: "\uB36E\uB2E4"
-    meaning: to cover
+    meaning: cover
     partOfSpeech: v
     example: "\uBFCC\uB9AC\uB9DD\uC774 \uB545\uC744 \uB36E\uACE0 \uC788\uB2E4."
     exampleMeaning: A network of roots covers the ground.
@@ -2625,7 +2625,7 @@ MonoBehaviour:
     romanization: beon
   - id: ko_teullida
     english: "\uD2C0\uB9AC\uB2E4"
-    meaning: to be wrong
+    meaning: be wrong
     partOfSpeech: v
     example: "\uB300\uB2F4\uD55C \uACC4\uD68D\uC774\uC5C8\uACE0, \uD2C0\uB9B0 \uACC4\uD68D\uC774\uAE30\uB3C4
       \uD588\uB2E4."
@@ -2654,7 +2654,7 @@ MonoBehaviour:
     romanization: bubun
   - id: ko_kkeunnada
     english: "\uB05D\uB098\uB2E4"
-    meaning: to end, to finish
+    meaning: end, finish
     partOfSpeech: v
     example: "\uB450\uAEBC\uBE44\uC758 \uC601\uC5ED\uC740 \uD3ED\uD3EC\uC5D0\uC11C
       \uB05D\uB09C\uB2E4."
@@ -2664,7 +2664,7 @@ MonoBehaviour:
     romanization: kkeunnada
   - id: ko_nada
     english: "\uB098\uB2E4"
-    meaning: to occur, to come out
+    meaning: occur, come out
     partOfSpeech: v
     example: "\uAC15\uC758 \uC885\uC810\uC740 \uB545\uC5D0 \uB09C \uAD6C\uBA4D\uC774\uC5C8\uB2E4."
     exampleMeaning: The river's terminal point was a hole in the ground.
@@ -2710,7 +2710,7 @@ MonoBehaviour:
     romanization: hwahak
   - id: ko_jagyonghada
     english: "\uC791\uC6A9\uD558\uB2E4"
-    meaning: to act (on), to work
+    meaning: act (on), take effect
     partOfSpeech: v
     example: "\uAC70\uBBF8 \uCE68\uC740 \uC885\uC774\uC5D0 \uC0B0\uCC98\uB7FC \uC791\uC6A9\uD55C\uB2E4."
     exampleMeaning: Spider spit works like acid on paper.
@@ -2739,7 +2739,7 @@ MonoBehaviour:
     romanization: gwansim
   - id: ko_tteoollida
     english: "\uB5A0\uC62C\uB9AC\uB2E4"
-    meaning: to recall
+    meaning: recall
     partOfSpeech: v
     example: "\uB9D0\uC744 \uB5A0\uC62C\uB9AC\uC790 \uC218\uC815\uC774 \uBE5B\uB0AC\uB2E4."
     exampleMeaning: A crystal glowed when I remembered a word.
@@ -2768,7 +2768,7 @@ MonoBehaviour:
     romanization: son
   - id: ko_balgyeonhada
     english: "\uBC1C\uACAC\uD558\uB2E4"
-    meaning: to discover
+    meaning: discover
     partOfSpeech: v
     example: "\uAC11\uC637 \uC18D\uC774 \uD145 \uBE48 \uB179\uC2A8 \uAE30\uC0AC\uAC00
       \uACBD\uBE44\uB97C \uC11C\uACE0 \uC788\uB294 \uAC83\uC744 \uBC1C\uACAC\uD588\uB2E4."
@@ -2788,7 +2788,7 @@ MonoBehaviour:
     romanization: gadeuk
   - id: ko_gachida
     english: "\uAC07\uD788\uB2E4"
-    meaning: to be trapped
+    meaning: be trapped
     partOfSpeech: v
     example: "\uB369\uAD74\uC758 \uC911\uC2EC\uBD80\uC5D0\uC11C \uADF8 \uC548\uC5D0
       \uAC07\uD78C \uBB38\uC7A5\uB4E4\uC744 \uBC1C\uACAC\uD588\uB2E4."
@@ -2828,7 +2828,7 @@ MonoBehaviour:
     romanization: jangnyesik
   - id: ko_jikida
     english: "\uC9C0\uD0A4\uB2E4"
-    meaning: to keep, to protect
+    meaning: keep, protect
     partOfSpeech: v
     example: "\uB2E8\uC5B4 \uD558\uB098\uB97C \uC9C0\uD0A4\uB824\uBA74 \uB2E4\uB978
       \uB2E8\uC5B4 \uD558\uB098\uB97C \uD76C\uC0DD\uD574\uC57C \uD55C\uB2E4."
@@ -2867,7 +2867,7 @@ MonoBehaviour:
     romanization: samak
   - id: ko_naeryeogada
     english: "\uB0B4\uB824\uAC00\uB2E4"
-    meaning: to go down
+    meaning: go down
     partOfSpeech: v
     example: "\uC774 \uC5EC\uC815\uC758 \uB9C8\uC9C0\uB9C9 \uB2E8\uACC4\uB294 \uC544\uB798\uB85C
       \uB0B4\uB824\uAC00\uB294 \uAC83\uC774\uB2E4."
@@ -2877,7 +2877,7 @@ MonoBehaviour:
     romanization: naeryeogada
   - id: ko_doragada
     english: "\uB3CC\uC544\uAC00\uB2E4"
-    meaning: to go back
+    meaning: go back
     partOfSpeech: v
     example: "\uB178\uC0C8\uB294 \uBCF4\uC0C1\uC73C\uB85C \uBC1B\uC740 \uC0AC\uACFC\uC640
       \uC774 \uC77C\uC9C0\uB97C \uAC00\uC9C0\uACE0 \uB3CC\uC544\uAC08 \uAC83\uC774\uB2E4."
@@ -2951,7 +2951,7 @@ MonoBehaviour:
     romanization: yeoreum
   - id: ko_gaeul
     english: "\uAC00\uC744"
-    meaning: autumn, fall
+    meaning: autumn
     partOfSpeech: n
     example: "\uAC00\uC744\uC774 \uB418\uBA74 \uB098\uBB47\uC78E\uC774 \uBD89\uAC8C
       \uBB3C\uB4E0\uB2E4."

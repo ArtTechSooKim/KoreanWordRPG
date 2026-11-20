@@ -63,6 +63,8 @@ namespace WordRPG.Tests
                 StringAssert.StartsWith("ko_", word.Id);
                 Assert.IsTrue(KoreanWords.HasHangul(word.English), $"{word.Id}: 한국어 단어 ({word.English})");
                 Assert.IsFalse(KoreanWords.HasHangul(word.Meaning), $"{word.Id}: 뜻은 영어 ({word.Meaning})");
+                foreach (var part in word.GetMeaningParts()) // 동사도 'to' 없이 (#3 사용자 — 보기 버튼이 짧게)
+                    Assert.IsFalse(part.StartsWith("to "), $"{word.Id}: '{part}' 앞의 to");
                 Assert.IsFalse(KoreanWords.HasHangul(word.ExampleMeaning), $"{word.Id}: 해석은 영어");
                 Assert.IsTrue(Regex.IsMatch(word.Romanization, "^[a-z]+$"), $"{word.Id}: 로마자 ({word.Romanization})");
             }
