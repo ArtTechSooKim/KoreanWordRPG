@@ -16,7 +16,7 @@ ko_sigol,시골,countryside,n,정오에 마지막 시골 농장을 지나쳤다.
 ko_dol,돌,stone,n,돌 하나가 숲의 경계를 표시하고 있었다.,A stone marked the border of the forest.,15,,dol
 ko_geulja,글자,character (written),n,표지판에는 출입 금지라고 적혀 있었지만 글자들이 뒤죽박죽이었다.,"The sign said no entry, but the letters were all jumbled.",16,,geulja
 ko_jeonyeok,저녁,evening,n,저녁이 되자 길이 더는 보이지 않았다.,"By evening, the road was no longer visible.",17,,jeonyeok
-ko_nota,놓다,"put, place",v,이정표들이 이상했다. 누가 옮겨 놓은 것 같았다.,"The signposts looked weird, as if someone had moved them.",18,,nota
+ko_nota,놓다,"put, set down",v,이정표들이 이상했다. 누가 옮겨 놓은 것 같았다.,"The signposts looked weird, as if someone had moved them.",18,,nota
 ko_banghyang,방향,direction,n,이정표마다 무작위 방향을 가리켰다.,Every signpost pointed in a random direction.,19,,banghyang
 ko_sigan,시간,"hour, time",n,내 지도는 한 시간쯤 정확했다.,My map was accurate for about one hour.,20,,sigan
 ko_saheul,사흘,three days,n,사흘째가 되자 우리 팀은 혼란에 빠졌다.,"By the third day, the crew was in chaos.",21,3일째,saheul
@@ -102,7 +102,7 @@ ko_gohyang,고향,hometown,n,고향의 작은 땅은 노새에게 넘긴다.,My 
 ko_noraehada,노래하다,sing,v,우리 집에서는 아침마다 주전자가 노래했다.,"In my household, the kettle sang every morning.",101,,noraehada
 ko_neukda,늙다,grow old,v,늙은 나무가 이 길의 수호자인 것 같다.,An old tree seems to be the guardian of this path.,102,30일째,neukda
 ko_jinjja,진짜,"the real thing, really",n,그 친절은 진짜 같았다. 열매를 떨어뜨려 주었다.,Its kindness seemed genuine; it dropped me a fruit.,103,,jinjja
-ko_yeogi,여기,here,n,여기가 내 지도에서 가장 외딴 곳이다.,This is the most remote place on my map.,104,,yeogi
+ko_got_2,곳,"place, spot",n,여기가 내 지도에서 가장 외딴 곳이다.,This is the most remote place on my map.,104,,got
 ko_haneul,하늘,sky,n,숲 안쪽에는 하늘이 없다.,The interior of the forest has no sky.,105,,haneul
 ko_neomu,너무,too (much),adv,어떤 지도에 담기에도 너무 광대하다.,It is more vast than any map can hold.,106,,neomu
 ko_gipda,깊다,deep,adj,이제 우리는 너구리의 영역 깊숙이 들어와 있다.,We are deep inside raccoon territory now.,107,,gipda
@@ -233,7 +233,7 @@ ko_matda,맞다,be right,v,맞는 말을 하자 돌판이 밀려 열렸다.,A st
 ko_mul,물,water,n,물 위 돌 단상에서 쉬었다.,We rested on a stone platform above the water.,232,,mul
 ko_gibon,기본,"basics, foundation",n,기억을 더듬어 새로운 지도의 기본 틀을 그렸다.,I sketched a framework for a new map from memory.,233,100일째,gibon
 ko_mandeulda,만들다,make,v,공식을 하나 만들었다. 길을 잃은 상태에 배고픔을 더하면 시인이 된다.,I came up with a formula: being lost plus being hungry equals becoming a poet.,234,,mandeulda
-ko_ijeon,이전,"previous, before",n,이전 지도들에는 여기에 아무것도 없다.,Prior maps show nothing here at all.,235,,ijeon
+ko_yeogi,여기,here,n,이전 지도들에는 여기에 아무것도 없다.,Prior maps show nothing here at all.,235,,yeogi
 ko_eotteon,어떤,"some, what kind of",adj,동시대의 어떤 지도에도 이곳은 없다.,No contemporary map shows this place either.,236,,eotteon
 ko_uija,의자,chair,n,내 이전 삶에는 의자가 있었다.,My former life had chairs.,237,,uija
 ko_dosi,도시,city,n,나는 한때 신발 신은 도시 사람이었다.,"I was an urban person once, with shoes.",238,,dosi

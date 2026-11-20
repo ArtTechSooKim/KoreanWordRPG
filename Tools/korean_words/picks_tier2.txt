@@ -1,4 +1,4 @@
-# story|단어|목록 키(- = 목록 밖)|품사|영어 뜻|로마자   (story 0 = 기록 밖 단어: 뒤에 |한국어 예문|영어 해석)
+# story|단어|목록 키(- = 목록 밖)|품사|영어 뜻|로마자   (뒤에 |한국어 문장|영어 줄 = story 0 기록 밖 단어의 예문 · 또는 사용자가 고친 기록 문장, 영어 줄을 비우면 원래 줄)
 1|학원|학원02|n|academy, cram school|hagwon
 2|법|법01:명|n|law, how to|beop
 3|뛰어나다|뛰어나다|adj|excellent, outstanding|ttwieonada
@@ -16,7 +16,7 @@
 15|돌|돌02|n|stone|dol
 16|글자|글자|n|character (written)|geulja
 17|저녁|저녁|n|evening|jeonyeok
-18|놓다|놓다01:동|v|put, place|nota
+18|놓다|놓다01:동|v|put, set down|nota
 19|방향|방향01|n|direction|banghyang
 20|시간|시간04:명|n|hour, time|sigan
 21|사흘|사흘|n|three days|saheul
@@ -102,7 +102,7 @@
 101|노래하다|노래하다|v|sing|noraehada
 102|늙다|늙다|v|grow old|neukda
 103|진짜|진짜:명|n|the real thing, really|jinjja
-104|여기|여기01|n|here|yeogi
+104|곳|곳01|n|place, spot|got
 105|하늘|하늘01|n|sky|haneul
 106|너무|너무01|adv|too (much)|neomu
 107|깊다|깊다|adj|deep|gipda
@@ -233,7 +233,7 @@
 232|물|물01|n|water|mul
 233|기본|기본|n|basics, foundation|gibon
 234|만들다|만들다|v|make|mandeulda
-235|이전|이전03|n|previous, before|ijeon
+235|여기|여기01|n|here|yeogi
 236|어떤|어떤|adj|some, what kind of|eotteon
 237|의자|의자03|n|chair|uija
 238|도시|도시03|n|city|dosi

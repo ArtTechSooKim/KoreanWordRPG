@@ -61,9 +61,9 @@
 
 - 단어 CSV 칸은 영단어RPG 그대로 쓰되 뜻이 바뀜: `english` = 배우는 한국어 단어(기본형, 동사는 '-다') · `meaning` = 영어 뜻(쉼표로 두 개까지, **동사도 'to' 없이** — #3 사용자: teach·rest·be (there)) · `example` = 한국어 예문 · `example_meaning` = 영어 해석 ·
   새 칸 `romanization` = 로마자(`WordEntry.Romanization`, 「국어의 로마자 표기법」 소리 나는 대로 — 가르치다 gareuchida, 색깔 saekkkal, 자음 동화도 반영: 신라 Silla·국물 gungmul). id = `ko_` + 로마자 (겹치면 `_2`, 출시 뒤 바꾸지 말 것)
-- 이야기 = 영단어RPG '누군가의 기록'의 검수된 한국어 문장 그대로: 줄마다 그 안의 단어 하나를 골라 예문으로 (기본 단어장은 모두 기록 줄 — 숲부터 단어장의 기록 밖 10개만 직접 쓴 예문). 문장을 함부로 다시 쓰지 말 것
+- 이야기 = 영단어RPG '누군가의 기록'의 검수된 한국어 문장 그대로: 줄마다 그 안의 단어 하나를 골라 예문으로 (기본 단어장은 모두 기록 줄 — 숲부터 단어장의 기록 밖 10개만 직접 쓴 예문). 문장을 함부로 다시 쓰지 말 것 — 사용자가 고친 줄만 picks에 고친 문장을 적음 (#7: 초원 8번 '사라지기 이전에')
 - 예문 속 단어 찾기 = `KoreanWords.Find`(순수 — `Journals.WordSpan`이 한글 단어면 이것을 씀): 명사는 어절 앞 그대로, 동사·형용사는 줄기 + 받침(간·갈·갑·갔)·ㄹ 탈락·ㄷ 불규칙·모음 줄임(져·여·했). ㅂ·르·ㅎ 불규칙 모양은 못 찾으니 그런 줄에는 다른 단어를 고름
-- 고치는 순서: `Tools/korean_words/picks_tier1·2.txt`(줄 번호|단어|목록 키|품사|영어 뜻|로마자)를 고침 → `python Tools/korean_words/build_books.py`(검사: 목록 등급·예문에 있음·두 단어장에 한 번·같은 뜻 조각 두 번 금지) → `--write`로 CSV →
+- 고치는 순서: `Tools/korean_words/picks_tier1·2.txt`(줄 번호|단어|목록 키|품사|영어 뜻|로마자, 뒤에 |한국어 문장|영어 줄 = 줄 번호 0의 직접 쓴 예문 또는 사용자가 고친 기록 문장)를 고침 → `python Tools/korean_words/build_books.py`(검사: 목록 등급·예문에 있음·두 단어장에 한 번·같은 뜻 조각 두 번 금지) → `--write`로 CSV →
   Unity가 .asset 갱신 → 검수 페이지 `python Tools/korean_words/gen_review.py` → Builds/한국어단어장검수.html을 같은 페이지로 다시 올림 (주소·메모 형식 = 작업메모)
 
 ## 기술 규칙

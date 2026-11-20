@@ -100,16 +100,16 @@ MonoBehaviour:
     story: 7
     storyHeading: 
     romanization: gilda
-  - id: ko_jeon
-    english: "\uC804"
+  - id: ko_ijeon
+    english: "\uC774\uC804"
     meaning: before, earlier
     partOfSpeech: n
     example: "\uB0B4 \uADDC\uCE59\uC740 \uAC04\uB2E8\uD558\uB2E4. \uC0AC\uB77C\uC9C0\uAE30
-      \uC804\uC5D0 \uAE30\uB85D\uD560 \uAC83."
+      \uC774\uC804\uC5D0 \uAE30\uB85D\uD560 \uAC83."
     exampleMeaning: 'My rule is simple: write things down before they fade.'
     story: 8
     storyHeading: 
-    romanization: jeon
+    romanization: ijeon
   - id: ko_hakgyo
     english: "\uD559\uAD50"
     meaning: school

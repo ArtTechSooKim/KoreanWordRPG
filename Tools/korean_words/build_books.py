@@ -79,7 +79,11 @@ for book, (pf, want) in books.items():
             r = old.get(p["story"])
             if r is None:
                 problems.append(f"{book}: 이야기 {p['story']}번 줄이 없음"); continue
-            p["ko"], p["en"], p["heading"] = r["example_meaning"], r["example"], r["story_heading"]
+            p["heading"] = r["story_heading"]
+            if p["ko"]:   # 사용자가 고친 한국어 문장 (#7: 사라지기 전에 → 이전에). 영어 줄은 그대로
+                p["en"] = p["en"] or r["example"]
+            else:
+                p["ko"], p["en"] = r["example_meaning"], r["example"]
         else:
             p["heading"] = ""
         w = p["word"]
