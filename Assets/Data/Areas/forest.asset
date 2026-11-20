@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9f8fed8fbccf14ab8116f85f927188, type: 3}
+  m_Name: forest
+  m_EditorClassIdentifier: WordRPG::WordRPG.Field.FieldArea
+  areaId: forest
+  displayName: "\uC232"
+  theme: 2
+  map: '#############################D######
+
+    ###########################:::::####
+
+    ########################:::::B:::::#
+
+    ##C,,,,#################::.......::#
+
+    ##,,,,,#################::.......::#
+
+    ##,,,,,##,,,,,C###:::::#::.......::#
+
+    ##,,,,,##,,,,,,###:::::##:.......:##
+
+    ##,,,,,##,,,,,,####:::#####:::::####
+
+    ##,,,,,###,#:::::##:::::###GGG###~~#
+
+    ##,,,,,,,,,:::::::##:::::.....###~~#
+
+    ##,,#,,,#,,:::::::######,,,######~~#
+
+    ###,,,,,,,,:::::::######,,,####,,,~#
+
+    ##,,,,####,,:::::#######,,,###,,,,C#
+
+    ##,,,#####,,,::#########,,,##,,,,~~#
+
+    ##,,,#####,,,:K#########,,,##,,##~~#
+
+    ##,,,#####,,,############......##~~#
+
+    #,,##,,##,,,,#:::::~~~###:::#,,,#~~#
+
+    ##,,,,,,,,,,,::::::~~~##:::::,,,#~~#
+
+    ##,,#,,,,,,,,:~~~::~~~##::::::,,#~~#
+
+    ##,,,,,,,,,::~~~~~:::::#:::::,,,#~~#
+
+    ##,,,,#,,,,#::~~~~:#:::##:::#,,,#~~#
+
+    ###..#######:::::C:::::######,,,#~~#
+
+    ###..##:::::#::#::~~~::####....##~~#
+
+    ###..::::::::::::~~~~~####,,,####~~#
+
+    ####:::::::::##:::~~~#####,,,####~~#
+
+    ###..#:::::::###::########,,,####~~#
+
+    ###..##:::::####::########,,,####~~#
+
+    ###..###########:::::###..,,,#######
+
+    ####.....########::::::.....########
+
+    #####....############,,,############
+
+    #######..############,,,############
+
+    #######..############,,,######,,,C##
+
+    #######..##########..,,,#####,,,,,##
+
+    ######:...:######......#####,,,,,,,#
+
+    ######:...SSS###,,,#########,,,,,,,#
+
+    ####E:::F:SSS###,,,#########,,,,,,,#
+
+    ###::.......::..,,,##########,,,,,##
+
+    #..::......N......############,,,,##
+
+    D..::P......::##..#,,,,#,,#,,#,,,,##
+
+    ####::::L::::###...,,,,,,,,,,,,,,###
+
+    ######:::n:######..............,,,##
+
+    ########C##########,,,,,,,,,,,,,,,##
+
+    ###################,,#,,,,#,,,,,,C##
+
+    ####################################
+
+'
+  encounters: {fileID: 11400000, guid: 22b2bf8229e61fe47bea7fc6546b6bf7, type: 2}
+  words: {fileID: 11400000, guid: 5f371803871f9dd499e7cfff437b0665, type: 2}
+  encounterRate: 0.13
+  minStepsBetweenEncounters: 4
+  encounterStyle: 0
+  waterEncounters: {fileID: 0}
+  shop: {fileID: 11400000, guid: 89dce7e0f28ae414e9caa28cfe12028b, type: 2}
+  chests:
+  - item: {fileID: 0}
+    count: 0
+    gold: 60
+    relic: {fileID: 11400000, guid: eef2fb082a5a0ae4b8da35987d1ae574, type: 2}
+  - item: {fileID: 11400000, guid: 4ef0a20b2f82e9c4c8ea2a134a013bf4, type: 2}
+    count: 3
+    gold: 0
+    relic: {fileID: 0}
+  - item: {fileID: 11400000, guid: d068093b31fa6bd479a9978022d8bc1f, type: 2}
+    count: 3
+    gold: 0
+    relic: {fileID: 0}
+  - item: {fileID: 11400000, guid: 83903ba43d39288409cddb3a5f7b0f43, type: 2}
+    count: 3
+    gold: 0
+    relic: {fileID: 0}
+  - item: {fileID: 0}
+    count: 0
+    gold: 60
+    relic: {fileID: 11400000, guid: 32a554c15e5393343bba57e9ec78dd36, type: 2}
+  - item: {fileID: 11400000, guid: c8fe83c5587070442976072e0cbb9051, type: 2}
+    count: 1
+    gold: 0
+    relic: {fileID: 0}
+  - item: {fileID: 0}
+    count: 0
+    gold: 150
+    relic: {fileID: 0}
+  npcs:
+  - {fileID: 11400000, guid: 660bc75b44232f541ba347a2019c770f, type: 2}
+  - {fileID: 11400000, guid: c970f416f57cc0846a1f1ce143e77f82, type: 2}
+  exits:
+  - target: {fileID: 11400000, guid: 768fa7c9e98d0ef48bcfa114628de9e5, type: 2}
+    targetDoorIndex: 1
+    openedByBossOf: {fileID: 11400000}
+  - target: {fileID: 11400000, guid: a2d06106feb91f048ad3b3d9f1f26ff0, type: 2}
+    targetDoorIndex: 1
+    openedByBossOf: {fileID: 0}
+  boss:
+    species: {fileID: 11400000, guid: 104b35434b4f9bc46aba8820d3c16227, type: 2}
+    level: 12
+    rewardRelic: {fileID: 11400000, guid: 1b7f999bdd3edb8409ff80aa0c65e454, type: 2}
+    rewardItem: {fileID: 11400000, guid: 06a736217507a204db83f20e3d6dcb23, type: 2}
+    bossLine: "\uC774\uCABD\uC774 \uB9DE\uB098? \uC800\uCABD\uC774 \uB9DE\uB098?
+      \uB098\uB3C4 \uBAA8\uB974\uACA0\uC5B4!"
+    heroLine: "\uAE38\uC744 \uD5F7\uAC08\uB9AC\uB294 \uAC74 \uAD1C\uCC2E\uC544. \uB2E4\uC2DC
+      \uD655\uC778\uD558\uBA74 \uB3FC."
+    afterLine: "\uC774\uC815\uD45C\uAC00 \uC81C\uC790\uB9AC\uB97C \uCC3E\uC558\uB2E4.\n\uC232
+      \uAE4A\uC740 \uACF3\uC5D0\uC11C \uC624\uB798\uB41C \uBA54\uC544\uB9AC\uAC00
+      \uB4E4\uB9B0\uB2E4."
+    fieldSize: {x: 5, y: 5}
+  returnAfterBoss: {fileID: 0}
+  bossKey: {fileID: 11400000, guid: f7d1bd7717ac67f4bb0ce50b193977b0, type: 2}
+  bossGateWords: 40
+  shrineCompanion: {fileID: 0}
+  shrineWords: 60
+  glowStoneRelic: {fileID: 0}
+  requiresFullVersion: 1
+  storyOrder: 3
+  dictionaryName: "\uC232\uC758 \uC0AC\uC804"

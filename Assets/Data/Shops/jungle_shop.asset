@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba224dac5864d74daef27257bbcd2da, type: 3}
+  m_Name: jungle_shop
+  m_EditorClassIdentifier: WordRPG::WordRPG.Items.ShopData
+  displayName: "\uBA54\uC544\uB9AC \uC57C\uC601\uC9C0 \uAC00\uAC8C"
+  entries:
+  - item: {fileID: 11400000, guid: 56596be176cf57541a9ab3caafeb386a, type: 2}
+    price: 30
+  - item: {fileID: 11400000, guid: 03136cba480d605499404eebbaaac6f5, type: 2}
+    price: 90
+  - item: {fileID: 11400000, guid: 5d1c837450b64c04db0b503c5b52edfe, type: 2}
+    price: 180
+  - item: {fileID: 11400000, guid: eecbdb7ebef15bf4384890a80ebcc94b, type: 2}
+    price: 2000
+  - item: {fileID: 11400000, guid: d06f0e6a146e8d7419259d713eb87c86, type: 2}
+    price: 10000
+  merchant: {fileID: 11400000, guid: 22c2a3b0a134b7d469883e8ebb3d5ba6, type: 2}
+  pitches:
+  - "\uB07D\uB07D! \uB5CF\uBAA9 \uD0C0\uAE30 \uC804\uC5D0 \uD558\uB098 \uCC59\uACA8\uC694!"
+  - "\uB07D! \uC0B4\uAE08\uC0B4\uAE08 \uBB3C\uC57D\uC774 \uC815\uAE00\uC5D4 \uD544\uC218\uB77C\uB2C8\uAE4C!"
+  - "\uB07D! \uD638\uAE30\uC2EC \uBB3C\uC57D \uB9C8\uC2DC\uBA74 \uC0C8 \uB2E8\uC5B4\uAC00
+    \uC3DF\uC544\uC9C4\uB300\uC694!"
+  - "\uB07D! \uC5EC\uAE30\uAC00 \uC81C\uC77C \uC2F8\uC694, \uC815\uAE00\uC5D0 \uC5EC\uAE30\uBC16\uC5D0
+    \uC5C6\uC9C0\uB9CC!"

@@ -1,0 +1,774 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.TestTools;
+using UnityEngine.UI;
+using WordRPG.Battle;
+using WordRPG.Field;
+using WordRPG.Game;
+using WordRPG.Heroes;
+using WordRPG.Items;
+using WordRPG.Monsters;
+using WordRPG.UI;
+using WordRPG.Words;
+using static WordRPG.Tests.UiDriver;
+
+namespace WordRPG.Tests
+{
+    // 실제 UI 버튼의 onClick을 눌러서 전투 한 판이 끝까지 진행되는지 확인하는 통합 테스트
+    public class BattleScreenTests
+    {
+        private static T Set<T>(T obj, string field, object value) where T : class
+        {
+            var info = obj.GetType().GetField(field, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            info.SetValue(obj, value);
+            return obj;
+        }
+
+        private static EncounterTable Table(MonsterSpecies enemy)
+        {
+            var table = ScriptableObject.CreateInstance<EncounterTable>();
+            Set(table, "entries", new List<EncounterTable.Entry> { new EncounterTable.Entry(enemy, 1, 1, 1) });
+            Set(table, "minGroupSize", 1);
+            Set(table, "maxGroupSize", 1);
+            return table;
+        }
+
+        private static WordDatabase Words()
+        {
+            var db = ScriptableObject.CreateInstance<WordDatabase>();
+            db.ReplaceWords(TestData.SampleWords());
+            return db;
+        }
+
+        // 주인공: 기본 기술 = basic (성유물 없음)
+        private static HeroData Hero(MonsterStats stats, SkillData basic) => TestData.Hero(stats).Set("basicSkill", basic);
+
+        private BattleScreen CreateScreen(HeroData hero, MonsterSpecies enemy, GameDatabase database = null, GameSession session = null)
+        {
+            var go = new GameObject("BattleScreenUnderTest");
+            var screen = go.AddComponent<BattleScreen>();
+            screen.Configure(Table(enemy), Words(), session ?? GameSession.NewGame(hero, 1), animScale: 0.01f, gameDatabase: database);
+            return screen;
+        }
+
+        [UnityTest]
+        public IEnumerator WinningABattleThroughTheUi()
+        {
+            LogAssert.ignoreFailingMessages = false;
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40);
+            var hero = Hero(new MonsterStats(100, 30, 10), strike);
+            var enemy = TestData.Species("enemy", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), strike)
+                .Set("expReward", 20).Set("goldReward", 7);
+            var screen = CreateScreen(hero, enemy);
+
+            yield return null;
+            yield return null;
+            yield return PlayUntilResult(screen, answerCorrectly: true);
+
+            Assert.IsTrue(screen.IsResultVisible, "결과 패널이 떠야 함");
+            Assert.AreEqual("승리!", screen.ResultTitle);
+            Assert.AreEqual(BattlePhase.Victory, screen.Engine.Phase);
+            Assert.Greater(screen.Engine.CorrectAnswers, 0);
+            Assert.Greater(screen.Hero.Exp + screen.Hero.Level, 1, "경험치가 지급돼야 함");
+            Assert.Greater(screen.Vocabulary.Entries.Count, 0, "맞힌 단어가 학습 기록에 남아야 함");
+
+            // 결산 (#41): 성장 · 가장 활약한 기술 · 기록 · 처음 본 단어
+            var result = AllText(screen.transform.Find("BattleCanvas/SafeArea/ResultPanel"));
+            StringAssert.Contains("물리쳤어요", result);
+            StringAssert.Contains("경험치 +", result);
+            StringAssert.Contains("가장 활약한 기술", result);
+            StringAssert.Contains("(기본 기술)", result);
+            StringAssert.Contains($"정답 {screen.Engine.Summary.Correct} / {screen.Engine.Summary.Correct + screen.Engine.Summary.Wrong}", result);
+            StringAssert.Contains($"새로 만난 단어 {screen.Engine.Summary.NewWords.Count}", result);
+            Assert.Greater(screen.Engine.Summary.NewWords.Count, 0, "첫 전투의 단어는 모두 새 단어");
+            StringAssert.Contains(screen.Engine.Summary.NewWords[0].English, result);
+            Assert.AreEqual(0, screen.FinishersPlayed, "보스전이 아니면 결정타 연출 없음");
+            var card = (RectTransform)screen.transform.Find("BattleCanvas/SafeArea/ResultPanel/Card");
+            var overlay = (RectTransform)card.parent;
+            Assert.LessOrEqual(card.rect.height * card.localScale.y, overlay.rect.height, "결산 판이 화면 안에 들어가야 함");
+
+            // 결과 버튼을 누르면 다음 전투가 시작된다
+            var next = ActiveButton(screen.transform, "ResultButton_Primary");
+            Assert.IsNotNull(next);
+            var firstEngine = screen.Engine;
+            next.onClick.Invoke();
+            for (int i = 0; i < 30 && screen.Engine == firstEngine; i++) yield return null;
+            Assert.AreNotSame(firstEngine, screen.Engine);
+            Assert.IsFalse(screen.IsResultVisible);
+
+            Object.Destroy(screen.gameObject);
+        }
+
+        // 힘 모으기 (#120 사용자): "까먹대왕이 힘을 모으고 있다" → 다음 차례 "까먹대왕의 기억상실!" (그 사이 한 차례는 피해 없음)
+        [UnityTest]
+        public IEnumerator ChargingBossAnnouncesThenStrikesNextTurn()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var hero = Hero(new MonsterStats(999, 10, 10), strike);
+            var amnesia = TestData.Skill("amnesia", SkillKind.Damage, SkillTarget.SingleEnemy, 20).Set("displayName", "기억상실").Set("chargeTurns", 1);
+            var boss = TestData.Species("boss", new MonsterStats(999, 10, 10), new MonsterStats(0, 0, 0), amnesia).Set("displayName", "까먹대왕");
+            var screen = CreateScreen(hero, boss);
+            yield return null;
+            yield return null;
+
+            var root = screen.transform;
+            int chargedAt = -1, struckAt = -1, hpWhenCharged = -1;
+            for (int frame = 0; frame < 4000 && struckAt < 0; frame++)
+            {
+                string text = AllText(root);
+                if (chargedAt < 0 && text.Contains("까먹대왕이 힘을 모으고 있다"))
+                {
+                    chargedAt = frame;
+                    hpWhenCharged = screen.Engine.Party[0].Hp;
+                }
+                if (text.Contains("까먹대왕의 기억상실!")) struckAt = frame;
+
+                var engine = screen.Engine;
+                var confirm = ActiveButton(root, "CardConfirmButton");
+                if (confirm != null) confirm.onClick.Invoke();
+                else if (engine.Phase == BattlePhase.AnsweringQuiz && engine.CurrentQuestion != null)
+                    ActiveButton(root, $"Choice_{(engine.CurrentQuestion.CorrectIndex + 1) % engine.CurrentQuestion.Choices.Count}")?.onClick.Invoke();
+                else if (engine.Phase == BattlePhase.ChoosingSkill)
+                    (ActiveButton(root, "Intensity_0") ?? ActiveButton(root, "SkillButton_0"))?.onClick.Invoke();
+                yield return null;
+            }
+
+            Assert.GreaterOrEqual(chargedAt, 0, "힘을 모으는 글이 떠야 함");
+            Assert.Greater(struckAt, chargedAt, "다음 차례에 기억상실");
+            Assert.AreEqual(999, hpWhenCharged, "힘을 모은 차례엔 피해 없음");
+            Object.Destroy(screen.gameObject);
+        }
+
+        // 실기기 점검표 (#48): 문제 도중 전화·알림·홈 화면으로 앱이 가려지면 시간이 멈춤
+        [UnityTest]
+        public IEnumerator QuizTimerStopsWhileTheAppIsHidden()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var hero = Hero(new MonsterStats(100, 30, 10), strike);
+            var enemy = TestData.Species("enemy", new MonsterStats(999, 1, 50), new MonsterStats(0, 0, 0), strike);
+            var go = new GameObject("BattleScreenUnderTest");
+            var screen = go.AddComponent<BattleScreen>();
+            screen.Configure(Table(enemy), Words(), GameSession.NewGame(hero, 1), animScale: 0.01f,
+                config: new BattleConfig(answerTimeLimitSeconds: 1f, criticalTimeSeconds: 0.3f, criticalMultiplier: 1.5f, variance: 0f,
+                    expPerCorrectAnswer: 2));
+            yield return null;
+            yield return null;
+
+            // 기술 → 강도 ×1 → 새 단어 카드 → 문제
+            var root = screen.transform;
+            yield return WaitFor(() =>
+            {
+                if (ActiveButton(root, "Choice_0") != null) return true;
+                (ActiveButton(root, "CardConfirmButton") ?? ActiveButton(root, "Intensity_0") ?? ActiveButton(root, "SkillButton_0"))?.onClick.Invoke();
+                return false;
+            }, 5f);
+            Assert.IsNotNull(ActiveButton(root, "Choice_0"));
+
+            go.SendMessage("OnApplicationPause", true);
+            yield return new WaitForSecondsRealtime(1.5f);
+            Assert.AreEqual(int.MinValue, PickedChoiceOf(screen), "앱이 가려진 동안은 1초 제한이 지나도 시간 초과가 아님");
+
+            go.SendMessage("OnApplicationPause", false);
+            yield return WaitFor(() => PickedChoiceOf(screen) != int.MinValue, 3f);
+            Assert.AreEqual(-1, PickedChoiceOf(screen), "돌아오면 다시 시간이 흘러 시간 초과");
+
+            Object.Destroy(go);
+            yield return null;
+        }
+
+        // #236 사용자 ㉑ (가): 까먹대왕과 싸울 때는 문제마다 크리티컬 시간이 지나면 정답 버튼이 사라져 무조건 틀림 (유령 웃음 + '까먹었다!').
+        // 답한 뒤엔 정답을 다시 보여 줌
+        [UnityTest]
+        public IEnumerator TheForgetBossMakesTheAnswerVanishAfterTheCriticalTime()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var hero = Hero(new MonsterStats(100, 30, 10), strike);
+            var king = TestData.Species("king", new MonsterStats(999, 1, 50), new MonsterStats(0, 0, 0), strike)
+                .Set("displayName", "까먹대왕").Set("gimmick", BossGimmick.Forget);
+            var go = new GameObject("BattleScreenUnderTest");
+            var screen = go.AddComponent<BattleScreen>();
+            screen.Configure(Table(king), Words(), GameSession.NewGame(hero, 1), animScale: 0.01f,
+                config: new BattleConfig(answerTimeLimitSeconds: 5f, criticalTimeSeconds: 0.3f, criticalMultiplier: 1.5f, variance: 0f,
+                    expPerCorrectAnswer: 2));
+            yield return null;
+            yield return null;
+            var root = screen.transform;
+            yield return WaitFor(() =>
+            {
+                if (ActiveButton(root, "Choice_0") != null || ActiveButton(root, "Choice_1") != null) return true;
+                (ActiveButton(root, "CardConfirmButton") ?? ActiveButton(root, "Intensity_0") ?? ActiveButton(root, "SkillButton_0"))?.onClick.Invoke();
+                return false;
+            }, 5f);
+            int correct = screen.Engine.CurrentQuestion.CorrectIndex;
+            Assert.IsNotNull(ActiveButton(root, $"Choice_{correct}"), "처음엔 정답 버튼이 있음");
+
+            yield return new WaitForSecondsRealtime(0.6f);
+            Assert.IsNull(ActiveButton(root, $"Choice_{correct}"), "크리티컬 시간이 지나면 정답 버튼이 사라짐");
+            Assert.AreEqual(1, screen.GimmickHits);
+            StringAssert.Contains("까먹대왕 때문에 단어를 까먹었다", AllText(root));
+            int wrong = correct == 0 ? 1 : 0;
+            ActiveButton(root, $"Choice_{wrong}").onClick.Invoke();
+            yield return null;
+            Assert.AreEqual(wrong, PickedChoiceOf(screen), "남은 건 모두 오답");
+            Assert.IsNotNull(FindButton(root, $"Choice_{correct}"));
+            Assert.IsTrue(FindButton(root, $"Choice_{correct}").gameObject.activeSelf, "답한 뒤엔 정답을 다시 보여 줌");
+            Object.Destroy(go);
+            yield return null;
+        }
+
+        // #237 사용자 ㉝: 빈칸 울음을 맞은 다음 차례엔 문제 단어 글자의 25%가 빈칸 (s_cur_ty처럼)
+        [UnityTest]
+        public IEnumerator TheFrogBlanksEveryWordAndFillsItAfterTheAnswer()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var hero = Hero(new MonsterStats(500, 30, 10), strike);
+            var croak = TestData.Skill("croak", SkillKind.Damage, SkillTarget.AllEnemies, 1).Set("displayName", "빈칸 울음")
+                .Set("shieldBonusDamage", 40);
+            var frog = TestData.Species("frog", new MonsterStats(999, 1, 50), new MonsterStats(0, 0, 0), croak)
+                .Set("displayName", "빈칸두꺼비").Set("gimmick", BossGimmick.Blank);
+            var go = new GameObject("BattleScreenUnderTest");
+            var screen = go.AddComponent<BattleScreen>();
+            screen.Configure(Table(frog), Words(), GameSession.NewGame(hero, 1), animScale: 0.01f);
+            yield return null;
+            yield return null;
+            var root = screen.transform;
+            yield return WaitFor(() =>
+            {
+                if (ActiveButton(root, "Choice_0") != null) return true;
+                (ActiveButton(root, "CardConfirmButton") ?? ActiveButton(root, "Intensity_0") ?? ActiveButton(root, "SkillButton_0"))?.onClick.Invoke();
+                return false;
+            }, 8f);
+            Assert.IsTrue(screen.Engine.WordsBlanked, "첫 차례부터 (#245)");
+            string word = screen.Engine.CurrentQuestion.Prompt;
+            Assert.IsTrue(screen.ShownPrompt.Contains("_"), $"빈칸: {screen.ShownPrompt}");
+            Assert.AreEqual(word.Length, screen.ShownPrompt.Length, "글자 수는 그대로");
+            Assert.AreEqual(word[0], screen.ShownPrompt[0], "첫 글자는 남김");
+
+            ActiveButton(root, "Choice_0").onClick.Invoke();
+            yield return null;
+            yield return null;
+            Assert.IsFalse(screen.ShownPrompt.Contains("_"), $"답하면 채워 보여 줌: {screen.ShownPrompt}");
+            StringAssert.Contains("<color=", screen.ShownPrompt, "채운 글자에 색");
+            Object.Destroy(go);
+            yield return null;
+        }
+
+        // #246 사용자: 말줄임덩굴 — 보스 차례가 지나면 양옆에 덩굴 카드 (보스는 가운데 그대로)
+        [UnityTest]
+        public IEnumerator VinesAppearOnBothSidesOfTheBoss()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var hero = Hero(new MonsterStats(5000, 30, 10), strike);
+            var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var sprout = TestData.Species("sprout", new MonsterStats(50, 1, 0), new MonsterStats(0, 0, 0), bite).Set("displayName", "덩굴");
+            var vine = TestData.Species("vine", new MonsterStats(999, 1, 50), new MonsterStats(0, 0, 0), bite)
+                .Set("displayName", "말줄임덩굴").Set("gimmick", BossGimmick.Overgrow).Set("minion", sprout).Set("minionLevel", 5);
+            var go = new GameObject("BattleScreenUnderTest");
+            var screen = go.AddComponent<BattleScreen>();
+            screen.Configure(Table(vine), Words(), GameSession.NewGame(hero, 1), animScale: 0.01f);
+            yield return null;
+            yield return null;
+            var root = screen.transform;
+            yield return WaitFor(() =>
+            {
+                if (ActiveButton(root, "Enemy_1") != null) return true;
+                (ActiveButton(root, "Choice_1") ?? ActiveButton(root, "CardConfirmButton") ?? ActiveButton(root, "Intensity_0") ?? ActiveButton(root, "SkillButton_0"))?.onClick.Invoke();
+                return false;
+            }, 10f);
+            var left = ActiveButton(root, "Enemy_1");
+            var right = ActiveButton(root, "Enemy_2");
+            Assert.IsNotNull(left, "왼쪽 덩굴");
+            Assert.IsNotNull(right, "오른쪽 덩굴");
+            Assert.AreEqual(0f, ((RectTransform)left.transform).anchorMin.x, 0.01f);
+            Assert.AreEqual(2f / 3f, ((RectTransform)right.transform).anchorMin.x, 0.01f);
+            Assert.AreEqual(1f / 3f, ((RectTransform)ActiveButton(root, "Enemy_0").transform).anchorMin.x, 0.01f, "보스는 가운데");
+            Assert.Greater(screen.GimmickHits, 0, "패배 조언에 쓰임");
+            Object.Destroy(go);
+            yield return null;
+        }
+
+        // #238 사용자 ㉑ 아이디어 1: 헷갈너구리와 싸울 땐 보기 버튼이 2초마다 자리를 섞음 (섞이기 직전에 흔들림). 누른 버튼 = 그 버튼의 보기
+        [UnityTest]
+        public IEnumerator TheMuddleRaccoonShufflesTheChoiceButtons()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var hero = Hero(new MonsterStats(100, 30, 10), strike);
+            var raccoon = TestData.Species("raccoon", new MonsterStats(999, 1, 50), new MonsterStats(0, 0, 0), strike)
+                .Set("displayName", "헷갈너구리").Set("gimmick", BossGimmick.Shuffle);
+            var go = new GameObject("BattleScreenUnderTest");
+            var screen = go.AddComponent<BattleScreen>();
+            screen.Configure(Table(raccoon), Words(), GameSession.NewGame(hero, 1), animScale: 0.01f,
+                config: new BattleConfig(answerTimeLimitSeconds: 8f, criticalTimeSeconds: 0.3f, criticalMultiplier: 1.5f, variance: 0f,
+                    expPerCorrectAnswer: 2));
+            yield return null;
+            yield return null;
+            var root = screen.transform;
+            yield return WaitFor(() =>
+            {
+                if (ActiveButton(root, "Choice_0") != null) return true;
+                (ActiveButton(root, "CardConfirmButton") ?? ActiveButton(root, "Intensity_0") ?? ActiveButton(root, "SkillButton_0"))?.onClick.Invoke();
+                return false;
+            }, 5f);
+            int correct = screen.Engine.CurrentQuestion.CorrectIndex;
+            var correctRect = (RectTransform)FindButton(root, $"Choice_{correct}").transform;
+            var before = correctRect.anchorMin;
+            var spots = new List<Vector2>();
+            for (int i = 0; i < 4; i++) spots.Add(((RectTransform)FindButton(root, $"Choice_{i}").transform).anchorMin);
+
+            yield return WaitFor(() => screen.ChoiceShuffles > 0, 4f);
+            Assert.AreEqual(1, screen.ChoiceShuffles, "2초가 지나면 섞임");
+            var after = new List<Vector2>();
+            for (int i = 0; i < 4; i++) after.Add(((RectTransform)FindButton(root, $"Choice_{i}").transform).anchorMin);
+            CollectionAssert.AreEquivalent(spots, after, "같은 네 자리를 서로 바꿈");
+            CollectionAssert.AreNotEqual(spots, after, "적어도 하나는 자리가 바뀜");
+            Assert.AreEqual(1, screen.GimmickHits);
+
+            FindButton(root, $"Choice_{correct}").onClick.Invoke(); // 옮겨 간 정답 버튼을 누르면 정답
+            yield return null;
+            yield return null;
+            Assert.AreEqual(correct, PickedChoiceOf(screen));
+            Assert.AreEqual(before, correctRect.anchorMin, "답한 뒤엔 제자리로");
+            Object.Destroy(go);
+            yield return null;
+        }
+
+        private static int PickedChoiceOf(BattleScreen battle) =>
+            (int)typeof(BattleScreen).GetField("pickedChoice", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(battle);
+
+        [UnityTest]
+        public IEnumerator LosingABattleThroughTheUi()
+        {
+            var weak = TestData.Skill("weak", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var smash = TestData.Skill("smash", SkillKind.Damage, SkillTarget.SingleEnemy, 500);
+            var hero = Hero(new MonsterStats(10, 5, 1), weak);
+            var enemy = TestData.Species("enemy", new MonsterStats(500, 50, 50), new MonsterStats(0, 0, 0), smash);
+            var screen = CreateScreen(hero, enemy);
+
+            yield return null;
+            yield return null;
+            yield return PlayUntilResult(screen, answerCorrectly: false);
+
+            Assert.IsTrue(screen.IsResultVisible);
+            Assert.AreEqual("패배…", screen.ResultTitle);
+            Assert.Greater(screen.Engine.WrongAnswers, 0);
+            var wrongWord = screen.Vocabulary.Entries[0];
+            Assert.IsTrue(wrongWord.InWrongNote, "틀린 단어는 오답 노트에 있어야 함");
+            var defeatText = AllText(screen.transform.Find("BattleCanvas/SafeArea/ResultPanel"));
+            StringAssert.Contains($"틀린 단어 {screen.Engine.Summary.WrongWords.Count} — 오답 노트에 넣었어요", defeatText);
+            StringAssert.Contains(screen.Engine.Summary.WrongWords[0].English, defeatText);
+
+            StringAssert.Contains("주인공이 쓰러졌다", AllText(screen.transform.Find("BattleCanvas/SafeArea/ResultPanel")));
+            Assert.IsNotEmpty(screen.LastDefeatAdvice, "#233 졌을 때 원인에 맞는 한 줄");
+            StringAssert.Contains(screen.LastDefeatAdvice, AllText(screen.transform.Find("BattleCanvas/SafeArea/ResultPanel")));
+
+            // 재도전하면 주인공이 회복된다
+            ActiveButton(screen.transform, "ResultButton_Primary").onClick.Invoke();
+            for (int i = 0; i < 30 && screen.IsResultVisible; i++) yield return null;
+            Assert.AreEqual(screen.Hero.Stats.MaxHp, screen.Hero.CurrentHp);
+
+            Object.Destroy(screen.gameObject);
+        }
+
+        // 실제 흐름: GameManager가 있는 상태로 전투 → 자동 저장 → 앱 재시작(GameManager 새로 생성) → 이어하기
+        [UnityTest]
+        public IEnumerator ProgressIsSavedAndRestoredAfterRestart()
+        {
+            string dir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "WordRPG_PlaySave_" + System.Guid.NewGuid().ToString("N"));
+            GameManager.SaveDirectoryOverride = dir;
+            try
+            {
+                var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40);
+                var hero = Hero(new MonsterStats(100, 30, 10), strike).Set("growthPerLevel", new MonsterStats(5, 1, 1));
+                var enemy = TestData.Species("enemy", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), strike)
+                    .Set("expReward", 20).Set("goldReward", 7);
+                var database = ScriptableObject.CreateInstance<GameDatabase>();
+                database.ReplaceContents(new[] { enemy }, new ItemData[0]);
+
+                GameManager StartManager()
+                {
+                    var managerGo = new GameObject("GameManager");
+                    managerGo.SetActive(false);
+                    managerGo.AddComponent<GameManager>().Configure(database, hero);
+                    managerGo.SetActive(true); // 여기서 Awake → 세이브 읽기
+                    return GameManager.Instance;
+                }
+
+                // 1회차: 새 게임 → 전투 승리
+                var manager = StartManager();
+                Assert.IsFalse(manager.LoadedFromSave);
+                var screenGo = new GameObject("BattleScreen");
+                var screen = screenGo.AddComponent<BattleScreen>();
+                screen.Configure(Table(enemy), Words(), animScale: 0.01f); // 세션은 GameManager 것을 사용
+                yield return null;
+                yield return null;
+                Assert.AreSame(manager.Session, screen.Session);
+
+                yield return PlayUntilResult(screen, answerCorrectly: true);
+                Assert.AreEqual("승리!", screen.ResultTitle);
+                Assert.IsTrue(System.IO.File.Exists(System.IO.Path.Combine(dir, "save.json")), "자동 저장 파일");
+
+                int discovered = manager.Session.Vocabulary.DiscoveredCount;
+                int exp = manager.Session.Hero.Exp;
+                int level = manager.Session.Hero.Level;
+                int gold = manager.Session.Inventory.Gold;
+                Assert.Greater(discovered, 0);
+                Assert.Greater(gold, 0);
+
+                // 앱 종료
+                Object.Destroy(screenGo);
+                Object.Destroy(manager.gameObject);
+                yield return null;
+                Assert.IsNull(GameManager.Instance);
+
+                // 2회차: 다시 켜면 이어하기
+                var restarted = StartManager();
+                Assert.IsTrue(restarted.LoadedFromSave);
+                StringAssert.Contains("이어하기", restarted.StatusMessage);
+                Assert.AreEqual(discovered, restarted.Session.Vocabulary.DiscoveredCount);
+                Assert.AreEqual(level, restarted.Session.Hero.Level);
+                Assert.AreEqual(exp, restarted.Session.Hero.Exp);
+                Assert.AreEqual(gold, restarted.Session.Inventory.Gold);
+                Assert.AreEqual(1, restarted.Session.Record.BattlesWon);
+
+                Object.Destroy(restarted.gameObject);
+                yield return null;
+            }
+            finally
+            {
+                GameManager.SaveDirectoryOverride = null;
+                if (System.IO.Directory.Exists(dir)) System.IO.Directory.Delete(dir, true);
+            }
+        }
+
+        // 도감 화면: 미발견은 ???, 목록 개수, 닫기. 스킬 선택 중에만 열린다
+        [UnityTest]
+        public IEnumerator DexShowsUndiscoveredWordsAsHidden()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40);
+            var hero = Hero(new MonsterStats(100, 30, 10), strike);
+            var enemy = TestData.Species("enemy", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), strike);
+            var screen = CreateScreen(hero, enemy);
+            yield return null;
+            yield return null;
+
+            var open = FindButton(screen.transform, "DexButton");
+            Assert.IsTrue(open.interactable, "스킬 선택 중에는 도감을 열 수 있다");
+            open.onClick.Invoke();
+            yield return null;
+
+            int rowCount = 0;
+            foreach (var button in screen.GetComponentsInChildren<Button>(true))
+            {
+                if (button.name.StartsWith("DexRow_")) rowCount++;
+            }
+            Assert.AreEqual(TestData.SampleWords().Count, rowCount);
+
+            var firstRow = FindButton(screen.transform, "DexRow_0");
+            StringAssert.Contains("???", AllText(firstRow));
+            firstRow.onClick.Invoke();
+            StringAssert.Contains("아직 발견하지 못한", AllText(screen.transform.Find("BattleCanvas/SafeArea/DexView")));
+
+            FindButton(screen.transform, "DexCloseButton").onClick.Invoke();
+            Assert.IsFalse(screen.transform.Find("BattleCanvas/SafeArea/DexView").gameObject.activeSelf);
+
+            // 문제를 푸는 중에는 도감 버튼이 잠긴다 (공격 기술 → 강도 ×1 → 문제)
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return null;
+            ActiveButton(screen.transform, "Intensity_0").onClick.Invoke();
+            yield return null;
+            yield return null;
+            Assert.IsFalse(FindButton(screen.transform, "DexButton").interactable);
+
+            Object.Destroy(screen.gameObject);
+        }
+
+        // 단어장을 전부 발견하면 징표와 골드가 지급되고 결과 화면에 표시, 도감에서도 완료 표시
+        [UnityTest]
+        public IEnumerator CompletingDexGivesKeepsakeAndGold()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40);
+            var hero = Hero(new MonsterStats(100, 30, 10), strike);
+            var enemy = TestData.Species("enemy", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), strike)
+                .Set("goldReward", 0);
+            var keepsake = TestData.Item("keepsake_test").Set("displayName", "시험 징표");
+            var oneWord = ScriptableObject.CreateInstance<WordDatabase>()
+                .Set("regionId", "test").Set("regionName", "시험 지역")
+                .Set("rewards", new List<DexReward> { new DexReward("test", "시험 지역", keepsake, 777) });
+            oneWord.ReplaceWords(new List<WordEntry> { new WordEntry("", "abandon", "버리다, 포기하다", "v") });
+
+            var session = GameSession.NewGame(hero, 1);
+            var go = new GameObject("DexCompletionTest");
+            var screen = go.AddComponent<BattleScreen>();
+            screen.Configure(Table(enemy), oneWord, session, animScale: 0.01f);
+            yield return null;
+            yield return null;
+            yield return PlayUntilResult(screen, answerCorrectly: true);
+
+            Assert.IsTrue(screen.IsResultVisible);
+            Assert.AreEqual(777, session.Inventory.Gold);
+            Assert.AreEqual(1, session.Inventory.GetCount(keepsake));
+            var resultText = AllText(screen.transform.Find("BattleCanvas/SafeArea/ResultPanel"));
+            StringAssert.Contains("도감 완성", resultText);
+            StringAssert.Contains("시험 징표", resultText);
+
+            // 결과 화면에서 도감을 열면 '획득 완료'
+            FindButton(screen.transform, "DexButton").onClick.Invoke();
+            yield return null;
+            StringAssert.Contains("획득 완료", AllText(screen.transform.Find("BattleCanvas/SafeArea/DexView")));
+            Assert.AreEqual(777, session.Inventory.Gold, "도감을 열어도 중복 지급 없음");
+
+            Object.Destroy(go);
+        }
+
+        // 기술 버튼 = 기본 기술 + 끼운 성유물 기술 (어느 성유물인지 표시), 맨 아래 [가방]으로 상처약 → 문제 없이 회복 + 한 턴
+        [UnityTest]
+        public IEnumerator RelicSkillsAndPotionThroughTheUi()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 10);
+            var splash = TestData.Skill("splash", SkillKind.Damage, SkillTarget.AllEnemies, 10).Set("displayName", "잉크 뿌리기");
+            var quill = TestData.Relic("relic_quill", splash, new MonsterStats(0, 2, 0)).Set("displayName", "깃펜");
+            var hero = Hero(new MonsterStats(100, 10, 10), strike);
+            var enemy = TestData.Species("enemy", new MonsterStats(500, 5, 50), new MonsterStats(0, 0, 0), strike);
+            var potion = TestData.Potion("potion", 40).Set("displayName", "상처약");
+            var database = ScriptableObject.CreateInstance<GameDatabase>();
+            database.ReplaceContents(new[] { enemy }, new[] { potion }, null, new[] { quill });
+            var session = GameSession.NewGame(hero, 1);
+            session.GrantRelic(quill);
+            session.Inventory.Add(potion, 2);
+            var screen = CreateScreen(hero, enemy, database, session);
+            yield return null;
+            yield return null;
+            yield return WaitFor(() => ActiveButton(screen.transform, "SkillButton_0") != null);
+
+            var skillText = AllText(screen.transform.Find("BattleCanvas/SafeArea/Bottom/SkillPanel"));
+            StringAssert.Contains("기본 · ", skillText);
+            StringAssert.Contains("깃펜 · ", skillText, "성유물 기술은 어느 성유물인지");
+            StringAssert.Contains("잉크 뿌리기", skillText);
+            Assert.IsFalse(FindButton(screen.transform, "ItemButton").interactable, "HP가 가득하면 상처약 잠금");
+
+            // HP를 깎고 한 턴 진행 → 다음 차례에 [가방]이 열린다 → 상처약
+            session.Hero.TakeDamage(60);
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return PlayOneTurn(screen);
+            yield return WaitFor(() => ActiveButton(screen.transform, "ItemButton") != null, 5f);
+            Assert.IsNotNull(ActiveButton(screen.transform, "ItemButton"), "다친 상태면 [가방]을 누를 수 있다");
+            int answered = screen.Engine.CorrectAnswers + screen.Engine.WrongAnswers;
+            int round = screen.Engine.Round;
+            ActiveButton(screen.transform, "ItemButton").onClick.Invoke();
+            yield return null;
+            StringAssert.Contains("상처약  × 2", AllText(screen.transform.Find("BattleCanvas/SafeArea/Bottom/SkillPanel")));
+            int hpBefore = session.Hero.CurrentHp;
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return WaitFor(() => screen.Engine.Round > round, 5f);
+
+            Assert.AreEqual(1, session.Inventory.GetCount(potion));
+            Assert.Greater(session.Hero.CurrentHp, hpBefore, "상처약 40 회복 (적 공격 몇 점보다 큼)");
+            Assert.AreEqual(answered, screen.Engine.CorrectAnswers + screen.Engine.WrongAnswers, "상처약은 문제 없이");
+
+            Object.Destroy(screen.gameObject);
+        }
+
+        [UnityTest]
+        public IEnumerator ComboTextShowsAndStreakCarriesOverUntilAMiss()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40);
+            var hero = Hero(new MonsterStats(500, 30, 10), strike);
+            var tank = TestData.Species("tank", new MonsterStats(9999, 1, 50), new MonsterStats(0, 0, 0), strike);
+            var session = GameSession.NewGame(hero, 1);
+            session.ComboStreak = 4; // 지난 전투에서 4연속 정답
+            var screen = CreateScreen(hero, tank, session: session);
+            yield return null;
+            yield return null;
+
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return PlayOneTurn(screen);
+            Assert.AreEqual(5, session.ComboStreak, "이어서 5연속");
+            Assert.AreEqual("Excellent!", screen.LastComboText);
+
+            // 이번엔 틀림 → 콤보 끊김
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            // 강도 ×1 → 새 단어 카드가 먼저 뜨면 닫고, 보기 버튼이 나타날 때까지
+            for (int frame = 0; frame < 600 && ActiveButton(screen.transform, "Choice_0") == null; frame++)
+            {
+                ActiveButton(screen.transform, "Intensity_0")?.onClick.Invoke();
+                ActiveButton(screen.transform, "CardConfirmButton")?.onClick.Invoke();
+                yield return null;
+            }
+            int wrong = (screen.Engine.CurrentQuestion.CorrectIndex + 1) % screen.Engine.CurrentQuestion.Choices.Count;
+            ActiveButton(screen.transform, $"Choice_{wrong}").onClick.Invoke();
+            yield return WaitFor(() => session.ComboStreak == 0, 5f);
+            Assert.AreEqual(0, session.ComboStreak, "틀리면 처음부터");
+
+            Object.Destroy(screen.gameObject);
+        }
+
+        // #141 적 고르기: 엄지가 위로 오가지 않게 적 카드들이 기술 버튼 자리로 내려옴 → 고르거나 취소하면 제자리로
+        [UnityTest]
+        public IEnumerator PickingAnEnemyPullsEnemiesDownToTheThumb()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40);
+            var hero = Hero(new MonsterStats(500, 30, 10), strike);
+            var tank = TestData.Species("tank", new MonsterStats(9999, 1, 50), new MonsterStats(0, 0, 0), strike);
+            var table = Table(tank);
+            Set(table, "minGroupSize", 2);
+            Set(table, "maxGroupSize", 2);
+            var screen = new GameObject("BattleScreenUnderTest").AddComponent<BattleScreen>();
+            screen.Configure(table, Words(), GameSession.NewGame(hero, 1), animScale: 0.01f);
+            yield return WaitFor(() => ActiveButton(screen.transform, "SkillButton_0") != null, 5f);
+            yield return null;
+
+            var enemy = (RectTransform)FindButton(screen.transform, "Enemy_1").transform;
+            var party = (RectTransform)screen.transform.Find("BattleCanvas/SafeArea/PartyArea");
+            float[] Span(RectTransform rect)
+            {
+                var corners = new Vector3[4];
+                rect.GetWorldCorners(corners);
+                return new[] { corners[0].y, corners[1].y };
+            }
+            float homeY = enemy.position.y, homeScale = enemy.lossyScale.y;
+            Assert.Greater(Span(enemy)[0], Span(party)[1], "평소 적은 아군 위에");
+
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return new WaitForSecondsRealtime(0.1f);
+            var cancel = (RectTransform)ActiveButton(screen.transform, "CancelButton").transform;
+            Assert.Less(Span(enemy)[1], Span(party)[0], "적 카드는 아군 아래로 내려옴");
+            Assert.GreaterOrEqual(Span(enemy)[0], Span(cancel)[1], "[취소]를 가리지 않음");
+            Assert.Less(enemy.lossyScale.y, homeScale, "기술 버튼 자리에 맞게 줄어듦");
+
+            // 내려온 자리에서 실제로 눌림: 그 위를 막는 것이 없음
+            var hits = new List<RaycastResult>();
+            var pointer = new PointerEventData(EventSystem.current) { position = RectTransformUtility.WorldToScreenPoint(null, enemy.position) };
+            EventSystem.current.RaycastAll(pointer, hits);
+            Assert.IsNotEmpty(hits);
+            Assert.AreEqual(enemy.gameObject, hits[0].gameObject, "맨 위는 적 카드");
+
+            // 취소하면 제자리로
+            cancel.GetComponent<Button>().onClick.Invoke();
+            yield return new WaitForSecondsRealtime(0.1f);
+            Assert.AreEqual(homeY, enemy.position.y, 0.5f, "취소 → 제자리");
+            Assert.AreEqual(homeScale, enemy.lossyScale.y, 0.001f);
+
+            // 적을 고르면 제자리로 돌아가고 같은 자리에 강도 고르기
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return new WaitForSecondsRealtime(0.1f);
+            Assert.Less(Span(enemy)[1], Span(party)[0]);
+            enemy.GetComponent<Button>().onClick.Invoke();
+            yield return new WaitForSecondsRealtime(0.1f);
+            Assert.IsNotNull(ActiveButton(screen.transform, "Intensity_0"), "다음은 강도");
+            Assert.AreEqual(homeY, enemy.position.y, 0.5f, "고른 뒤 제자리");
+            Object.Destroy(screen.gameObject);
+        }
+
+        // 설정에서 강도를 정해 두면 묻지 않고 그 강도로 공격 (#147 사용자)
+        [UnityTest]
+        public IEnumerator FixedIntensitySkipsTheIntensityMenu()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40).Set("displayName", "찌르기");
+            var hero = Hero(new MonsterStats(500, 30, 10), strike);
+            var tank = TestData.Species("tank", new MonsterStats(9999, 1, 50), new MonsterStats(0, 0, 0), strike);
+            var go = new GameObject("FixedIntensityTest");
+            var screen = go.AddComponent<BattleScreen>();
+            screen.Configure(Table(tank), Words(), GameSession.NewGame(hero, 1), animScale: 0.01f, gameSettings: new GameSettings { BattleIntensity = 3 });
+            yield return null;
+            yield return null;
+
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return null;
+            Assert.IsNull(ActiveButton(screen.transform, "Intensity_0"), "강도를 묻지 않음");
+            for (int frame = 0; frame < 600 && ActiveButton(screen.transform, "Choice_0") == null; frame++)
+            {
+                ActiveButton(screen.transform, "CardConfirmButton")?.onClick.Invoke();
+                yield return null;
+            }
+            var quizText = AllText(screen.transform.Find("BattleCanvas/SafeArea/Bottom/QuizPanel"));
+            StringAssert.Contains("×1.5", quizText, "설정한 강도");
+            StringAssert.Contains("0/3", quizText, "단어 3개 연속");
+            Object.Destroy(go);
+        }
+
+        [UnityTest]
+        public IEnumerator ChargedAttackAsksTwoWordsAndShowsProgress()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40).Set("displayName", "찌르기");
+            var hero = Hero(new MonsterStats(500, 30, 10), strike);
+            var tank = TestData.Species("tank", new MonsterStats(9999, 1, 50), new MonsterStats(0, 0, 0), strike);
+            var session = GameSession.NewGame(hero, 1);
+            var screen = CreateScreen(hero, tank, session: session);
+            yield return null;
+            yield return null;
+
+            // 공격 기술을 누르면 강도 고르기 (×1 ~ ×2, 예상 피해)
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return null;
+            var panelText = AllText(screen.transform.Find("BattleCanvas/SafeArea/Bottom/SkillPanel"));
+            StringAssert.Contains("강도를 고르세요", panelText);
+            StringAssert.Contains("단어 2개 연속", panelText);
+            StringAssert.Contains("×2", panelText);
+            StringAssert.Contains("예상 피해", panelText);
+            Assert.IsNull(ActiveButton(screen.transform, "SkillButton_0"), "강도 고르는 동안 기술 버튼은 숨김");
+
+            // 취소하면 기술 목록으로
+            ActiveButton(screen.transform, "CancelButton").onClick.Invoke();
+            yield return null;
+            Assert.IsNotNull(ActiveButton(screen.transform, "SkillButton_0"));
+
+            // 안드로이드 뒤로가기도 [취소]와 같음 (기술 목록에서는 아무 일도 없음 — 전투에서 도망치기는 없다)
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return null;
+            screen.HandleBack();
+            yield return null;
+            Assert.IsNotNull(ActiveButton(screen.transform, "SkillButton_0"), "뒤로가기 → 기술 목록");
+            screen.HandleBack();
+            Assert.IsNotNull(ActiveButton(screen.transform, "SkillButton_0"));
+
+            // ×1.2 = 단어 2개 연속
+            ActiveButton(screen.transform, "SkillButton_0").onClick.Invoke();
+            yield return null;
+            ActiveButton(screen.transform, "Intensity_1").onClick.Invoke();
+            int enemyHp = screen.Engine.Enemies[0].Hp;
+            for (int word = 0; word < 2; word++)
+            {
+                for (int frame = 0; frame < 600 && ActiveButton(screen.transform, "Choice_0") == null; frame++)
+                {
+                    ActiveButton(screen.transform, "CardConfirmButton")?.onClick.Invoke();
+                    yield return null;
+                }
+                var quizText = AllText(screen.transform.Find("BattleCanvas/SafeArea/Bottom/QuizPanel"));
+                StringAssert.Contains("×1.2", quizText, "진행 배지");
+                StringAssert.Contains($"{word}/2", quizText);
+                Assert.AreEqual(enemyHp, screen.Engine.Enemies[0].Hp, "다 맞히기 전엔 공격 안 함");
+                ActiveButton(screen.transform, $"Choice_{screen.Engine.CurrentQuestion.CorrectIndex}").onClick.Invoke();
+                yield return WaitFor(() => ActiveButton(screen.transform, "Choice_0") == null, 5f);
+            }
+            yield return WaitFor(() => ActiveButton(screen.transform, "SkillButton_0") != null, 10f);
+
+            Assert.AreEqual(2, screen.Engine.CorrectAnswers, "단어 2개");
+            Assert.AreEqual(2, session.ComboStreak, "맞힌 단어마다 콤보");
+            Assert.Less(screen.Engine.Enemies[0].Hp, enemyHp, "다 맞히면 공격");
+            StringAssert.Contains("×1.2", AllText(screen), "기록에 강도");
+
+            Object.Destroy(screen.gameObject);
+        }
+
+        // 기술을 고른 뒤: (강도 ×1 →) 새 단어 카드 확인 → 정답 → 연출이 끝나 다시 기술 고르기가 될 때까지
+        private static IEnumerator PlayOneTurn(BattleScreen screen)
+        {
+            for (int frame = 0; frame < 600; frame++)
+            {
+                ActiveButton(screen.transform, "Intensity_0")?.onClick.Invoke();
+                var confirm = ActiveButton(screen.transform, "CardConfirmButton");
+                if (confirm != null) confirm.onClick.Invoke();
+                var engine = screen.Engine;
+                if (engine.Phase == BattlePhase.AnsweringQuiz && engine.CurrentQuestion != null)
+                    ActiveButton(screen.transform, $"Choice_{engine.CurrentQuestion.CorrectIndex}")?.onClick.Invoke();
+                else if (engine.Phase == BattlePhase.ChoosingSkill && frame > 2 && ActiveButton(screen.transform, "SkillButton_0") != null)
+                    yield break;
+                yield return null;
+            }
+        }
+    }
+}

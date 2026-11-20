@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e346695651bea4b81094cc485af4d8, type: 3}
+  m_Name: npc_pilgrim
+  m_EditorClassIdentifier: WordRPG::WordRPG.Field.NpcData
+  npcId: npc_pilgrim
+  displayName: "\uC21C\uB840\uC790"
+  frameWidth: 0
+  stages:
+  - bossOf: {fileID: 0}
+    wordsNeeded: 0
+    line: "\uAC15\uC744 ___ \uAC74\uB108\uBA74 ___\uC5D0 ___\uAC00 \uC788\uC5B4."
+    motion: 4
+    pace: 1
+  - bossOf: {fileID: 0}
+    wordsNeeded: 60
+    line: "\uAC15\uC744 \uB5CF\uBAA9\uC73C\uB85C \uAC74\uB108\uBA74 \uB3D9\uCABD
+      \uAE30\uC2AD\uC5D0 \uC5F4\uC1E0\uAC00 \uC788\uC5B4."
+    motion: 1
+    pace: 0.65
+  springLeapAfter: {fileID: 0}
+  springLeapLines: []
+  entryLines:
+  - "\uC232\uC744 \uC9C0\uB098\uC628 \uAC74\uAC00? \uADF8\uB7F0 \uAC74\uAC00? \uC624\uB79C\uB9CC\uC5D0
+    \uC0AC\uB78C\uC744 \uB9CC\uB098\uB2C8 \uBC18\uAC11\uB124"
+  - "\uC774 \uC815\uAE00\uC740 ___\uC815\uAE00\uC774\uC57C \uC544\uC774\uACE0 \uC774\uB7F0."
+  - "\uD558\uC580 ___\uAC00 \uC9C0\uB098\uAC04 \uC774\uD6C4\uB85C ___\uB450\uAEBC\uBE44\uAC00
+    \uD3ED\uC8FC___ \uB0B4 \uB9D0\uC5D0\uB3C4 \uC790\uAFB8 ___\uC774 \uC0DD\uACA8."
+  - "___\uC758 \uD560\uBA38\uB2C8? \uB098\uB3C4 \uBAB0\uB77C ___ \uC5C6\uB294\uB370"
+  - "\uB450\uAEBC\uBE44\uB294 \uBD81\uCABD ___\uC5D0 \uC228\uC5B4 \uC788\uC5B4. \uADF8
+    \uBB38\uC744 \uC5F4 \uC5F4\uC1E0\uB294\u2026 \uAC15 ___ \uC5B4\uB518\uAC00\uC5D0."
+  - "\uB2E8_\uB97C \uB9CE\uC774 __\uC218\uB85D \uB0B4 \uB9D0\uC758 \uBE48\uCE78\uB3C4
+    \uCC44\uC6CC\uC9C8 \uAC70\uC57C. \uBD80\uD0C1\uD558\uB124! ____\uB97C \uBB3C\uB9AC\uCCD0\uC918"
+  - "\uC544 ___ \uC774 ___\uC5D0\uB294 \uC720\uC801\uC774 \uC788\uC5B4 \uC790\uB124\uB77C\uBA74
+    __\uC758 \uC218\uC218\uAED8\uB07C\uB97C ___\uC218\uB3C4 \uC788\uACA0\uB124"
+  bossThanksLines: []
+  exitCallLines: []
+  exitStoryLines: []
+  giftItem: {fileID: 0}
+  giftCount: 1
+  giftBeforeBossOf: {fileID: 0}
+  giftLines: []

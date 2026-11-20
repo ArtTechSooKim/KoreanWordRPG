@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e346695651bea4b81094cc485af4d8, type: 3}
+  m_Name: npc_child
+  m_EditorClassIdentifier: WordRPG::WordRPG.Field.NpcData
+  npcId: npc_child
+  displayName: "\uC544\uC774"
+  frameWidth: 0
+  stages:
+  - bossOf: {fileID: 0}
+    wordsNeeded: 0
+    line: "\uB545\uC5D0 \uB0B4 \uC774\uB984\uC744 \uC4F0\uB294 \uC911\uC774\uC5D0\uC694.
+      \uCCAB \uAE00\uC790\uAC00\u2026 \uC74C\u2026"
+    motion: 4
+    pace: 1
+  - bossOf: {fileID: 0}
+    wordsNeeded: 25
+    line: "\uCCAB \uAE00\uC790\uAC00 \uC0DD\uAC01\uB0AC\uC5B4\uC694! \uADF8\uB2E4\uC74C\uC740\u2026"
+    motion: 4
+    pace: 1
+  - bossOf: {fileID: 0}
+    wordsNeeded: 50
+    line: "\uC81C \uC774\uB984 \uB450 \uAE00\uC790\uAC00 \uC0DD\uAC01\uB0AC\uC5B4\uC694.
+      \uB9C8\uC9C0\uB9C9 \uD558\uB098\uAC00 \uBB50\uC600\uB354\uB77C\u2026"
+    motion: 4
+    pace: 1
+  - bossOf: {fileID: 0}
+    wordsNeeded: 75
+    line: "\uC774\uC81C \uC138 \uAE00\uC790 \uB2E4 \uC37C\uC5B4\uC694!"
+    motion: 3
+    pace: 1.6
+  springLeapAfter: {fileID: 0}
+  springLeapLines: []
+  entryLines: []
+  bossThanksLines: []
+  exitCallLines: []
+  exitStoryLines: []
+  giftItem: {fileID: 0}
+  giftCount: 1
+  giftBeforeBossOf: {fileID: 0}
+  giftLines: []

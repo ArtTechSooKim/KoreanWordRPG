@@ -1,0 +1,557 @@
+using System;
+using System.Collections.Generic;
+using WordRPG.Items;
+using WordRPG.Monsters;
+using WordRPG.Words;
+
+namespace WordRPG.Battle
+{
+    public enum BattlePhase
+    {
+        ChoosingSkill, // CurrentActor의 스킬/대상 선택 대기
+        AnsweringQuiz, // CurrentQuestion 답 대기
+        Victory,
+        Defeat,
+        Fled           // 도망침 (#53) — 보상 없음
+    }
+
+    // 턴제 전투 진행. 한 라운드 = 아군(지금은 주인공 혼자)이 [기술 선택 → 단어 문제 → 결과] 후 적 전원 행동.
+    //  정답: 기술 발동 (빨리 맞히면 크리티컬)
+    //  오답/시간 초과: 기술 실패, 단어는 오답 노트로
+    //  기술 대신 상처약을 쓰면 문제 없이 회복하고 차례를 넘긴다
+    //  연속으로 맞히면 콤보 (Combo): 단계마다 아군 기술 피해가 조금씩 늘고, 틀리면 0으로
+    //  기술 대신 도망칠 수 있다 (#53): 끝나면 보상은 없음. 보스전(canFlee = false)에서는 막힘.
+    //    몬스터 등급(#84): 약함 = 바로 / 보통 = 1/4 확률로 단어 문제 / 강함 = 늘 단어 문제 — 맞히면 도망, 틀리면 차례를 놓침
+    //  공격 기술은 강도를 고를 수 있다 (사용자 아이디어): 단어 n개를 연속으로 맞혀야 발동하고 피해 ×1.2·×1.5·×2.
+    //    하나라도 틀리면 이번 턴 공격 실패. 맞힌 단어는 하나하나 콤보에 더해지고, 크리티컬은 모두 빨리 맞혔을 때만
+    // MonoBehaviour·UI 의존 없음. UI는 SelectSkill/SubmitAnswer를 호출하고 돌려받은 BattleEvent 목록을 연출한다
+    public class BattleEngine
+    {
+        private readonly List<BattleUnit> party = new List<BattleUnit>();
+        private readonly List<BattleUnit> enemies = new List<BattleUnit>();
+        private const int MinionSlots = 2; // 보스 양옆 (#246)
+        private readonly List<MasteryChange> masteryChanges = new List<MasteryChange>();
+        private readonly Dictionary<BattleUnit, int> enemyHeals = new Dictionary<BattleUnit, int>(); // 적마다 이번 전투에서 회복한 횟수 (#88)
+        private readonly Dictionary<BattleUnit, (SkillData skill, int turnsLeft)> charging =
+            new Dictionary<BattleUnit, (SkillData, int)>(); // 힘을 모으는 적 → 모으는 기술 · 남은 차례 (#120)
+        private readonly IQuizProvider quiz;
+        private readonly BattleConfig config;
+        private readonly Random rng;
+
+        private SkillData pendingSkill;
+        private BattleUnit pendingTarget;
+        private bool chainAllFast;
+
+        public IReadOnlyList<BattleUnit> Party => party;
+        public IReadOnlyList<BattleUnit> Enemies => enemies;
+        public BattlePhase Phase { get; private set; }
+        public int Round { get; private set; } = 1;
+        public BattleUnit CurrentActor { get; private set; }
+        public QuizQuestion CurrentQuestion { get; private set; }
+        public SkillData PendingSkill => pendingSkill;
+        public BattleConfig Config => config;
+        public int CorrectAnswers { get; private set; }
+        public int WrongAnswers { get; private set; }
+        public int Streak { get; private set; } // 지금까지 연속으로 맞힌 수 (이전 전투에서 이어받을 수 있음)
+        public int Intensity { get; private set; } = 1; // 이번 기술에서 연속으로 맞혀야 할 단어 수
+        public int ChainCorrect { get; private set; }    // 그중 지금까지 맞힌 수
+        public bool CanStillCrit => chainAllFast;        // 지금까지 모두 빨리 맞혀서 크리티컬이 아직 가능한지
+        public IReadOnlyList<MasteryChange> MasteryChanges => masteryChanges;
+        public BattleSummary Summary { get; } = new BattleSummary(); // 결산 화면용 (#41)
+        public bool IsOver => Phase == BattlePhase.Victory || Phase == BattlePhase.Defeat || Phase == BattlePhase.Fled;
+        public bool CanFlee { get; }
+        public bool IsFleeQuiz { get; private set; } // 지금 문제가 도망 문제인지 (#84)
+        // 몰래 다니던 중 부딪힌 전투 (살금살금 물약이 남아 있음): 몬스터 등급과 상관없이 바로 도망 (#232 사용자 — 물약의 취지).
+        // 보스전(CanFlee = false)은 그대로 막힘
+        public bool SureEscape { get; set; }
+        // 빈칸두꺼비와 싸우는 동안 늘 (#237 → #245 사용자: 빈칸 울음 뒤만이 아니라 다른 보스 기믹처럼): 문제 단어 글자의 25%가 빈칸 — UI가 WordBlanks로 가림
+        public bool WordsBlanked
+        {
+            get
+            {
+                foreach (var enemy in enemies)
+                    if (!enemy.IsDefeated && enemy.Monster != null && enemy.Monster.Species.Gimmick == BossGimmick.Blank) return true;
+                return false;
+            }
+        }
+
+        // 도망 등급 = 살아 있는 적 중 가장 강한 등급
+        public FleeTier EscapeTier
+        {
+            get
+            {
+                var tier = FleeTier.Weak;
+                foreach (var enemy in enemies)
+                    if (!enemy.IsDefeated && enemy.Monster != null && enemy.Monster.Species.FleeTier > tier) tier = enemy.Monster.Species.FleeTier;
+                return tier;
+            }
+        }
+
+        // startStreak: 이전 전투에서 이어지는 연속 정답 수, canFlee: 도망칠 수 있는 전투인지 (보스전은 false)
+        public BattleEngine(IReadOnlyList<ICombatant> partyMembers, IReadOnlyList<MonsterInstance> enemyMonsters,
+            IQuizProvider quiz, BattleConfig config, Random rng, int startStreak = 0, bool canFlee = true)
+        {
+            this.quiz = quiz ?? throw new ArgumentNullException(nameof(quiz));
+            this.config = config ?? new BattleConfig();
+            this.rng = rng ?? new Random();
+            Streak = Math.Max(0, startStreak);
+            CanFlee = canFlee;
+
+            for (int i = 0; i < partyMembers.Count; i++) party.Add(new BattleUnit(partyMembers[i], true, i));
+            for (int i = 0; i < enemyMonsters.Count; i++) enemies.Add(new BattleUnit(enemyMonsters[i], false, i));
+
+            if (FirstAlive(party) == null) throw new ArgumentException("싸울 수 있는 아군이 없습니다", nameof(partyMembers));
+            if (FirstAlive(enemies) == null) throw new ArgumentException("적이 없습니다", nameof(enemyMonsters));
+
+            CurrentActor = FirstAlive(party);
+            Phase = BattlePhase.ChoosingSkill;
+        }
+
+        // 강도를 고를 수 있는 기술인지: 아군의 공격 기술만
+        public static bool CanChooseIntensity(SkillData skill) => skill != null && skill.Kind == SkillKind.Damage;
+
+        // 단일 대상 스킬이면 target 필수. intensity = 연속으로 맞혀야 할 단어 수 (공격 기술만 2 이상).
+        // 반환된 문제를 UI에 보여준다
+        public QuizQuestion SelectSkill(SkillData skill, BattleUnit target = null, int intensity = 1)
+        {
+            RequirePhase(BattlePhase.ChoosingSkill);
+            if (skill == null || !Contains(CurrentActor.Skills, skill))
+                throw new ArgumentException($"{CurrentActor.DisplayName}의 스킬이 아닙니다", nameof(skill));
+            if (skill.NeedsTargetChoice) ValidateTarget(skill, target);
+            if (intensity < 1 || intensity > config.MaxIntensity)
+                throw new ArgumentOutOfRangeException(nameof(intensity), $"강도는 1~{config.MaxIntensity}");
+            if (intensity > 1 && !CanChooseIntensity(skill))
+                throw new ArgumentException("강도는 공격 기술만 고를 수 있습니다", nameof(intensity));
+
+            pendingSkill = skill;
+            pendingTarget = target;
+            Intensity = intensity;
+            ChainCorrect = 0;
+            chainAllFast = true;
+            CurrentQuestion = quiz.NextQuestion(skill.QuizDirection);
+            Phase = BattlePhase.AnsweringQuiz;
+            return CurrentQuestion;
+        }
+
+        // 강도 고르기 화면의 예상 피해 (랜덤·크리티컬 빼고, 다 맞혔을 때 쌓일 콤보까지 넣어서)
+        public int EstimateDamage(SkillData skill, BattleUnit target, int intensity)
+        {
+            if (skill == null || target == null) return 0;
+            float bonus = Combo.DamageBonus(Streak + intensity, config.ComboBonusPerStep);
+            return BattleFormulas.ExpectedDamage(skill.Power, CurrentActor.Attack, target.Defense, bonus,
+                config.IntensityMultiplier(intensity));
+        }
+
+        // choiceIndex < 0 이면 시간 초과로 처리
+        public IReadOnlyList<BattleEvent> SubmitAnswer(int choiceIndex, float secondsTaken)
+        {
+            RequirePhase(BattlePhase.AnsweringQuiz);
+            var events = new List<BattleEvent>();
+
+            bool correct = choiceIndex >= 0
+                           && secondsTaken <= config.AnswerTimeLimitSeconds
+                           && CurrentQuestion.IsCorrect(choiceIndex);
+
+            var mastery = quiz.SubmitAnswer(CurrentQuestion, correct);
+            masteryChanges.Add(mastery);
+            Summary.RecordAnswer(CurrentQuestion.Word, CurrentQuestion.IsNewWord, correct);
+            if (IsFleeQuiz) return AnswerFleeQuiz(correct, mastery, events);
+            if (correct)
+            {
+                CorrectAnswers++;
+                Streak++;
+                ChainCorrect++;
+                chainAllFast &= secondsTaken <= config.CriticalTimeSeconds;
+            }
+            else
+            {
+                WrongAnswers++;
+                Streak = 0;
+            }
+            events.Add(BattleEvent.QuizAnswered(CurrentActor, correct, mastery));
+
+            // 강도를 올렸으면 남은 단어를 계속 낸다 (차례는 그대로)
+            if (correct && ChainCorrect < Intensity)
+            {
+                CurrentQuestion = quiz.NextQuestion(pendingSkill.QuizDirection);
+                Summary.Record(events);
+                return events;
+            }
+
+            if (correct)
+            {
+                if (Combo.Step(Streak) > 0) events.Add(BattleEvent.Combo(CurrentActor, Streak));
+                ExecuteSkill(CurrentActor, pendingSkill, pendingTarget, chainAllFast, events,
+                    Combo.DamageBonus(Streak, config.ComboBonusPerStep), config.IntensityMultiplier(Intensity));
+            }
+            else
+            {
+                events.Add(BattleEvent.SkillFailed(CurrentActor, pendingSkill));
+            }
+
+            pendingSkill = null;
+            pendingTarget = null;
+            CurrentQuestion = null;
+            Intensity = 1;
+            ChainCorrect = 0;
+
+            if (!CheckBattleEnd(events)) AdvanceTurn(events);
+            Summary.Record(events);
+            return events;
+        }
+
+        // 기술 대신 회복 아이템(상처약)을 쓴다: 문제 없이 지금 차례인 아군을 회복하고 차례를 넘긴다
+        public IReadOnlyList<BattleEvent> UseItem(ItemData item, Inventory inventory)
+        {
+            RequirePhase(BattlePhase.ChoosingSkill);
+            if (item == null || !item.IsHealingItem) throw new ArgumentException("전투에서 쓸 수 있는 회복 아이템이 아닙니다", nameof(item));
+            if (inventory == null) throw new ArgumentNullException(nameof(inventory));
+            if (!inventory.TryRemove(item)) throw new InvalidOperationException($"{item.DisplayName}이(가) 없습니다");
+
+            var events = new List<BattleEvent>();
+            int healed = CurrentActor.ReceiveHeal(item.HealAmount);
+            events.Add(BattleEvent.ItemUsed(CurrentActor, item, healed));
+            if (!CheckBattleEnd(events)) AdvanceTurn(events);
+            Summary.Record(events);
+            return events;
+        }
+
+        // 기술 대신 도망친다 (#53): 전투가 끝나고(Fled) 보상은 없다. 그때까지 쓴 상처약·받은 피해·푼 단어 기록은 그대로.
+        // 도망칠 수 없는 전투(보스)면 FleeBlocked만 돌려주고 차례는 그대로.
+        // 몬스터 등급(#84): 강한 몬스터가 있거나 보통 몬스터에서 1/4이 걸리면 FleeQuiz → 단어 문제(AnsweringQuiz) — SubmitAnswer로 답한다
+        public IReadOnlyList<BattleEvent> Flee()
+        {
+            RequirePhase(BattlePhase.ChoosingSkill);
+            var events = new List<BattleEvent>();
+            if (!CanFlee)
+            {
+                events.Add(BattleEvent.FleeBlocked(CurrentActor));
+                return events;
+            }
+            var tier = EscapeTier;
+            bool quizNeeded = !SureEscape && (tier == FleeTier.Strong || (tier == FleeTier.Normal && rng.NextDouble() < config.NormalFleeQuizChance));
+            if (quizNeeded)
+            {
+                IsFleeQuiz = true;
+                CurrentQuestion = quiz.NextQuestion(QuizDirection.EnglishToMeaning);
+                Phase = BattlePhase.AnsweringQuiz;
+                events.Add(BattleEvent.FleeQuiz(CurrentActor, StrongestEnemy()));
+                Summary.Record(events);
+                return events;
+            }
+            Phase = BattlePhase.Fled;
+            events.Add(BattleEvent.Fled(CurrentActor));
+            Summary.Record(events);
+            return events;
+        }
+
+        // 도망 문제의 답: 맞히면 도망(Fled), 틀리면 차례를 놓침(FleeFailed → 다음 아군이나 적 차례). 콤보·정답 수는 보통 문제와 같이 센다
+        private IReadOnlyList<BattleEvent> AnswerFleeQuiz(bool correct, MasteryChange mastery, List<BattleEvent> events)
+        {
+            if (correct)
+            {
+                CorrectAnswers++;
+                Streak++;
+            }
+            else
+            {
+                WrongAnswers++;
+                Streak = 0;
+            }
+            events.Add(BattleEvent.QuizAnswered(CurrentActor, correct, mastery));
+            IsFleeQuiz = false;
+            CurrentQuestion = null;
+            if (correct)
+            {
+                Phase = BattlePhase.Fled;
+                events.Add(BattleEvent.Fled(CurrentActor));
+            }
+            else
+            {
+                events.Add(BattleEvent.FleeFailed(CurrentActor));
+                if (!CheckBattleEnd(events)) AdvanceTurn(events);
+            }
+            Summary.Record(events);
+            return events;
+        }
+
+        private BattleUnit StrongestEnemy()
+        {
+            BattleUnit best = null;
+            foreach (var enemy in enemies)
+            {
+                if (enemy.IsDefeated || enemy.Monster == null) continue;
+                if (best == null || enemy.Monster.Species.FleeTier > best.Monster.Species.FleeTier) best = enemy;
+            }
+            return best;
+        }
+
+        public BattleReward CalculateReward()
+        {
+            if (Phase != BattlePhase.Victory) throw new InvalidOperationException("승리했을 때만 보상이 있습니다");
+            var defeated = new List<MonsterInstance>();
+            foreach (var enemy in enemies)
+                if (!enemy.IsSummoned) defeated.Add(enemy.Monster); // 자라난 덩굴은 보상 없음 — 다시 자라므로 벌이가 되지 않게 (#246)
+            return BattleRewardCalculator.Calculate(defeated, CorrectAnswers, config, rng, party[0].Level);
+        }
+
+        private void AdvanceTurn(List<BattleEvent> events)
+        {
+            var next = NextAlivePartyMember(CurrentActor.Index);
+            if (next != null)
+            {
+                CurrentActor = next;
+                Phase = BattlePhase.ChoosingSkill;
+                return;
+            }
+
+            RunEnemyPhase(events);
+            if (CheckBattleEnd(events)) return;
+
+            // 아군 보호막은 다 깎일 때까지 그 전투 내내 남는다 (#120 사용자: 한 번 쓰고 사라지면 쓸 이유가 적음 — 큰 한 방에 대비해 미리 쳐 둠)
+            Round++;
+            events.Add(BattleEvent.RoundStarted(Round));
+            CurrentActor = FirstAlive(party);
+            Phase = BattlePhase.ChoosingSkill;
+        }
+
+        private void RunEnemyPhase(List<BattleEvent> events)
+        {
+            foreach (var enemy in enemies) enemy.ClearShield();
+
+            var acting = new List<BattleUnit>(enemies); // 이번에 자란 덩굴은 다음 차례부터
+            GrowMinions(events);
+            foreach (var enemy in acting)
+            {
+                if (enemy.IsDefeated || enemy.Skills.Count == 0) continue;
+                if (FirstAlive(party) == null) return;
+
+                // 힘을 모으던 기술 (#120): 다 모았으면 이번 차례에 발동 (대상은 지금 고름)
+                if (charging.TryGetValue(enemy, out var held))
+                {
+                    if (held.turnsLeft > 1)
+                    {
+                        charging[enemy] = (held.skill, held.turnsLeft - 1);
+                        events.Add(BattleEvent.Charging(enemy, held.skill));
+                        continue;
+                    }
+                    charging.Remove(enemy);
+                    ExecuteSkill(enemy, held.skill, ChooseEnemyTarget(enemy, held.skill), false, events);
+                    continue;
+                }
+
+                var skill = ChooseEnemySkill(enemy);
+                if (skill.ChargeTurns > 0)
+                {
+                    charging[enemy] = (skill, skill.ChargeTurns);
+                    events.Add(BattleEvent.Charging(enemy, skill));
+                    continue;
+                }
+                if (skill.Kind == SkillKind.Heal) enemyHeals[enemy] = HealsUsed(enemy) + 1;
+                ExecuteSkill(enemy, skill, ChooseEnemyTarget(enemy, skill), false, events);
+            }
+        }
+
+        // 말줄임덩굴 (#246 사용자): 매 차례 덩굴이 하나도 없으면 양옆(1번·2번 자리)에 덩굴이 자람. 보스는 그 차례에도 그대로 행동
+        private void GrowMinions(List<BattleEvent> events)
+        {
+            BattleUnit grower = null;
+            foreach (var enemy in enemies)
+            {
+                if (enemy.IsDefeated) continue;
+                if (enemy.IsSummoned) return; // 덩굴이 남아 있음
+                if (enemy.Monster != null && enemy.Monster.Species.Gimmick == BossGimmick.Overgrow && enemy.Monster.Species.Minion != null) grower = enemy;
+            }
+            if (grower == null) return;
+            var species = grower.Monster.Species;
+            var grown = new List<BattleUnit>();
+            for (int slot = 1; slot <= MinionSlots; slot++)
+            {
+                var unit = new BattleUnit(new MonsterInstance(species.Minion, species.MinionLevel), false, slot, summoned: true);
+                enemies.Add(unit); // 쓰러진 덩굴은 목록에 남아도 됨 (쓰러진 칸은 아무도 고르지 않음)
+                grown.Add(unit);
+            }
+            events.Add(BattleEvent.MinionsGrown(grower, grown));
+        }
+
+        // 부른 보스가 쓰러지면 덩굴도 시듦 (#246) — 남은 덩굴을 때리지 않아도 이김
+        private void WitherMinions(List<BattleEvent> events)
+        {
+            foreach (var enemy in enemies)
+                if (!enemy.IsSummoned && !enemy.IsDefeated) return;
+            foreach (var enemy in enemies)
+            {
+                if (!enemy.IsSummoned || enemy.IsDefeated) continue;
+                enemy.ReceiveDamage(enemy.Hp + enemy.Shield, out _, out _);
+                events.Add(BattleEvent.Defeated(enemy));
+            }
+        }
+
+        // 적의 기술 고르기 (#88): 회복 기술은 HP가 절반 아래일 때만, 한 전투에 enemyHealLimit번까지 — 나머지 중에서 무작위
+        private SkillData ChooseEnemySkill(BattleUnit enemy)
+        {
+            bool canHeal = enemy.Hp < enemy.MaxHp * config.EnemyHealBelow && HealsUsed(enemy) < config.EnemyHealLimit;
+            var choices = new List<SkillData>();
+            foreach (var skill in enemy.Skills)
+                if (skill.Kind != SkillKind.Heal || canHeal) choices.Add(skill);
+            if (choices.Count == 0) choices.AddRange(enemy.Skills); // 회복 기술뿐인 적
+            return choices[rng.Next(choices.Count)];
+        }
+
+        // 힘을 모으고 있는 적인지 (#120) — 다음 차례에 큰 기술이 나감
+        public bool IsCharging(BattleUnit enemy) => enemy != null && charging.ContainsKey(enemy);
+
+        private int HealsUsed(BattleUnit enemy) => enemyHeals.TryGetValue(enemy, out int used) ? used : 0;
+
+        private BattleUnit ChooseEnemyTarget(BattleUnit enemy, SkillData skill)
+        {
+            switch (skill.Target)
+            {
+                case SkillTarget.SingleEnemy:
+                    var alive = AliveUnits(party);
+                    return alive[rng.Next(alive.Count)];
+                case SkillTarget.SingleAlly:
+                    // 체력 비율이 가장 낮은 아군(적 편)을 돌본다
+                    BattleUnit weakest = null;
+                    foreach (var unit in AliveUnits(enemies))
+                    {
+                        if (weakest == null || (double)unit.Hp / unit.MaxHp < (double)weakest.Hp / weakest.MaxHp)
+                            weakest = unit;
+                    }
+                    return weakest;
+                default:
+                    return null;
+            }
+        }
+
+        // comboBonus: 연속 정답 콤보 추가 피해, intensity: 강도 배율 (아군이 문제를 맞혔을 때만, 공격 기술에만)
+        private void ExecuteSkill(BattleUnit user, SkillData skill, BattleUnit chosenTarget, bool critical,
+            List<BattleEvent> events, float comboBonus = 0f, float intensity = 1f)
+        {
+            events.Add(BattleEvent.SkillUsed(user, skill, intensity));
+
+            foreach (var target in ResolveTargets(user, skill, chosenTarget))
+            {
+                if (skill.ShattersShields && target.Shield > 0)
+                {
+                    int broken = target.Shield;
+                    target.ClearShield();
+                    events.Add(BattleEvent.ShieldShattered(user, target, skill, broken));
+                }
+                switch (skill.Kind)
+                {
+                    case SkillKind.Damage:
+                        int damage = BattleFormulas.Damage(skill.Power, user.Attack, target.Defense, critical, config, rng, comboBonus, intensity);
+                        // 보호막 추가 피해 (#239 사용자): 보호막이 있는 대상은 더 아픔 — 보호막은 깨지지 않고 그대로 먼저 막음
+                        int shieldBonus = skill.ShieldBonusDamage > 0 && target.Shield > 0 ? skill.ShieldBonusDamage : 0;
+                        target.ReceiveDamage(damage + shieldBonus, out int hpDamage, out int absorbed);
+                        events.Add(BattleEvent.Damage(user, target, skill, hpDamage, absorbed, critical, shieldBonus));
+                        if (target.IsDefeated) events.Add(BattleEvent.Defeated(target));
+                        break;
+
+                    case SkillKind.Heal:
+                        int heal = BattleFormulas.Heal(skill.Power, user.Attack, critical, config, rng);
+                        events.Add(BattleEvent.Heal(user, target, skill, target.ReceiveHeal(heal), critical));
+                        break;
+
+                    case SkillKind.Guard:
+                        int shield = BattleFormulas.Shield(skill.Power, user.Defense, critical, config, rng);
+                        target.AddShield(shield);
+                        events.Add(BattleEvent.Shield(user, target, skill, shield, critical));
+                        break;
+                }
+            }
+        }
+
+        private List<BattleUnit> ResolveTargets(BattleUnit user, SkillData skill, BattleUnit chosenTarget)
+        {
+            var opponents = user.IsPlayerSide ? enemies : party;
+            var allies = user.IsPlayerSide ? party : enemies;
+
+            switch (skill.Target)
+            {
+                case SkillTarget.SingleEnemy:
+                    return SingleOrFallback(chosenTarget, opponents);
+                case SkillTarget.SingleAlly:
+                    return SingleOrFallback(chosenTarget, allies);
+                case SkillTarget.AllEnemies:
+                    return AliveUnits(opponents);
+                case SkillTarget.AllAllies:
+                    return AliveUnits(allies);
+                case SkillTarget.Self:
+                    return new List<BattleUnit> { user };
+                default:
+                    return new List<BattleUnit>();
+            }
+        }
+
+        private static List<BattleUnit> SingleOrFallback(BattleUnit chosen, List<BattleUnit> side)
+        {
+            if (chosen != null && !chosen.IsDefeated) return new List<BattleUnit> { chosen };
+            var first = FirstAlive(side);
+            return first != null ? new List<BattleUnit> { first } : new List<BattleUnit>();
+        }
+
+        private bool CheckBattleEnd(List<BattleEvent> events)
+        {
+            WitherMinions(events);
+            if (FirstAlive(enemies) == null)
+            {
+                Phase = BattlePhase.Victory;
+                events.Add(BattleEvent.Victory());
+                return true;
+            }
+            if (FirstAlive(party) == null)
+            {
+                Phase = BattlePhase.Defeat;
+                events.Add(BattleEvent.Defeat());
+                return true;
+            }
+            return false;
+        }
+
+        private void ValidateTarget(SkillData skill, BattleUnit target)
+        {
+            var side = skill.Target == SkillTarget.SingleEnemy ? enemies : party;
+            if (target == null || !side.Contains(target) || target.IsDefeated)
+                throw new ArgumentException($"{skill.DisplayName}의 대상으로 고를 수 없습니다", nameof(target));
+        }
+
+        private void RequirePhase(BattlePhase expected)
+        {
+            if (Phase != expected) throw new InvalidOperationException($"지금은 {Phase} 단계입니다 ({expected} 필요)");
+        }
+
+        private BattleUnit NextAlivePartyMember(int afterIndex)
+        {
+            for (int i = afterIndex + 1; i < party.Count; i++)
+            {
+                if (!party[i].IsDefeated) return party[i];
+            }
+            return null;
+        }
+
+        private static BattleUnit FirstAlive(List<BattleUnit> units)
+        {
+            foreach (var unit in units)
+            {
+                if (!unit.IsDefeated) return unit;
+            }
+            return null;
+        }
+
+        private static List<BattleUnit> AliveUnits(List<BattleUnit> units)
+        {
+            return units.FindAll(u => !u.IsDefeated);
+        }
+
+        private static bool Contains(IReadOnlyList<SkillData> skills, SkillData skill)
+        {
+            foreach (var s in skills)
+            {
+                if (s == skill) return true;
+            }
+            return false;
+        }
+    }
+}

@@ -1,0 +1,621 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
+using WordRPG.Field;
+using WordRPG.Game;
+using WordRPG.Heroes;
+using WordRPG.Items;
+using WordRPG.Monsters;
+using WordRPG.UI;
+using WordRPG.Words;
+using static WordRPG.Tests.UiDriver;
+
+namespace WordRPG.Tests
+{
+    // 지역 이동(출입구)과 보스전 통합 테스트 — 실제 가상 패드로 걷는다
+    public class DungeonScreenTests
+    {
+        //  A (바깥)   y=3 #D#   ← 출입구 (1,3)
+        //             y=2 #.#
+        //             y=1 #P#
+        //             y=0 ###
+        private const string OutsideMap = "#D#\n#.#\n#P#\n###";
+
+        //  B (안쪽)   y=3 ###
+        //             y=2 #P#
+        //             y=1 #.#
+        //             y=0 #D#   ← 출입구 (1,0)
+        private const string InsideMap = "###\n#P#\n#.#\n#D#";
+
+        private static WordDatabase Words()
+        {
+            var words = ScriptableObject.CreateInstance<WordDatabase>();
+            words.ReplaceWords(TestData.SampleWords());
+            return words;
+        }
+
+        // 지역의 적으로 쓰는 몬스터 (조우 확률 0이라 실제로는 안 나옴)
+        private static MonsterSpecies Hero()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40);
+            return TestData.Species("hero", new MonsterStats(100, 30, 10), new MonsterStats(0, 0, 0), strike);
+        }
+
+        // 주인공 (기본 기술 공격 40)
+        private static HeroData Player()
+        {
+            var strike = TestData.Skill("strike", SkillKind.Damage, SkillTarget.SingleEnemy, 40);
+            return TestData.Hero(new MonsterStats(100, 30, 10)).Set("basicSkill", strike);
+        }
+
+        private static FieldArea Area(string id, string name, string map, MonsterSpecies enemy)
+        {
+            var table = ScriptableObject.CreateInstance<EncounterTable>()
+                .Set("entries", new List<EncounterTable.Entry> { new EncounterTable.Entry(enemy, 1, 1, 1) });
+            return ScriptableObject.CreateInstance<FieldArea>()
+                .Set("areaId", id).Set("displayName", name).Set("map", map)
+                .Set("encounters", table).Set("words", Words());
+        }
+
+        private static (FieldArea outside, FieldArea inside) LinkedAreas(MonsterSpecies enemy)
+        {
+            var outside = Area("outside", "바깥 들판", OutsideMap, enemy);
+            var inside = Area("inside", "안쪽 서고", InsideMap, enemy).Set("theme", FieldTheme.Library);
+            outside.Set("exits", new List<AreaExit> { new AreaExit(inside, 0) });
+            inside.Set("exits", new List<AreaExit> { new AreaExit(outside, 0) });
+            return (outside, inside);
+        }
+
+        private static FieldScreen CreateField(FieldArea area, GameSession session, GameDatabase database = null)
+        {
+            var go = new GameObject("DungeonFieldUnderTest");
+            var field = go.AddComponent<FieldScreen>();
+            field.Configure(area, session, step: 0.05f, animScale: 0.01f, gameDatabase: database);
+            return field;
+        }
+
+        [UnityTest]
+        public IEnumerator DoorsMoveBetweenAreasAndBack()
+        {
+            var hero = Hero();
+            var (outside, inside) = LinkedAreas(hero);
+            var session = GameSession.NewGame(Player(), 1);
+            var field = CreateField(outside, session);
+            yield return null;
+            yield return null;
+
+            CollectionAssert.Contains(field.VisibleNameTags, "안쪽 서고", "출입구 위에 도착 지역 이름표");
+
+            // 위, 위 → 출입구를 밟으면 안쪽 서고의 출입구 칸에 나타남
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            yield return WaitFor(() => field.CurrentArea == inside && !field.IsInBattle);
+
+            Assert.AreSame(inside, field.CurrentArea);
+            Assert.AreEqual(new Vector2Int(1, 0), field.PlayerCell);
+            Assert.AreEqual("inside", session.World.AreaId, "현재 지역이 세이브 상태에 기록됨");
+            StringAssert.Contains("안쪽 서고", AllText(field.transform.Find("FieldHud/SafeArea/TopBar")));
+            StringAssert.Contains("안쪽 서고", field.ToastMessage);
+
+            // 도착하자마자 되돌아가지 않음
+            yield return new WaitForSecondsRealtime(0.1f);
+            Assert.AreSame(inside, field.CurrentArea);
+
+            // 위로 한 칸 갔다가 다시 아래 출입구 → 바깥 들판의 출입구로
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            yield return HoldStick(field, Direction.Down, () => field.IsMoving);
+            yield return WaitFor(() => field.CurrentArea == outside && !field.IsInBattle);
+
+            Assert.AreSame(outside, field.CurrentArea);
+            Assert.AreEqual(new Vector2Int(1, 3), field.PlayerCell);
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 보스 대사 (#207): 전투 기록 칸에 보스·주인공 한 줄씩, 이긴 뒤 머리 위에 글, 다시 찾아가도 그 글
+        [UnityTest]
+        public IEnumerator BossSpeaksAndLeavesALineToReadAgain()
+        {
+            var hero = Hero();
+            var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var king = TestData.Species("king", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), bite)
+                .Set("displayName", "까먹대왕").Set("expReward", 10);
+            var boss = new BossEncounter(king, 3).Set("bossLine", "잊어버리면 아플 일도 없어!")
+                .Set("heroLine", "기억을 돌려줘!").Set("afterLine", "책 속의 글자가 돌아왔다.");
+            var area = Area("lair", "보스 방", "#####\n#.B.#\n#.P.#\n#####", hero).Set("boss", boss).Set("theme", FieldTheme.Forest);
+            var session = GameSession.NewGame(Player(), 1);
+            var field = CreateField(area, session);
+            yield return null;
+            yield return null;
+
+            yield return FaceStick(field, Direction.Up);
+            yield return PressConfirm(field);
+            yield return WaitFor(() => field.Battle.IsRunning);
+            string log = AllText(field.Battle);
+            StringAssert.Contains("까먹대왕: \"잊어버리면 아플 일도 없어!\"", log);
+            StringAssert.Contains($"{session.Hero.DisplayName}: \"기억을 돌려줘!\"", log);
+
+            yield return PlayUntilResult(field.Battle, answerCorrectly: true);
+            FindButton(field.Battle.transform, "ResultButton_Primary").onClick.Invoke();
+            yield return WaitFor(() => !field.IsInBattle);
+            yield return WaitFor(() => field.Bubble.ShowsText);
+            StringAssert.Contains("책 속의 글자가 돌아왔다", field.Bubble.Text, "이긴 뒤 머리 위에");
+
+            // 보스 자리의 보석에 부딪히면 다시 나옴 (전에 이긴 사람도 읽을 수 있음 — #251부터 밟을 수 없어서)
+            yield return new WaitForSecondsRealtime(0.5f);
+            field.Bubble.Hide();
+            yield return HoldStick(field, Direction.Up, () => field.Bubble.ShowsText, 1f);
+            Assert.AreEqual(new Vector2Int(2, 1), field.PlayerCell, "보석은 막힘");
+            Assert.IsTrue(field.Bubble.ShowsText, "부딪히면 글이 보임");
+            StringAssert.Contains("책 속의 글자가 돌아왔다", field.Bubble.Text);
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // #252·#254 사용자: 후기를 부탁하는 지역의 보스를 이기면 돌아가기 묻기까지 끝난 뒤 애플 기본 창을 한 번 (앱이 만든 창은 없음)
+        [UnityTest]
+        public IEnumerator BeatingTheCaveBossRequestsTheStoreReviewAfterTheDialogs()
+        {
+            int asked = 0;
+            var original = ReviewPrompt.NativeRequest;
+            ReviewPrompt.NativeRequest = () => asked++;
+            try
+            {
+                var hero = Hero();
+                var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+                var king = TestData.Species("king", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), bite).Set("displayName", "말줄임덩굴");
+                //   y=3 #.B.#
+                //   y=2 #...#  ← 시작 지점이 아닌 곳에서 싸움 (돌아갈지 묻는 창이 먼저)
+                //   y=1 #.P.#
+                var area = Area("lair", "보스 방", "#####\n#.B.#\n#...#\n#.P.#\n#####", hero).Set("boss", new BossEncounter(king, 3)).Set("asksReviewAfterBoss", true);
+                var session = GameSession.NewGame(Player(), 1);
+                var field = CreateField(area, session);
+                yield return null;
+                yield return null;
+
+                yield return HoldStick(field, Direction.Up, () => field.PlayerCell.y >= 2);
+                yield return FaceStick(field, Direction.Up);
+                yield return PressConfirm(field);
+                yield return WaitFor(() => field.Battle.IsRunning);
+                yield return PlayUntilResult(field.Battle, answerCorrectly: true);
+                FindButton(field.Battle.transform, "ResultButton_Primary").onClick.Invoke();
+                yield return WaitFor(() => field.IsReturnDialogOpen, 3f);
+                Assert.IsTrue(field.IsReturnDialogOpen);
+                StringAssert.Contains("돌아갈까요", AllText(field), "앱이 만든 후기 창 없이 돌아가기 묻기만");
+                Assert.AreEqual(0, asked, "창이 겹치지 않게 아직");
+
+                VisibleButton(field, "DialogCancelButton").onClick.Invoke();
+                yield return WaitFor(() => asked == 1, 2f);
+                Assert.AreEqual(1, asked, "돌아가기 묻기가 끝나면 애플 기본 창");
+                Assert.IsTrue(session.World.HasEvent(ReviewPrompt.EventId), "물어본 것을 기록");
+                Object.Destroy(field.gameObject);
+                yield return null;
+            }
+            finally
+            {
+                ReviewPrompt.NativeRequest = original;
+            }
+        }
+
+        // #254 사용자: 후기를 쓰는 링크는 설정의 버튼으로 (사람이 직접 눌렀을 때만)
+        [UnityTest]
+        public IEnumerator SettingsHasAWriteAReviewButton()
+        {
+            string opened = null;
+            var original = ReviewPrompt.OpenUrl;
+            ReviewPrompt.OpenUrl = url => opened = url;
+            try
+            {
+                var field = CreateField(Area("town", "마을", "###\n#P#\n###", Hero()), GameSession.NewGame(Player(), 1));
+                yield return null;
+                yield return null;
+                var hud = field.transform.Find("FieldHud/SafeArea");
+                FindButton(hud, "SettingsButton").onClick.Invoke();
+                ActiveButton(hud.Find("SettingsView"), "ReviewButton").onClick.Invoke();
+                Assert.AreEqual(ReviewPrompt.Url(Application.platform), opened);
+                Object.Destroy(field.gameObject);
+                yield return null;
+            }
+            finally
+            {
+                ReviewPrompt.OpenUrl = original;
+            }
+        }
+
+        // #267 사용자: 크게 선 보스(빈칸두꺼비 6칸)인데 [확인]은 B 한 칸이라 어떻게 도전하는지 몰랐음
+        // → 그림에 보이는 몸 어느 칸이든 막히고, 옆에서 [확인]이면 보스전. 이기면 몸이 없어져 걸을 수 있음
+        [UnityTest]
+        public IEnumerator BigBossCanBeChallengedFromAnyPartOfItsBody()
+        {
+            var hero = Hero();
+            var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var texture = new Texture2D(16, 16);
+            texture.SetPixels(Enumerable.Repeat(Color.white, 16 * 16).ToArray());
+            texture.Apply();
+            var frog = TestData.Species("frog", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), bite)
+                .Set("displayName", "빈칸두꺼비").Set("sprite", Sprite.Create(texture, new Rect(0, 0, 16, 16), new Vector2(0.5f, 0.5f), 16));
+            //   y=3  #.P.....#   ← 시작 (2,3) — 오른쪽 (3,3)은 보스 몸 (B 칸 아님)
+            //   y=2  #...B...#   ← 보스 (4,2), 그림 3×3 = 가로 3..5 · 세로 2..4
+            var area = Area("lair", "보스 방", "#########\n#.......#\n#.......#\n#.P.....#\n#...B...#\n#.......#\n#########", hero)
+                .Set("boss", new BossEncounter(frog, 3).Set("fieldSize", new Vector2(3, 3))).Set("theme", FieldTheme.Forest);
+            var session = GameSession.NewGame(Player(), 1);
+            var field = CreateField(area, session);
+            yield return null;
+            yield return null;
+
+            Assert.IsNotNull(field.BigBoss, "크게 서 있음");
+            Assert.AreEqual(9, field.BossBodyCells.Count);
+            CollectionAssert.Contains(field.BossBodyCells, new Vector2Int(3, 3));
+
+            yield return FaceStick(field, Direction.Right);
+            Assert.AreEqual(new Vector2Int(2, 3), field.PlayerCell, "몸으로는 걸어 들어갈 수 없음");
+            Assert.IsFalse(field.IsInBattle, "부딪히기만 해서는 싸우지 않음");
+            yield return PressConfirm(field);
+            yield return WaitFor(() => field.Battle.IsRunning);
+            Assert.AreSame(frog, field.Battle.Engine.Enemies[0].Monster.Species, "옆구리에서 [확인]해도 보스전");
+
+            yield return PlayUntilResult(field.Battle, answerCorrectly: true);
+            FindButton(field.Battle.transform, "ResultButton_Primary").onClick.Invoke();
+            yield return WaitFor(() => !field.IsInBattle);
+            Assert.IsTrue(session.World.IsBossDefeated("lair:boss"));
+            Assert.IsNull(field.BigBoss);
+            Assert.AreEqual(0, field.BossBodyCells.Count, "쓰러뜨리면 몸이 없어짐");
+
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return HoldStick(field, Direction.Right, () => field.IsMoving);
+            yield return WaitFor(() => !field.IsMoving);
+            Assert.AreEqual(new Vector2Int(3, 3), field.PlayerCell, "몸이 있던 곳을 걸을 수 있음");
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator BossIsFoughtOnceAndRemembered()
+        {
+            var hero = Hero();
+            var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var king = TestData.Species("king", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), bite)
+                .Set("displayName", "까먹대왕").Set("expReward", 10);
+            var crown = TestData.Relic("relic_grail", TestData.Skill("recall", SkillKind.Heal, SkillTarget.Self, 16),
+                new MonsterStats(20, 0, 2)).Set("displayName", "기억의 성배");
+            var area = Area("lair", "보스 방", "#####\n#.B.#\n#.P.#\n#####", hero)
+                .Set("boss", new BossEncounter(king, 3, crown)).Set("theme", FieldTheme.Forest);
+            var session = GameSession.NewGame(Player(), 1);
+            var field = CreateField(area, session);
+            yield return null;
+            yield return null;
+
+            CollectionAssert.Contains(field.VisibleNameTags, "까먹대왕", "보스 위에 보스 이름표");
+
+            // 위 = 보스 → [확인]으로 도전 → 보스전
+            yield return FaceStick(field, Direction.Up);
+            Assert.IsFalse(field.IsInBattle, "부딪히기만 해서는 싸우지 않음");
+            yield return PressConfirm(field);
+            yield return WaitFor(() => field.Battle.IsRunning);
+            Assert.IsTrue(field.Battle.IsRunning);
+            Assert.AreSame(king, field.Battle.Engine.Enemies[0].Monster.Species);
+            Assert.AreEqual(3, field.Battle.Engine.Enemies[0].Monster.Level);
+            StringAssert.Contains("보스 출현", AllText(field.Battle));
+            Assert.AreEqual(Music.BossForest, Sound.CurrentMusic, "그 지역의 보스곡 (#166)");
+
+            yield return PlayUntilResult(field.Battle, answerCorrectly: true);
+            // 보스를 쓰러뜨린 한 방은 결정타 연출 (#41), 결산에 물리친 보스 이름
+            Assert.AreEqual(1, field.Battle.FinishersPlayed);
+            StringAssert.Contains("까먹대왕을 물리쳤어요", AllText(field.Battle.transform.Find("BattleCanvas/SafeArea/ResultPanel")));
+            Assert.IsFalse(field.Battle.transform.Find("BattleCanvas/SafeArea/FinisherShade").gameObject.activeSelf, "결산 전에 어두운 막은 걷힘");
+            FindButton(field.Battle.transform, "ResultButton_Primary").onClick.Invoke();
+            yield return WaitFor(() => !field.IsInBattle);
+
+            Assert.IsTrue(session.World.IsBossDefeated("lair:boss"));
+            StringAssert.Contains("까먹대왕을 물리쳤다", field.ToastMessage);
+            StringAssert.Contains("기억의 성배", field.ToastMessage, "보스 보상 성유물");
+            Assert.IsTrue(session.Hero.Owns(crown));
+            Assert.IsTrue(session.Hero.IsEquipped(session.Hero.Find(crown)), "빈 칸이 있으면 바로 끼움");
+
+            CollectionAssert.Contains(field.VisibleNameTags, "까먹대왕의 기억 · 다시 싸우기", "쓰러뜨린 보스 자리엔 보석과 이름표가 남음 (#251)");
+            Assert.IsNotNull(field.BossGem, "보석이 보임");
+
+            // 시작 지점에 선 채로 이겼으면 돌아갈지 묻지 않음 (#60)
+            yield return new WaitForSecondsRealtime(0.3f);
+            Assert.IsFalse(field.IsReturnDialogOpen, "이미 시작 지점이면 묻지 않음");
+
+            // 보석은 막힌 물건 (#251): 옆에서 [확인]이면 다시 싸울지 묻기 — 바로 전투는 아님, 걸어 들어갈 수 없음
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return PressConfirm(field);
+            yield return new WaitForSecondsRealtime(0.2f);
+            Assert.IsFalse(field.IsInBattle);
+            Assert.IsTrue(field.IsReturnDialogOpen, "다시 싸울지 묻기");
+            Assert.AreEqual(1, session.Record.BattlesWon);
+            VisibleButton(field, "DialogCancelButton").onClick.Invoke();
+            yield return null;
+            yield return FaceStick(field, Direction.Up);
+            Assert.AreEqual(new Vector2Int(2, 1), field.PlayerCell, "보스가 있던 칸은 막혀 있음");
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator BossOpensLockedGateAndCameraShowsIt()
+        {
+            var hero = Hero();
+            var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var king = TestData.Species("king", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), bite)
+                .Set("displayName", "까먹대왕");
+            //  마을  y=3 ##D##  ← 숲 (보스 방의 보스를 물리쳐야 열림)      보스 방  y=3 #####
+            //        y=2 #...#                                           y=2 #.B.#
+            //        y=1 #.P.#                                           y=1 #.P.#
+            //        y=0 ##D##  ← 보스 방                                y=0 ##D##
+            var town = Area("town", "마을", "##D##\n#...#\n#.P.#\n##D##", hero);
+            var forest = Area("forest", "숲", "###\n#P#\n#D#", hero).Set("theme", FieldTheme.Forest);
+            var lair = Area("lair", "보스 방", "#####\n#.B.#\n#.P.#\n##D##", hero).Set("theme", FieldTheme.Library)
+                .Set("boss", new BossEncounter(king, 3));
+            town.Set("exits", new List<AreaExit> { new AreaExit(forest, 0, lair), new AreaExit(lair, 0) });
+            forest.Set("exits", new List<AreaExit> { new AreaExit(town, 0) });
+            lair.Set("exits", new List<AreaExit> { new AreaExit(town, 1) });
+            var database = ScriptableObject.CreateInstance<GameDatabase>();
+            database.ReplaceContents(new[] { hero, king }, new ItemData[0], new[] { town, forest, lair });
+            var session = GameSession.NewGame(Player(), 1);
+            var field = CreateField(town, session, database);
+            yield return null;
+            yield return null;
+
+            CollectionAssert.Contains(field.VisibleNameTags, "숲 · 잠김", "잠긴 출입구 이름표");
+
+            // 위로 한 칸 → 숲 출입구는 덤불로 막혀 있음
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            yield return WaitFor(() => !field.IsMoving);
+            yield return HoldStick(field, Direction.Up, () => field.ToastMessage.Contains("막혀"));
+            Assert.AreEqual(new Vector2Int(2, 2), field.PlayerCell, "잠긴 출입구는 못 지나감");
+            StringAssert.Contains("보스 방의 까먹대왕을 물리치면", field.ToastMessage);
+            Assert.AreSame(town, field.CurrentArea);
+
+            // 아래로 → 보스 방 → 보스를 물리침
+            yield return HoldStick(field, Direction.Down, () => field.IsMoving);
+            yield return HoldStick(field, Direction.Down, () => field.IsMoving);
+            yield return WaitFor(() => field.CurrentArea == lair && !field.IsInBattle);
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            yield return WaitFor(() => !field.IsMoving);
+            yield return FaceStick(field, Direction.Up);
+            yield return PressConfirm(field);
+            yield return WaitFor(() => field.Battle.IsRunning);
+            yield return PlayUntilResult(field.Battle, answerCorrectly: true);
+            FindButton(field.Battle.transform, "ResultButton_Primary").onClick.Invoke();
+
+            // 카메라가 마을의 숲 출입구로 가서 길이 열리는 것을 보여 주고 돌아옴
+            yield return WaitFor(() => field.IsRevealingGate);
+            Assert.IsTrue(field.IsInBattle, "연출 중에는 움직이거나 메뉴를 열 수 없음");
+            yield return WaitFor(() => !field.IsInBattle && !field.IsRevealingGate);
+            Assert.AreEqual(1, field.RevealedGates.Count);
+            Assert.AreSame(town, field.RevealedGates[0].Area);
+            Assert.AreEqual(new Vector2Int(2, 3), field.RevealedGates[0].Cell);
+            Assert.LessOrEqual(Vector2.Distance(field.LastGateCamera, new Vector2(2.5f, 3.5f)), 3.2f, "길이 열릴 때 카메라는 출입구 근처를 비춤");
+            StringAssert.Contains("숲으로 가는 길이 열렸다", field.LastGateBanner);
+            Assert.AreSame(lair, field.CurrentArea, "연출이 끝나면 보스 방으로 돌아옴");
+            Assert.AreEqual(new Vector2Int(2, 1), field.PlayerCell);
+            Assert.Less(Vector2.Distance(field.CameraPosition, new Vector2(2.5f, 1.5f)), 3f, "카메라도 주인공에게 돌아옴");
+            StringAssert.Contains("숲으로 가는 길이 열렸다", field.ToastMessage);
+            Assert.IsTrue(session.World.IsExitOpen(town.Exits[0]));
+            Assert.IsFalse(field.IsReturnDialogOpen, "시작 지점에서 싸웠으면 돌아갈지 묻지 않음 (#60)");
+
+            // 마을로 돌아가 열린 길로 숲에 들어감
+            yield return HoldStick(field, Direction.Down, () => field.IsMoving);
+            yield return WaitFor(() => field.CurrentArea == town && !field.IsInBattle);
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            CollectionAssert.Contains(field.VisibleNameTags, "숲", "열린 뒤에는 '잠김' 없이");
+            for (int i = 0; i < 2; i++) yield return HoldStick(field, Direction.Up, () => field.IsMoving || field.CurrentArea == forest);
+            yield return WaitFor(() => field.CurrentArea == forest && !field.IsInBattle);
+            Assert.AreSame(forest, field.CurrentArea);
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 동굴 입구처럼 맵 가운데 있는 큰 그림은 치우치지 않게 그림 한가운데를 비춤 (#244 사용자)
+        [UnityTest]
+        public IEnumerator GateRevealCentersTheCaveMouth()
+        {
+            var hero = Hero();
+            var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var king = TestData.Species("king", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), bite)
+                .Set("displayName", "까먹대왕");
+            var town = Area("town", "마을", "#####\n#.O.#\n#...#\n#.P.#\n##D##", hero);
+            var cave = Area("cave", "동굴", "###\n#P#\n#D#", hero).Set("theme", FieldTheme.Forest);
+            var lair = Area("lair", "보스 방", "#####\n#.B.#\n#.P.#\n##D##", hero).Set("theme", FieldTheme.Library)
+                .Set("boss", new BossEncounter(king, 3));
+            town.Set("exits", new List<AreaExit> { new AreaExit(cave, 0, lair), new AreaExit(lair, 0) });
+            cave.Set("exits", new List<AreaExit> { new AreaExit(town, 0) });
+            lair.Set("exits", new List<AreaExit> { new AreaExit(town, 1) });
+            var database = ScriptableObject.CreateInstance<GameDatabase>();
+            database.ReplaceContents(new[] { hero, king }, new ItemData[0], new[] { town, cave, lair });
+            var session = GameSession.NewGame(Player(), 1);
+            var field = CreateField(town, session, database);
+            yield return null;
+            yield return null;
+
+            yield return HoldStick(field, Direction.Down, () => field.IsMoving);
+            yield return WaitFor(() => field.CurrentArea == lair && !field.IsInBattle);
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            yield return WaitFor(() => !field.IsMoving);
+            yield return FaceStick(field, Direction.Up);
+            yield return PressConfirm(field);
+            yield return WaitFor(() => field.Battle.IsRunning);
+            yield return PlayUntilResult(field.Battle, answerCorrectly: true);
+            FindButton(field.Battle.transform, "ResultButton_Primary").onClick.Invoke();
+            yield return WaitFor(() => field.IsRevealingGate);
+            yield return WaitFor(() => !field.IsInBattle && !field.IsRevealingGate);
+
+            Assert.AreEqual(new Vector2Int(2, 3), field.RevealedGates[0].Cell);
+            Assert.Less(Vector2.Distance(field.LastGateCamera, new Vector2(2.5f, 4.75f)), 0.01f, "동굴 그림의 한가운데가 화면 가운데");
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 같은 이름의 버튼이 여러 창에 있으므로(끝내기 창·돌아가기 창) 지금 보이는 것
+        private static UnityEngine.UI.Button VisibleButton(FieldScreen field, string name)
+        {
+            foreach (var button in field.GetComponentsInChildren<UnityEngine.UI.Button>())
+                if (button.name == name) return button;
+            return null;
+        }
+
+        // 보스를 이긴 뒤 [돌아가기] (#60): 어두워졌다 밝아지며 그 지역 시작 지점에 정면으로 섬
+        [UnityTest]
+        public IEnumerator BossVictoryOffersReturnToStart()
+        {
+            var hero = Hero();
+            var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var king = TestData.Species("king", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), bite)
+                .Set("displayName", "까먹대왕");
+            //   y=4 #####
+            //   y=3 #.B.#
+            //   y=2 #...#
+            //   y=1 #.P.#  ← 시작
+            //   y=0 #####
+            var area = Area("lair", "보스 방", "#####\n#.B.#\n#...#\n#.P.#\n#####", hero).Set("boss", new BossEncounter(king, 3));
+            var session = GameSession.NewGame(Player(), 1);
+            var field = CreateField(area, session);
+            yield return null;
+            yield return null;
+
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            yield return WaitFor(() => !field.IsMoving);
+            Assert.AreEqual(new Vector2Int(2, 2), field.PlayerCell);
+            yield return FaceStick(field, Direction.Up);
+            yield return PressConfirm(field);
+            yield return WaitFor(() => field.Battle.IsRunning);
+            yield return PlayUntilResult(field.Battle, answerCorrectly: true);
+            FindButton(field.Battle.transform, "ResultButton_Primary").onClick.Invoke();
+            yield return WaitFor(() => field.IsReturnDialogOpen, 5f);
+            Assert.IsTrue(field.IsReturnDialogOpen);
+            StringAssert.Contains("보스를 물리쳤다", AllText(field));
+            StringAssert.Contains("보스 방 시작 지점으로 돌아갈까요", AllText(field));
+
+            StringAssert.Contains("여기 있기", AllText(VisibleButton(field, "DialogCancelButton")));
+
+            // 창이 떠 있는 동안은 움직일 수 없다
+            yield return HoldStick(field, Direction.Left, () => field.IsMoving, maxSeconds: 0.3f);
+            Assert.AreEqual(new Vector2Int(2, 2), field.PlayerCell, "창이 열려 있으면 이동 안 됨");
+
+            VisibleButton(field, "DialogConfirmButton").onClick.Invoke();
+            yield return WaitFor(() => field.ReturnsToStart == 1 && field.ToastMessage.Contains("시작 지점으로 돌아왔다"), 5f);
+            Assert.AreEqual(area.Map.Start, field.PlayerCell, "시작 지점으로");
+            Assert.AreEqual(PlayerArt.Get(Direction.Down, 0), field.PlayerSprite, "정면으로 서 있음");
+            Assert.IsTrue(session.World.TryGetPosition("lair", out var saved));
+            Assert.AreEqual(area.Map.Start, saved, "저장된 위치도 시작 지점");
+            StringAssert.Contains("보스 방 시작 지점으로 돌아왔다", field.ToastMessage);
+            Assert.IsFalse(field.IsReturnDialogOpen);
+
+            // 다시 움직일 수 있다
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            Assert.AreEqual(new Vector2Int(2, 2), field.PlayerCell);
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // #236 사용자 ㉓ · #251: 이긴 보스 자리의 보석 옆에서 [확인] → 다시 싸우기 — 보상은 경험치·골드만 (성유물·재료는 다시 안 줌)
+        [UnityTest]
+        public IEnumerator ADefeatedBossCanBeFoughtAgainForExpAndGoldOnly()
+        {
+            var hero = Hero();
+            var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var ink = TestData.Item("ink").Set("displayName", "잉크");
+            var crown = TestData.Relic("crown", bite, new MonsterStats(0, 1, 0)).Set("displayName", "왕관");
+            var king = TestData.Species("king", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), bite)
+                .Set("displayName", "까먹대왕").Set("goldReward", 10).Set("drops", new List<ItemDrop> { new ItemDrop(ink, 1f) });
+            //   y=2 #.B.#  ← 보스 (2,2)
+            //   y=1 #.P.#
+            var lair = Area("lair", "보스 방", "#####\n#.B.#\n#.P.#\n#####", hero).Set("boss", new BossEncounter(king, 3, crown));
+            var session = GameSession.NewGame(Player(), 1);
+            session.World.MarkBossDefeated(lair.BossId);
+            var field = CreateField(lair, session);
+            yield return null;
+            yield return null;
+
+            Assert.IsNotNull(field.BossGem, "보석이 보임");
+            CollectionAssert.Contains(field.VisibleNameTags, "까먹대왕의 기억 · 다시 싸우기");
+            yield return FaceStick(field, Direction.Up);
+            Assert.AreEqual(new Vector2Int(2, 1), field.PlayerCell, "보석은 막힘");
+            yield return PressConfirm(field);
+            yield return WaitFor(() => field.IsReturnDialogOpen, 2f);
+            StringAssert.Contains("까먹대왕의 기억 속으로 들어갈까요", AllText(field));
+            StringAssert.Contains("경험치와 골드만", AllText(field));
+            int gold = session.Inventory.Gold;
+            VisibleButton(field, "DialogConfirmButton").onClick.Invoke();
+            yield return WaitFor(() => field.Battle.IsRunning, 3f);
+            yield return PlayUntilResult(field.Battle, answerCorrectly: true);
+            FindButton(field.Battle.transform, "ResultButton_Primary").onClick.Invoke();
+            yield return WaitFor(() => field.Rematches == 1, 3f);
+            Assert.AreEqual(1, field.Rematches);
+            Assert.Greater(session.Inventory.Gold, gold, "골드는 받음");
+            Assert.AreEqual(0, session.Inventory.GetCount(ink), "재료는 안 받음");
+            Assert.IsFalse(session.Hero.Owns(crown), "보스 성유물은 다시 안 줌");
+            StringAssert.Contains("다시 물리쳤다", field.ToastMessage);
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // #232 사용자: 서고 보스(까먹대왕)를 이기고 [돌아가기]를 고르면 초원 시작 지점으로 — 던전을 깨면 마을로 돌아가는 게 당연함
+        [UnityTest]
+        public IEnumerator DungeonBossVictoryReturnsToTheVillageStart()
+        {
+            var hero = Hero();
+            var bite = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 1);
+            var king = TestData.Species("king", new MonsterStats(40, 1, 50), new MonsterStats(0, 0, 0), bite).Set("displayName", "까먹대왕");
+            var village = Area("village", "마을", "######\n#..P.#\n######", hero);
+            var lair = Area("lair", "보스 방", "#####\n#.B.#\n#.P.#\n#####", hero)
+                .Set("boss", new BossEncounter(king, 3)).Set("returnAfterBoss", village);
+            var session = GameSession.NewGame(Player(), 1);
+            var field = CreateField(lair, session);
+            yield return null;
+            yield return null;
+
+            yield return FaceStick(field, Direction.Up);
+            yield return PressConfirm(field);
+            yield return WaitFor(() => field.Battle.IsRunning);
+            yield return PlayUntilResult(field.Battle, answerCorrectly: true);
+            FindButton(field.Battle.transform, "ResultButton_Primary").onClick.Invoke();
+            yield return WaitFor(() => field.IsReturnDialogOpen, 5f);
+            StringAssert.Contains("마을 시작 지점으로 돌아갈까요", AllText(field), "보스 방 시작 지점에 서 있어도 마을로 갈지 물음");
+
+            VisibleButton(field, "DialogConfirmButton").onClick.Invoke();
+            yield return WaitFor(() => field.ReturnsToStart == 1 && field.ToastMessage.Contains("시작 지점으로 돌아왔다"), 5f);
+            Assert.AreSame(village, field.CurrentArea, "마을로");
+            Assert.AreEqual(village.Map.Start, field.PlayerCell, "마을 시작 지점");
+            Assert.IsTrue(session.World.TryGetPosition("village", out var saved));
+            Assert.AreEqual(village.Map.Start, saved);
+            StringAssert.Contains("마을 시작 지점으로 돌아왔다", field.ToastMessage);
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator StartsInTheAreaWhereTheGameWasSaved()
+        {
+            var hero = Hero();
+            var (outside, inside) = LinkedAreas(hero);
+            var database = ScriptableObject.CreateInstance<GameDatabase>();
+            database.ReplaceContents(new[] { hero }, new ItemData[0], new[] { outside, inside });
+            var session = GameSession.NewGame(Player(), 1);
+            session.World.SetPosition("inside", new Vector2Int(1, 1));
+
+            var field = CreateField(outside, session, database);
+            yield return null;
+            yield return null;
+
+            Assert.AreSame(inside, field.CurrentArea, "세이브의 마지막 지역에서 시작");
+            Assert.AreEqual(new Vector2Int(1, 1), field.PlayerCell);
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+    }
+}

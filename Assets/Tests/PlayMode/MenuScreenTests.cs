@@ -1,0 +1,713 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UI;
+using WordRPG.Field;
+using WordRPG.Game;
+using WordRPG.Heroes;
+using WordRPG.Items;
+using WordRPG.Monsters;
+using WordRPG.UI;
+using WordRPG.Words;
+using static WordRPG.Tests.UiDriver;
+
+namespace WordRPG.Tests
+{
+    // 필드 오른쪽 메뉴: 가방(소지품) · 설정(소리·진동·저장 데이터 지우기) — 실제 버튼을 눌러 확인
+    public class MenuScreenTests
+    {
+        //   y=2  #C..#   ← 보물상자 (1,2)
+        //   y=1  #.P.#   ← 시작 (2,1)
+        private const string Map = "#####\n#C..#\n#.P.#\n#####";
+
+        private ItemData ink, cover, keepsake, potion;
+        private RelicData quill, book, lantern;
+        private FieldArea area;
+        private GameDatabase database;
+        private GameSession session;
+
+        [SetUp]
+        public void SetUp()
+        {
+            ink = TestData.Item("shiny_ink").Set("displayName", "빛나는 잉크").Set("description", "깃펜을 강화하는 잉크.");
+            cover = TestData.Item("hard_cover").Set("displayName", "단단한 표지");
+            keepsake = TestData.Item("keepsake_meadow").Set("displayName", "네잎클로버 책갈피").Set("kind", ItemKind.Keepsake);
+            potion = TestData.Potion("potion", 40).Set("displayName", "상처약");
+            var splash = TestData.Skill("ink_splash", SkillKind.Damage, SkillTarget.AllEnemies, 14, QuizDirection.MeaningToEnglish)
+                .Set("displayName", "잉크 뿌리기").Set("description", "적 전체에 잉크를 뿌린다.");
+            var storm = TestData.Skill("ink_storm", SkillKind.Damage, SkillTarget.AllEnemies, 22, QuizDirection.MeaningToEnglish)
+                .Set("displayName", "잉크 폭풍");
+            quill = TestData.Relic("relic_quill", splash, new MonsterStats(0, 4, 0), ink, storm)
+                .Set("displayName", "깃펜").Set("description", "펜촉이가 남긴 깃펜.").Set("bonusPerLevel", new MonsterStats(0, 2, 0));
+            book = TestData.Relic("relic_book", TestData.Skill("shield", SkillKind.Guard, SkillTarget.AllAllies, 4).Set("displayName", "책 방패"),
+                new MonsterStats(10, 0, 4), cover).Set("displayName", "백과사전").Set("role", MonsterRole.Defender);
+            lantern = TestData.Relic("relic_lantern", TestData.Skill("light", SkillKind.Heal, SkillTarget.AllAllies, 8).Set("displayName", "쪽잠자기"),
+                new MonsterStats(15, 0, 0), cover).Set("displayName", "등불");
+            var enemySkill = TestData.Skill("bite", SkillKind.Damage, SkillTarget.SingleEnemy, 5);
+            var enemy = TestData.Species("slime", new MonsterStats(20, 5, 5), new MonsterStats(0, 0, 0), enemySkill);
+
+            var words = ScriptableObject.CreateInstance<WordDatabase>()
+                .Set("regionId", "meadow").Set("regionName", "초원").Set("rewards", new List<DexReward> { new DexReward("meadow", "초원", keepsake, 500) });
+            words.ReplaceWords(TestData.SampleWords());
+            var table = ScriptableObject.CreateInstance<EncounterTable>()
+                .Set("entries", new List<EncounterTable.Entry> { new EncounterTable.Entry(enemy, 1, 1, 1) });
+            area = ScriptableObject.CreateInstance<FieldArea>()
+                .Set("areaId", "meadow").Set("displayName", "초원").Set("map", Map)
+                .Set("encounters", table).Set("words", words);
+            database = ScriptableObject.CreateInstance<GameDatabase>();
+            database.ReplaceContents(new[] { enemy }, new[] { ink, cover, keepsake, potion }, new[] { area }, new[] { quill, book, lantern });
+
+            var hero = TestData.Hero(new MonsterStats(60, 14, 10), quill).Set("description", "단어의 힘을 성유물에 담아 싸우는 견습 모험가.");
+            session = GameSession.NewGame(hero, 5);
+            session.Inventory.Add(ink, 3);
+            session.Inventory.Add(cover, 1);
+            session.Inventory.Add(keepsake);
+            session.Record.MarkRegionClaimed("meadow");
+            session.Inventory.AddGold(90);
+        }
+
+        private FieldScreen MakeField(GameSettings settings = null, System.Action changed = null, System.Action delete = null)
+        {
+            var go = new GameObject("MenuUnderTest");
+            var field = go.AddComponent<FieldScreen>();
+            field.Configure(area, session, step: 0.05f, animScale: 0.01f, gameDatabase: database,
+                gameSettings: settings ?? new GameSettings(), onSettingsChanged: changed, onDeleteSave: delete);
+            return field;
+        }
+
+        [UnityTest]
+        public IEnumerator BagShowsMaterialsAndKeepsakeShelf()
+        {
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+            Assert.AreEqual(Music.Meadow, Sound.CurrentMusic, "초원에 들어가면 초원 음악");
+
+            FindButton(hud, "BagButton").onClick.Invoke();
+            var bag = hud.Find("InventoryView").gameObject;
+            Assert.IsTrue(bag.activeSelf, "가방 버튼 → 소지품");
+            Assert.IsTrue(field.IsPanelOpen, "소지품이 열려 있는 동안은 걷지 않음");
+            Assert.IsFalse(bag.transform.Find("DetailBox").gameObject.activeSelf, "처음엔 주인공 탭 (아이템 상세는 숨김)");
+
+            // 아이템 탭: 잉크(선택) · 표지, 나머지는 빈 칸. 징표는 아이템 칸에 안 나옴
+            FindButton(bag.transform, "TabItems").onClick.Invoke();
+            var text = AllText(bag.transform);
+            StringAssert.Contains("보유 골드  90G", text);
+            StringAssert.Contains("× 3", text);
+            StringAssert.Contains("× 1", text);
+            StringAssert.Contains("빛나는 잉크", text);
+            StringAssert.Contains("깃펜 +0 → +1", text, "쓰는 곳: 성유물 제단에서 깃펜 강화");
+            StringAssert.Contains("지금 강화할 수 있어요", text);
+            Assert.IsFalse(FindButton(bag.transform, "ItemSlot_2").interactable, "세 번째 칸은 빈 칸");
+
+            FindButton(bag.transform, "ItemSlot_1").onClick.Invoke();
+            StringAssert.Contains("단단한 표지", AllText(bag.transform.Find("DetailBox")));
+            StringAssert.Contains("강화하는 것이 없어요", AllText(bag.transform.Find("DetailBox")), "백과사전·등불을 아직 안 모음");
+
+            // 다른 메뉴는 겹쳐 열리지 않음
+            FindButton(hud, "SettingsButton").onClick.Invoke();
+            Assert.IsFalse(hud.Find("SettingsView").gameObject.activeSelf);
+
+            // 징표 탭: 초원 징표 획득 + 다음 지역 자리
+            FindButton(bag.transform, "TabKeepsakes").onClick.Invoke();
+            var shelfText = AllText(bag.transform.Find("KeepsakesPage"));
+            StringAssert.Contains("네잎클로버 책갈피", shelfText);
+            StringAssert.Contains("다음 지역", shelfText);
+            StringAssert.Contains("500 골드", AllText(bag.transform.Find("DetailBox")));
+            Assert.IsFalse(bag.transform.Find("KeepsakesPage/KeepsakePager").gameObject.activeSelf, "한 쪽뿐이면 쪽 넘기기 숨김");
+
+            FindButton(bag.transform, "InventoryCloseButton").onClick.Invoke();
+            Assert.IsFalse(bag.activeSelf);
+            Assert.IsFalse(field.IsPanelOpen);
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 설정 > 전투 강도 (#147 사용자): 고르면 저장되고 금색으로 표시
+        [UnityTest]
+        public IEnumerator SettingsChoosesAFixedBattleIntensity()
+        {
+            var settings = new GameSettings();
+            int saved = 0;
+            var field = MakeField(settings, () => saved++);
+            yield return null;
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+            FindButton(hud, "SettingsButton").onClick.Invoke();
+            var view = hud.Find("SettingsView");
+            StringAssert.Contains("공격할 때마다", AllText(view));
+            FindButton(view, "IntensityOption_3").onClick.Invoke();
+            Assert.AreEqual(3, settings.BattleIntensity);
+            Assert.Greater(saved, 0, "바로 저장");
+            StringAssert.Contains("단어 3개를 모두 맞혀야", AllText(view));
+            StringAssert.Contains("×1.5", AllText(FindButton(view, "IntensityOption_3")));
+            FindButton(view, "IntensityOption_0").onClick.Invoke();
+            Assert.AreEqual(0, settings.BattleIntensity, "다시 매번 고르기로");
+            Object.Destroy(field.gameObject);
+        }
+
+        // 휘두르기 자리에 다른 기술을 넣고 (#147 사용자), 주인공 탭의 [휘두르기 넣기]로 되돌림
+        [UnityTest]
+        public IEnumerator BasicSkillSeatCanBeSwappedAndPutBackInTheBag()
+        {
+            var cram = TestData.Skill("cram", SkillKind.Damage, SkillTarget.SingleEnemy, 30).Set("displayName", "벼락치기");
+            var doc = TestData.Item("skilldoc_cram").Set("kind", ItemKind.SkillDocument).Set("taughtSkill", cram).Set("displayName", "기술문서: 벼락치기");
+            var bookRelic = TestData.Relic("relic_b", TestData.Skill("b", SkillKind.Guard, SkillTarget.AllAllies, 3).Set("displayName", "방패"), new MonsterStats(1, 0, 0));
+            var lanternRelic = TestData.Relic("relic_c", TestData.Skill("c", SkillKind.Heal, SkillTarget.AllAllies, 3).Set("displayName", "빛"), new MonsterStats(1, 0, 0));
+            session.GrantRelic(bookRelic);
+            session.GrantRelic(lanternRelic);
+            session.Inventory.Add(doc);
+            database.ReplaceContents(new MonsterSpecies[0], new[] { ink, cover, keepsake, potion, doc }, new[] { area }, new[] { quill, book, lantern, bookRelic, lanternRelic });
+            Assert.IsFalse(session.Hero.HasSkillRoom);
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+            var bag = hud.Find("InventoryView");
+            FindButton(hud, "BagButton").onClick.Invoke();
+            yield return null;
+            Assert.IsFalse(FindButton(bag, "PutBasicSkillButton").gameObject.activeSelf, "휘두르기가 있으면 버튼 없음");
+
+            var view = (InventoryView)typeof(FieldScreen).GetField("inventoryView", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(field);
+            view.LearnView.ShowDocument(session, doc, _ => { });
+            yield return null;
+            var learn = bag.Find("SkillLearnView");
+            StringAssert.Contains(session.Hero.Data.BasicSkill.DisplayName, AllText(learn.Find("LearnPanel/Replace_Basic")), "맨 위 = 기본 기술");
+            learn.Find("LearnPanel/Replace_Basic/Hit").GetComponent<Button>().onClick.Invoke();
+            FindButton(learn, "LearnConfirmButton").onClick.Invoke();
+            yield return null;
+            Assert.IsFalse(session.Hero.UsesBasicSkill);
+            Assert.AreSame(cram, session.Hero.Skills[0]);
+
+            // 주인공 탭을 다시 열면 [휘두르기 넣기]
+            FindButton(bag, "TabRelics").onClick.Invoke();
+            FindButton(bag, "TabHero").onClick.Invoke();
+            yield return null;
+            var put = FindButton(bag, "PutBasicSkillButton");
+            Assert.IsTrue(put.gameObject.activeSelf);
+            StringAssert.Contains(session.Hero.Data.BasicSkill.DisplayName + " 넣기", AllText(put));
+            put.onClick.Invoke();
+            yield return null;
+            learn.Find("LearnPanel/Replace_Basic/Hit").GetComponent<Button>().onClick.Invoke();
+            FindButton(learn, "LearnConfirmButton").onClick.Invoke();
+            yield return null;
+            Assert.IsTrue(session.Hero.UsesBasicSkill);
+            Assert.IsFalse(FindButton(bag, "PutBasicSkillButton").gameObject.activeSelf, "돌아오면 버튼 사라짐");
+            Object.Destroy(field.gameObject);
+        }
+
+        // 아이템이 8종을 넘어도 다 보고 쓸 수 있음 (#147 사용자: 상처약이 안 보임 — 8칸 고정이라 먼저 얻은 재료가 칸을 채우면 안 보였음).
+        // 상처약이 맨 앞, 나머지는 위아래로 밀어서 봄
+        [UnityTest]
+        public IEnumerator BagScrollsAndPutsUsableItemsFirst()
+        {
+            var extras = new List<ItemData>();
+            for (int i = 0; i < 9; i++)
+            {
+                var extra = TestData.Item("extra_" + i).Set("displayName", "재료 " + i);
+                extras.Add(extra);
+                session.Inventory.Add(extra); // 재료를 상처약보다 먼저 얻음
+            }
+            var healing = TestData.Item("late_potion").Set("displayName", "늦게 얻은 상처약").Set("kind", ItemKind.Consumable).Set("healAmount", 40);
+            session.Inventory.Add(healing);
+            var everything = new List<ItemData>(extras) { ink, cover, keepsake, potion, healing };
+            database.ReplaceContents(new MonsterSpecies[0], everything.ToArray(), new[] { area }, new[] { quill, book, lantern });
+
+            var field = MakeField();
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+            var bag = hud.Find("InventoryView");
+            FindButton(hud, "BagButton").onClick.Invoke();
+            FindButton(bag, "TabItems").onClick.Invoke();
+            yield return null;
+
+            StringAssert.Contains("상처약", AllText(bag.Find("DetailBox")), "첫 칸 = 상처약");
+            Assert.IsTrue(FindButton(bag, "UseItemButton").gameObject.activeSelf, "바로 쓸 수 있음");
+            var last = FindButton(bag, "ItemSlot_11");
+            Assert.IsTrue(last.gameObject.activeInHierarchy, "12칸까지 줄이 늘어남");
+            var scroll = bag.Find("MaterialsPage/Viewport").GetComponent<ScrollRect>();
+            Assert.Greater(scroll.content.rect.height, scroll.viewport.rect.height, "넘치면 밀 수 있음");
+            Assert.IsTrue(bag.Find("MaterialsPage/ScrollTrack").gameObject.activeSelf, "스크롤 막대가 보임");
+            Assert.AreEqual(1f, scroll.verticalNormalizedPosition, 0.01f, "처음엔 맨 위");
+            Object.Destroy(field.gameObject);
+        }
+
+        // 징표 진열장 (#97): 이야기 순서로 3칸씩, 넘치면 ◀ 1 / 2 ▶ — 전에는 에셋 순서 + 3칸 고정이라 지역이 4개면 하나가 안 보였음
+        [UnityTest]
+        public IEnumerator KeepsakeShelfPagesInStoryOrder()
+        {
+            WordDatabase Region(string id, string name, int order, string keepsakeName)
+            {
+                var item = TestData.Item("keepsake_" + id).Set("displayName", keepsakeName).Set("kind", ItemKind.Keepsake);
+                session.Inventory.Add(item);
+                var book = ScriptableObject.CreateInstance<WordDatabase>().Set("regionId", id).Set("regionName", name)
+                    .Set("rewards", new List<DexReward> { new DexReward(id, name, item, 100 * order, 0, order) });
+                book.ReplaceWords(TestData.SampleWords());
+                return book;
+            }
+            area.Words.Set("rewards", new List<DexReward> { new DexReward("meadow", "초원", keepsake, 500, 0, 1) });
+            FieldArea Area(string id, WordDatabase words) =>
+                ScriptableObject.CreateInstance<FieldArea>().Set("areaId", id).Set("displayName", id).Set("map", Map).Set("words", words);
+            // 일부러 이야기 순서와 다르게 넣음 (에셋 이름 순: forest · jungle · library · meadow)
+            var areas = new[] { Area("forest", Region("forest", "숲", 3, "도토리 책갈피")), Area("jungle", Region("jungle", "메아리 정글", 4, "메아리 풀잎 책갈피")),
+                Area("library", Region("library", "잊혀진 서고", 2, "깃털 책갈피")), area };
+            database.ReplaceContents(new MonsterSpecies[0], new[] { ink, cover, keepsake, potion }, areas, new[] { quill, book, lantern });
+            var field = MakeField();
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+            FindButton(hud, "BagButton").onClick.Invoke();
+            var bag = hud.Find("InventoryView");
+            FindButton(bag, "TabKeepsakes").onClick.Invoke();
+            var page = bag.Find("KeepsakesPage");
+            string Slot(int i) => AllText(page.Find($"KeepsakeSlot_{i}"));
+            StringAssert.Contains("초원", Slot(0));
+            StringAssert.Contains("잊혀진 서고", Slot(1));
+            StringAssert.Contains("숲", Slot(2));
+            Assert.IsTrue(page.Find("KeepsakePager").gameObject.activeSelf);
+            StringAssert.Contains("1 / 2", AllText(page.Find("KeepsakePager")));
+            Assert.IsFalse(FindButton(page, "KeepsakePrev").interactable, "첫 쪽에선 ◀ 못 누름");
+
+            FindButton(page, "KeepsakeNext").onClick.Invoke();
+            StringAssert.Contains("2 / 2", AllText(page.Find("KeepsakePager")));
+            StringAssert.Contains("메아리 풀잎 책갈피", Slot(0));
+            StringAssert.Contains("다음 지역", Slot(1));
+            StringAssert.Contains("메아리 풀잎 책갈피", AllText(bag.Find("DetailBox")), "넘기면 그 쪽 첫 칸을 보여 줌");
+            StringAssert.Contains("400 골드", AllText(bag.Find("DetailBox")));
+            Assert.IsFalse(FindButton(page, "KeepsakeNext").interactable, "마지막 쪽에선 ▶ 못 누름");
+            FindButton(page, "KeepsakeSlot_2").onClick.Invoke();
+            StringAssert.Contains("새 지역이 열리면", AllText(bag.Find("DetailBox")));
+
+            FindButton(page, "KeepsakePrev").onClick.Invoke();
+            StringAssert.Contains("네잎클로버 책갈피", Slot(0));
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 성유물이 11개면 (1.1) 칸이 두 줄 6칸씩 — 이름이 아랫줄 칸에 가려지지 않고 11번째 칸도 보임 (#120 사용자 캡처)
+        [UnityTest]
+        public IEnumerator RelicGridShowsElevenRelicsWithoutCoveringNames()
+        {
+            var relics = new List<RelicData> { quill, book, lantern };
+            for (int i = 3; i < 11; i++)
+                relics.Add(TestData.Relic($"relic_extra_{i}", TestData.Skill($"extra_{i}", SkillKind.Damage, SkillTarget.SingleEnemy, 5),
+                    new MonsterStats(0, 1, 0), cover).Set("displayName", $"긴 이름 성유물 {i}"));
+            database.ReplaceContents(new MonsterSpecies[0], new[] { ink, cover, keepsake, potion }, new[] { area }, relics.ToArray());
+            foreach (var relic in relics.GetRange(1, 4)) session.GrantRelic(relic); // 5개 가짐, 6개는 ???
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var bag = field.transform.Find("FieldHud/SafeArea/InventoryView");
+            FindButton(field.transform.Find("FieldHud/SafeArea"), "BagButton").onClick.Invoke();
+            FindButton(bag, "TabRelics").onClick.Invoke();
+            yield return null;
+            Canvas.ForceUpdateCanvases();
+
+            var grid = bag.Find("RelicPage/Grid");
+            for (int i = 0; i < 11; i++)
+                Assert.IsTrue(grid.Find($"RelicCell_{i}").gameObject.activeSelf, $"{i + 1}번째 칸이 보여야 함");
+            StringAssert.Contains("모은 성유물  5 / 11", AllText(bag.Find("RelicPage")));
+
+            // 윗줄(0~5) 이름의 아래 끝이 아랫줄(6~10) 칸 그림의 위 끝보다 위에 있어야 함
+            float Bottom(RectTransform rt) { var c = new Vector3[4]; rt.GetWorldCorners(c); return c[0].y; }
+            float Top(RectTransform rt) { var c = new Vector3[4]; rt.GetWorldCorners(c); return c[1].y; }
+            float lowestName = float.MaxValue, highestBelow = float.MinValue;
+            for (int i = 0; i < 6; i++) lowestName = Mathf.Min(lowestName, Bottom((RectTransform)grid.Find($"RelicCell_{i}/Name")));
+            for (int i = 6; i < 11; i++) highestBelow = Mathf.Max(highestBelow, Top((RectTransform)grid.Find($"RelicCell_{i}/Back")));
+            Assert.GreaterOrEqual(lowestName, highestBelow, "윗줄 이름이 아랫줄 칸에 가려짐");
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 가방 > 주인공: 레벨·경험치·능력치(성유물 보너스)·기술(기본 + 성유물). 성유물 탭: 모은 것·??? · 장착/빼기
+        [UnityTest]
+        public IEnumerator BagHeroAndRelicTabs()
+        {
+            session.GrantRelic(book);                // 빈 칸에 바로 끼워짐 → 깃펜·백과사전 장착
+            session.Hero.TakeDamage(session.Hero.CurrentHp - 20);
+            session.Hero.GainExp(10);
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+            var bag = hud.Find("InventoryView").gameObject;
+
+            // HUD 주인공 배지 → 가방 > 주인공
+            StringAssert.Contains("주인공 Lv5", AllText(hud.Find("HeroStrip")));
+            FindButton(hud, "HeroBadge").onClick.Invoke();
+            Assert.IsTrue(bag.activeSelf);
+            var heroText = AllText(bag.transform.Find("HeroPage"));
+            StringAssert.Contains("Lv5 · 성유물 2개 장착", heroText);
+            StringAssert.Contains($"20 / {session.Hero.Stats.MaxHp}", heroText, "현재 HP / 최대 HP");
+            StringAssert.Contains("(+4)", heroText, "공격·방어에 성유물 보너스");
+            StringAssert.Contains("기본 기술 · ", heroText);
+            StringAssert.Contains("깃펜 +0 · ", heroText, "성유물 기술은 어느 성유물인지");
+            StringAssert.Contains("잉크 뿌리기", heroText);
+            StringAssert.Contains("책 방패", heroText);
+            StringAssert.Contains("한→영 · 어려움", heroText, "기술의 문제 유형");
+            StringAssert.Contains($"다음 레벨까지 {LevelCurve.ExpToNextLevel(5) - 10}", heroText);
+            StringAssert.Contains("견습 모험가", heroText);
+
+            // 성유물 탭: 깃펜·백과사전 + 못 찾은 등불은 ???
+            FindButton(bag.transform, "TabRelics").onClick.Invoke();
+            var relicPage = bag.transform.Find("RelicPage");
+            var relicText = AllText(relicPage);
+            StringAssert.Contains("모은 성유물  2 / 3", relicText);
+            StringAssert.Contains("???", relicText);
+            StringAssert.Contains("깃펜  +0", relicText);
+            StringAssert.Contains("+3 각성 → 잉크 폭풍", relicText);
+            StringAssert.Contains("빼기", relicText);
+
+            // 깃펜 빼기 → 기술·공격이 줄어든다 → 다시 장착
+            int attack = session.Hero.Stats.Attack;
+            FindButton(relicPage, "RelicActionButton").onClick.Invoke();
+            Assert.IsFalse(session.Hero.IsEquipped(session.Hero.Find(quill)));
+            Assert.AreEqual(attack - 4, session.Hero.Stats.Attack);
+            StringAssert.Contains("장착하기", AllText(relicPage));
+            FindButton(relicPage, "RelicActionButton").onClick.Invoke();
+            Assert.IsTrue(session.Hero.IsEquipped(session.Hero.Find(quill)));
+
+            // 못 찾은 칸(???)을 누르면 안내
+            FindButton(relicPage, "Back").onClick.Invoke(); // 첫 칸 (깃펜)
+            var cells = relicPage.Find("Grid");
+            FindButton(cells.Find("RelicCell_2"), "Back").onClick.Invoke();
+            StringAssert.Contains("아직 찾지 못한 성유물", AllText(relicPage));
+
+            FindButton(bag.transform, "InventoryCloseButton").onClick.Invoke();
+            yield return null;
+            Assert.IsFalse(field.IsPanelOpen);
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 성유물 바로 바꿔 끼우기 (#91): 칸이 가득 찼을 때 [바꿔 끼우기] → 위의 칸을 누르면 그 칸의 성유물과 바뀜 (기술 칸 순서 그대로)
+        [UnityTest]
+        public IEnumerator RelicSwapsStraightIntoAFullSlot()
+        {
+            var wand = TestData.Relic("relic_wand", TestData.Skill("bolt", SkillKind.Damage, SkillTarget.SingleEnemy, 26).Set("displayName", "철자 번개"),
+                new MonsterStats(0, 6, 0), cover).Set("displayName", "마법 지팡이");
+            session.GrantRelic(book);
+            session.GrantRelic(lantern);   // 세 칸 가득 (깃펜·백과사전·등불)
+            session.GrantRelic(wand);      // 칸이 없어 가방에만
+            var hero = session.Hero;
+            Assert.IsFalse(hero.HasEmptySlot);
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var bag = field.transform.Find("FieldHud/SafeArea/InventoryView");
+            FindButton(field.transform.Find("FieldHud/SafeArea"), "BagButton").onClick.Invoke();
+            FindButton(bag, "TabRelics").onClick.Invoke();
+            var relicPage = bag.Find("RelicPage");
+            FindButton(relicPage.Find("Grid/RelicCell_3"), "Back").onClick.Invoke();
+            StringAssert.Contains("마법 지팡이", AllText(relicPage));
+            StringAssert.Contains("바꿔 끼우기", AllText(FindButton(relicPage, "RelicActionButton")), "칸이 가득해도 바로 바꿀 수 있음");
+
+            FindButton(relicPage, "RelicActionButton").onClick.Invoke();
+            StringAssert.Contains("바꿀 칸을 고르세요", AllText(relicPage));
+            StringAssert.Contains("취소", AllText(FindButton(relicPage, "RelicActionButton")));
+            FindButton(relicPage, "EquipSlot_0").onClick.Invoke();
+            Assert.AreSame(hero.Find(wand), hero.SlotAt(0), "1번 칸 = 마법 지팡이");
+            Assert.IsFalse(hero.IsEquipped(hero.Find(quill)), "깃펜은 빠짐");
+            Assert.AreEqual("relic:relic_wand", hero.SkillSlots[0].Key, "기술 칸 첫 자리도 지팡이 기술");
+            StringAssert.Contains("마법 지팡이 ↔ 깃펜 바꿔 끼웠어요", AllText(relicPage));
+            StringAssert.Contains("빼기", AllText(FindButton(relicPage, "RelicActionButton")));
+
+            // 칸 고르기 중 뒤로가기 = 그것만 취소
+            FindButton(relicPage.Find("Grid"), "Back").onClick.Invoke(); // 첫 칸 = 마법 지팡이? → 깃펜을 고름
+            FindButton(relicPage.Find("Grid/RelicCell_0"), "Back").onClick.Invoke();
+            FindButton(relicPage, "RelicActionButton").onClick.Invoke();
+            field.HandleBack();
+            Assert.IsTrue(bag.gameObject.activeSelf, "가방은 그대로");
+            StringAssert.DoesNotContain("바꿀 칸을 고르세요", AllText(relicPage));
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 가방 > 아이템: 상처약 [사용하기] — HP가 가득이면 잠금, 다치면 회복 + 개수 감소
+        [UnityTest]
+        public IEnumerator PotionCanBeUsedFromBag()
+        {
+            session.Inventory.Add(potion, 2);
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+            var bag = hud.Find("InventoryView").gameObject;
+
+            FindButton(hud, "BagButton").onClick.Invoke();
+            FindButton(bag.transform, "TabItems").onClick.Invoke();
+            int potionSlot = -1;
+            for (int i = 0; i < InventoryView.SlotCount; i++)
+            {
+                FindButton(bag.transform, $"ItemSlot_{i}").onClick.Invoke();
+                if (AllText(bag.transform.Find("DetailBox")).Contains("상처약")) { potionSlot = i; break; }
+            }
+            Assert.GreaterOrEqual(potionSlot, 0, "아이템 칸에 상처약");
+            var use = FindButton(bag.transform, "UseItemButton");
+            Assert.IsTrue(use.gameObject.activeSelf);
+            Assert.IsFalse(use.interactable, "HP가 가득하면 잠금");
+            FindButton(bag.transform, "InventoryCloseButton").onClick.Invoke();
+            yield return null;
+
+            session.Hero.TakeDamage(50);
+            FindButton(hud, "BagButton").onClick.Invoke();
+            FindButton(bag.transform, "TabItems").onClick.Invoke();
+            FindButton(bag.transform, $"ItemSlot_{potionSlot}").onClick.Invoke();
+            int hp = session.Hero.CurrentHp;
+            Assert.IsTrue(use.interactable);
+            use.onClick.Invoke();
+            Assert.AreEqual(hp + 40, session.Hero.CurrentHp);
+            Assert.AreEqual(1, session.Inventory.GetCount(potion));
+            StringAssert.Contains("HP +40 회복했어요", AllText(bag.transform.Find("DetailBox")));
+
+            FindButton(bag.transform, "InventoryCloseButton").onClick.Invoke();
+            yield return null;
+            StringAssert.Contains($"HP {session.Hero.CurrentHp}/", AllText(hud.Find("HeroStrip")), "HUD도 갱신");
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 기술 칸이 가득일 때 가방 > 아이템의 기술문서로 배우기 → 바꿀 기술 고르기, 빠진 성유물 기술은 성유물 탭에서 다시 넣기
+        [UnityTest]
+        public IEnumerator SkillDocumentFromBagReplacesASkillAndRelicSkillComesBack()
+        {
+            var cram = TestData.Skill("cram", SkillKind.Damage, SkillTarget.SingleEnemy, 30).Set("displayName", "벼락치기");
+            var doc = TestData.Item("skilldoc_cram").Set("displayName", "기술문서: 벼락치기")
+                .Set("kind", ItemKind.SkillDocument).Set("taughtSkill", cram);
+            database.ReplaceContents(new MonsterSpecies[0], new[] { ink, cover, keepsake, potion, doc }, new[] { area }, new[] { quill, book, lantern });
+            session.GrantRelic(book);
+            session.GrantRelic(lantern);
+            session.Inventory.Add(doc);
+            Assert.IsFalse(session.Hero.HasSkillRoom, "기술 칸 가득 (깃펜·백과사전·등불)");
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+            var bag = hud.Find("InventoryView");
+
+            FindButton(hud, "BagButton").onClick.Invoke();
+            FindButton(bag, "TabItems").onClick.Invoke();
+            bool found = false;
+            for (int i = 0; i < InventoryView.SlotCount && !found; i++)
+            {
+                FindButton(bag, $"ItemSlot_{i}").onClick.Invoke();
+                found = AllText(bag.Find("DetailBox")).Contains("기술문서: 벼락치기");
+            }
+            Assert.IsTrue(found, "아이템 칸에 기술문서");
+            var learnButton = FindButton(bag, "UseItemButton");
+            StringAssert.Contains("배우기", AllText(learnButton));
+            StringAssert.Contains("기술 칸이 가득", AllText(bag.Find("DetailBox")));
+            learnButton.onClick.Invoke();
+            yield return null;
+
+            var learn = bag.Find("SkillLearnView");
+            Assert.IsTrue(learn.gameObject.activeSelf, "기술 배우기 창");
+            StringAssert.Contains("바꿀 기술을 고르세요", AllText(learn));
+            StringAssert.Contains("책 방패", AllText(learn));
+            var confirm = FindButton(learn, "LearnConfirmButton");
+            Assert.IsFalse(confirm.interactable, "바꿀 기술을 고르기 전엔 못 누름");
+            learn.Find("LearnPanel/Replace_1/Hit").GetComponent<Button>().onClick.Invoke(); // 책 방패
+            Assert.IsTrue(confirm.interactable);
+            StringAssert.Contains("책 방패 → 벼락치기", AllText(confirm));
+            confirm.onClick.Invoke();
+            yield return null;
+
+            Assert.IsFalse(learn.gameObject.activeSelf);
+            CollectionAssert.Contains(session.Hero.Skills.ToArray(), cram);
+            Assert.IsFalse(session.Hero.Skills.Any(s => s.DisplayName == "책 방패"));
+            Assert.AreEqual(1, session.Inventory.GetCount(doc), "문서는 남음");
+            StringAssert.Contains("배웠어요", AllText(bag.Find("DetailBox")));
+            Assert.IsFalse(learnButton.interactable, "이미 배운 기술");
+
+            // 성유물 탭: 백과사전은 끼웠지만 기술이 빠져 있음 → [기술 넣기]로 벼락치기와 바꿔 다시 넣기
+            FindButton(bag, "InventoryCloseButton").onClick.Invoke();
+            yield return null;
+            FindButton(hud, "RelicSlot_1").onClick.Invoke();
+            yield return null;
+            var relicPage = bag.Find("RelicPage");
+            StringAssert.Contains("기술은 기술 칸에 없음", AllText(relicPage));
+            var put = FindButton(relicPage, "RelicSkillButton");
+            Assert.IsTrue(put.gameObject.activeSelf);
+            put.onClick.Invoke();
+            yield return null;
+            Assert.IsTrue(learn.gameObject.activeSelf);
+            StringAssert.Contains("기술 칸에 넣기", AllText(learn));
+            Assert.IsTrue(learn.Find("LearnPanel/Replace_Basic").gameObject.activeSelf, "휘두르기도 고를 수 있음 (#147)");
+            learn.Find("LearnPanel/Replace_1/Hit").GetComponent<Button>().onClick.Invoke(); // 벼락치기
+            FindButton(learn, "LearnConfirmButton").onClick.Invoke();
+            yield return null;
+            Assert.IsTrue(session.Hero.Skills.Any(s => s.DisplayName == "책 방패"), "다시 넣음");
+            CollectionAssert.DoesNotContain(session.Hero.Skills.ToArray(), cram);
+            Assert.IsFalse(FindButton(relicPage, "RelicSkillButton").gameObject.activeSelf);
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator MinimapFollowsPlayerAndOpensFullMap()
+        {
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+
+            // 미니맵은 맵 데이터 크기대로 (한 칸 = 한 점), 내 위치 점이 시작 칸에
+            var texture = field.Minimap.Texture;
+            Assert.AreEqual(5, texture.width);
+            Assert.AreEqual(4, texture.height);
+            Assert.AreEqual((Color)MinimapArt.Chest, (Color)texture.GetPixel(1, 2), "보물상자 점");
+            var before = field.Minimap.Picture.PlayerAnchor;
+
+            // 위로 한 칸 걸으면 점도 따라 움직인다
+            yield return HoldStick(field, Direction.Up, () => field.IsMoving);
+            Assert.AreEqual(new Vector2Int(2, 2), field.PlayerCell);
+            Assert.Greater(field.Minimap.Picture.PlayerAnchor.y, before.y);
+
+            // 미니맵을 누르면 큰 지도
+            FindButton(hud, "Minimap").onClick.Invoke();
+            var map = hud.Find("MapView").gameObject;
+            Assert.IsTrue(map.activeSelf);
+            Assert.IsTrue(field.IsPanelOpen, "지도가 열려 있는 동안은 걷지 않음");
+            var text = AllText(map.transform);
+            StringAssert.Contains("지도 · 초원", text);
+            StringAssert.Contains("남은 보물상자 1개", text);
+            FindButton(map.transform, "MapCloseButton").onClick.Invoke();
+            Assert.IsFalse(map.activeSelf);
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 탐험 안개: 멀리 있는 상자는 처음엔 안 보이다가 가까이 걸어가면 미니맵에 나타난다
+        [UnityTest]
+        public IEnumerator WalkingRevealsFogOnMinimap()
+        {
+            //   y=1  #P..........C#   ← 시작 (1,1), 상자 (12,1)
+            area.Set("map", "##############\n#P..........C#\n##############");
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var chest = new Vector2Int(12, 1);
+            Assert.AreEqual((Color)MinimapArt.Fog, (Color)field.Minimap.Texture.GetPixel(chest.x, chest.y), "처음엔 안개");
+            Assert.IsFalse(session.World.IsExplored("meadow", chest));
+
+            yield return HoldStick(field, Direction.Right, () => field.PlayerCell.x >= 9, 8f);
+            Assert.IsTrue(session.World.IsExplored("meadow", chest), "3칸 안으로 다가가면 밝혀짐");
+            Assert.AreEqual((Color)MinimapArt.Chest, (Color)field.Minimap.Texture.GetPixel(chest.x, chest.y), "미니맵에 상자가 나타남");
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        // 안드로이드 뒤로가기: 맨 위 창부터 닫고, 아무 창도 없으면 '게임을 끝낼까요?' (한 번 더 누르면 닫힘)
+        [UnityTest]
+        public IEnumerator BackButtonClosesTopPanelThenAsksToQuit()
+        {
+            var field = MakeField();
+            yield return null;
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+            var quit = hud.Find("ConfirmDialog").gameObject;
+
+            FindButton(hud, "BagButton").onClick.Invoke();
+            Assert.IsTrue(hud.Find("InventoryView").gameObject.activeSelf);
+            field.HandleBack();
+            Assert.IsFalse(hud.Find("InventoryView").gameObject.activeSelf, "뒤로가기 → 가방 닫힘");
+            Assert.IsFalse(quit.activeSelf, "창을 닫을 때는 끝내기를 묻지 않음");
+
+            FindButton(hud, "SettingsButton").onClick.Invoke();
+            field.HandleBack();
+            Assert.IsFalse(hud.Find("SettingsView").gameObject.activeSelf, "뒤로가기 → 설정 닫힘");
+            Assert.IsFalse(field.IsPanelOpen);
+
+            field.HandleBack();
+            Assert.IsTrue(field.IsQuitDialogOpen, "아무 창도 없으면 끝낼지 물음");
+            Assert.IsTrue(field.IsPanelOpen, "묻는 동안은 걷지 않음");
+            StringAssert.Contains("게임을 끝낼까요?", AllText(quit.transform));
+            StringAssert.Contains("자동으로 저장", AllText(quit.transform));
+
+            field.HandleBack();
+            Assert.IsFalse(field.IsQuitDialogOpen, "한 번 더 누르면 취소");
+
+            field.HandleBack();
+            FindButton(quit.transform, "DialogCancelButton").onClick.Invoke();
+            Assert.IsFalse(field.IsQuitDialogOpen, "[취소]로도 닫힘");
+            Assert.IsFalse(field.IsPanelOpen);
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator SettingsSaveChangesAndDeleteNeedsConfirm()
+        {
+            var settings = new GameSettings();
+            int saved = 0, deleted = 0;
+            var field = MakeField(settings, () => saved++, () => deleted++);
+            yield return null;
+            yield return null;
+            var hud = field.transform.Find("FieldHud/SafeArea");
+
+            FindButton(hud, "SettingsButton").onClick.Invoke();
+            var view = hud.Find("SettingsView").gameObject;
+            Assert.IsTrue(view.activeSelf, "설정 버튼 → 설정");
+            Assert.AreEqual(0, saved, "열기만 해서는 저장하지 않음");
+
+            FindButton(view.transform, "VibrationSwitch").onClick.Invoke();
+            Assert.IsFalse(settings.Vibration);
+            Assert.AreEqual(1, saved);
+
+            // 왼손 모드 (#215): 켜면 바로 스틱과 [확인]이 자리를 바꾸고 저장됨, 끄면 돌아옴
+            var confirmArea = (RectTransform)hud.Find("ConfirmArea");
+            Assert.AreEqual(0.02f, confirmArea.anchorMin.x, 0.001f, "기본은 [확인]이 왼쪽");
+            FindButton(view.transform, "LeftHandedSwitch").onClick.Invoke();
+            Assert.IsTrue(settings.LeftHanded);
+            Assert.AreEqual(2, saved);
+            Assert.AreEqual(0.64f, confirmArea.anchorMin.x, 0.001f, "[확인]이 오른쪽으로");
+            Assert.AreEqual(0.6f, field.Stick.Zone.anchorMax.x, 0.001f, "스틱 영역이 왼쪽으로");
+            FindButton(view.transform, "LeftHandedSwitch").onClick.Invoke();
+            Assert.IsFalse(settings.LeftHanded);
+            Assert.AreEqual(3, saved);
+            Assert.AreEqual(0.02f, confirmArea.anchorMin.x, 0.001f, "끄면 제자리로");
+            Assert.AreEqual(0.4f, field.Stick.Zone.anchorMin.x, 0.001f);
+            saved = 1; // 아래 저장 횟수는 진동 스위치 기준 그대로
+
+            var music = view.GetComponentsInChildren<Slider>(true).First(s => s.name == "MusicSlider");
+            Assert.AreEqual(GameSettings.DefaultMusicVolume, music.value, 0.001f, "현재 값으로 열림");
+            music.value = 0.2f;
+            music.value = 0.3f;
+            Assert.AreEqual(0.3f, settings.MusicVolume, 0.001f, "소리는 바로 바뀜");
+            Assert.AreEqual(1, saved, "슬라이더를 끄는 동안은 저장하지 않음 (#48)");
+            FindButton(view.transform, "SettingsCloseButton").onClick.Invoke();
+            Assert.AreEqual(2, saved, "창을 닫을 때 한 번 저장");
+            FindButton(hud, "SettingsButton").onClick.Invoke();
+            Assert.AreEqual(2, saved);
+
+            // 처음부터 다시 하기: 첫 확인에서 취소하면 아무 일도 없음
+            var dialog = view.transform.Find("ConfirmDialog").gameObject;
+            FindButton(view.transform, "RestartButton").onClick.Invoke();
+            Assert.IsTrue(dialog.activeSelf);
+            StringAssert.Contains("처음부터 다시 할까요?", AllText(dialog.transform));
+            FindButton(dialog.transform, "DialogCancelButton").onClick.Invoke();
+            Assert.IsFalse(dialog.activeSelf);
+            Assert.AreEqual(0, deleted);
+
+            // 한 번 확인해도 아직 안 지우고 다시 묻는다 → 두 번째 [지우기]에서 지운다
+            FindButton(view.transform, "RestartButton").onClick.Invoke();
+            FindButton(dialog.transform, "DialogConfirmButton").onClick.Invoke();
+            Assert.AreEqual(0, deleted, "한 번만 눌러서는 안 지움");
+            StringAssert.Contains("되돌릴 수 없어요", AllText(dialog.transform));
+            FindButton(dialog.transform, "DialogConfirmButton").onClick.Invoke();
+            Assert.AreEqual(1, deleted);
+            Assert.IsFalse(view.activeSelf, "지운 뒤 설정 창은 닫힘");
+
+            Object.Destroy(field.gameObject);
+            yield return null;
+        }
+    }
+}

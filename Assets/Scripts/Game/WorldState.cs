@@ -1,0 +1,173 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using WordRPG.Field;
+
+namespace WordRPG.Game
+{
+    // 필드 진행 상태: 마지막 위치(지역+칸), 열어 본 보물상자, 쓰러뜨린 보스, 탐험한 칸(안개), 연 보스 방 문. 세이브 파일에 들어간다
+    [Serializable]
+    public class WorldState
+    {
+        // 걸을 때 주변이 밝혀지는 반지름 (칸)
+        public const int SightRadius = 3;
+
+        [SerializeField] private string areaId;
+        [SerializeField] private int x;
+        [SerializeField] private int y;
+        [SerializeField] private bool hasPosition;
+        [SerializeField] private List<string> openedChests = new List<string>();
+        [SerializeField] private List<string> defeatedBosses = new List<string>();
+        [SerializeField] private List<ExploredArea> explored = new List<ExploredArea>(); // 예전 세이브에는 없음 → 처음부터 탐험
+        [SerializeField] private List<DictionaryReadDay> dictionaryReads = new List<DictionaryReadDay>(); // 사전을 읽은 날 (#45, 예전 세이브엔 없음)
+        [SerializeField] private List<string> openedGates = new List<string>(); // 연 보스 방 문의 지역 id (#76, 예전 세이브엔 없음)
+        // 1.1 정글 (#80, 예전 세이브엔 없음 → 기본값): 마지막 위치가 뗏목 위인지, 당긴 레버 · 푼 석판 (id = "지역:x,y" — 상자 id와 같은 방식)
+        [SerializeField] private bool rafting;
+        [SerializeField] private List<string> pulledLevers = new List<string>();
+        [SerializeField] private List<string> solvedTablets = new List<string>();
+        // 1.2 동굴 (#112, 예전 세이브엔 없음 → 빈 목록): 밝힌 글자 반딧돌 (id = "지역:x,y")
+        [SerializeField] private List<string> litStones = new List<string>();
+        // 1.3 (#223, 예전 세이브엔 없음 → 빈 목록): 한 번만 일어난 일 — 어르신이 샘으로 뛰어듦 (id = "spring_leap:npcId")
+        [SerializeField] private List<string> events = new List<string>();
+
+        public string AreaId => hasPosition ? areaId : null;
+        public IReadOnlyList<string> OpenedChests => openedChests;
+
+        public bool TryGetPosition(string area, out Vector2Int position)
+        {
+            position = new Vector2Int(x, y);
+            return hasPosition && areaId == area;
+        }
+
+        // 마지막 위치가 뗏목 위인지 (그 위치의 지역에서만 의미가 있음)
+        public bool Rafting => hasPosition && rafting;
+
+        public void SetPosition(string area, Vector2Int position, bool onRaft = false)
+        {
+            areaId = area;
+            x = position.x;
+            y = position.y;
+            hasPosition = true;
+            rafting = onRaft;
+        }
+
+        public void ClearPosition() => hasPosition = false;
+
+        public bool IsBossDefeated(string bossId) => defeatedBosses.Contains(bossId);
+
+        public void MarkBossDefeated(string bossId)
+        {
+            if (!defeatedBosses.Contains(bossId)) defeatedBosses.Add(bossId);
+        }
+
+        // 탐험 안개: center 둘레를 밝히고 새로 밝힌 칸 수를 돌려준다
+        public int Reveal(string area, int mapWidth, int mapHeight, Vector2Int center, int radius = SightRadius)
+        {
+            var record = explored.Find(e => e.AreaId == area);
+            if (record == null)
+            {
+                record = new ExploredArea(area, mapWidth, mapHeight);
+                explored.Add(record);
+            }
+            return record.Reveal(mapWidth, mapHeight, center, radius);
+        }
+
+        public int ExploredAreaCount => explored.Count; // 한 번이라도 들어가 본 지역 수 (지도 버튼 빨간 점 #61)
+
+        public bool IsExplored(string area, Vector2Int cell)
+        {
+            var record = explored.Find(e => e.AreaId == area);
+            return record != null && record.IsExplored(cell);
+        }
+
+        // 출입구가 지금 열려 있는지: 여는 보스가 정해져 있으면 그 보스를 물리쳤을 때만
+        public bool IsExitOpen(AreaExit exit) =>
+            exit == null || exit.OpenedByBossOf == null || IsBossDefeated(exit.OpenedByBossOf.BossId);
+
+        public bool IsChestOpened(string chestId) => openedChests.Contains(chestId);
+
+        public bool IsGateOpened(string area) => openedGates != null && openedGates.Contains(area);
+
+        public void MarkGateOpened(string area)
+        {
+            if (openedGates == null) openedGates = new List<string>();
+            if (!openedGates.Contains(area)) openedGates.Add(area);
+        }
+
+        public void MarkChestOpened(string chestId)
+        {
+            if (!openedChests.Contains(chestId)) openedChests.Add(chestId);
+        }
+
+        public bool IsLeverPulled(string leverId) => pulledLevers != null && pulledLevers.Contains(leverId);
+
+        public void MarkLeverPulled(string leverId)
+        {
+            if (pulledLevers == null) pulledLevers = new List<string>();
+            if (!pulledLevers.Contains(leverId)) pulledLevers.Add(leverId);
+        }
+
+        public bool IsTabletSolved(string tabletId) => solvedTablets != null && solvedTablets.Contains(tabletId);
+
+        public void MarkTabletSolved(string tabletId)
+        {
+            if (solvedTablets == null) solvedTablets = new List<string>();
+            if (!solvedTablets.Contains(tabletId)) solvedTablets.Add(tabletId);
+        }
+
+        public bool IsStoneLit(string stoneId) => litStones != null && litStones.Contains(stoneId);
+
+        public void MarkStoneLit(string stoneId)
+        {
+            if (litStones == null) litStones = new List<string>();
+            if (!litStones.Contains(stoneId)) litStones.Add(stoneId);
+        }
+
+        public bool HasEvent(string eventId) => events != null && events.Contains(eventId);
+        public bool HasEventStartingWith(string prefix) => events != null && events.Exists(e => e.StartsWith(prefix, System.StringComparison.Ordinal));
+
+        public void MarkEvent(string eventId)
+        {
+            if (events == null) events = new List<string>();
+            if (!events.Contains(eventId)) events.Add(eventId);
+        }
+
+#if WORDRPG_TESTER || UNITY_EDITOR
+        public void TesterForgetEvent(string eventId) => events?.Remove(eventId); // 테스터 메뉴 [무료 상태로] — 특전을 다시 받게 (#251)
+#endif
+
+        // 그 지역 사전을 마지막으로 읽은 날 ("yyyy-MM-dd", 없으면 null)
+        public string DictionaryReadDay(string area)
+        {
+            if (dictionaryReads == null) return null;
+            foreach (var read in dictionaryReads)
+                if (read.AreaId == area) return read.Day;
+            return null;
+        }
+
+        public void MarkDictionaryRead(string area, string day)
+        {
+            if (dictionaryReads == null) dictionaryReads = new List<DictionaryReadDay>();
+            dictionaryReads.RemoveAll(r => r.AreaId == area);
+            dictionaryReads.Add(new DictionaryReadDay(area, day));
+        }
+    }
+
+    [Serializable]
+    public class DictionaryReadDay
+    {
+        [SerializeField] private string areaId;
+        [SerializeField] private string day;
+
+        public string AreaId => areaId;
+        public string Day => day;
+
+        private DictionaryReadDay() { } // Unity 직렬화용
+
+        public DictionaryReadDay(string areaId, string day)
+        {
+            this.areaId = areaId;
+            this.day = day;
+        }
+    }
+}
