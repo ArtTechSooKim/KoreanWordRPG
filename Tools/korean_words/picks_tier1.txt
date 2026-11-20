@@ -6,7 +6,7 @@
 5|이야기|이야기|n|story, talk|iyagi
 6|작다|작다01|adj|small|jakda
 7|길다|길다02|adj|long|gilda
-8|전|전08:명|n|before, earlier|jeon
+8|기록하다|기록하다|v|record|girokada
 9|학교|학교|n|school|hakgyo
 10|밝다|밝다:형|adj|bright, cheerful|bakda
 11|사전|사전22|n|dictionary|sajeon
