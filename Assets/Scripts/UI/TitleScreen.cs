@@ -113,8 +113,8 @@ namespace WordRPG.UI
             root = UiKit.Stretch("SafeArea", canvasGo.transform);
             UiKit.ApplySafeArea(root);
 
-            // 로고 (게임 이름: 영단어RPG) — 풍경 위에서도 또렷하게 그림자
-            var logo = UiKit.Display(UiKit.Label("Logo", root, "영단어RPG", 168, Palette.Gold, 0, 0.7f, 1, 0.86f,
+            // 로고 (게임 이름: Korean Word RPG) — 풍경 위에서도 또렷하게 그림자
+            var logo = UiKit.Display(UiKit.Label("Logo", root, "Korean Word RPG", 168, Palette.Gold, 0, 0.7f, 1, 0.86f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 96));
             var logoShadow = logo.gameObject.AddComponent<Shadow>();
             logoShadow.effectColor = new Color(0, 0, 0, 0.6f);

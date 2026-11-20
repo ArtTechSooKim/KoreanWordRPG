@@ -18,8 +18,8 @@ namespace WordRPG.EditorTools
     {
         // 앱 고유 이름(번들 ID·패키지 이름)은 스토어에 한 번 올리면 바꿀 수 없고, 바꾸면 폰의 세이브 위치도 바뀐다 (2026-10-03 사용자 확정).
         // 회사 이름(companyName)은 건드리지 않는다: PC(에디터) 세이브·설정 위치가 회사·앱 이름으로 정해져서 바꾸면 지금 세이브가 안 보임
-        public const string ProductName = "영단어RPG";
-        public const string PackageName = "com.arttechsoo.wordrpg";
+        public const string ProductName = "Korean Word RPG";
+        public const string PackageName = "com.arttechsoo.koreanwordrpg"; // 임시 — 앱스토어·구글플레이에 등록하기 전에 사용자 확인 (등록 뒤엔 못 바꿈)
         public const string IconPath = "Assets/Branding/AppIcon.png";
         public const string IosFolder = "Builds/iOS";
         public const string AndroidFolder = "Builds/Android";

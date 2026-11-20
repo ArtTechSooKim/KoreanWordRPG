@@ -32,8 +32,8 @@ namespace WordRPG.Tests
         [Test]
         public void LinkGoesToTheStoreOfThePhone()
         {
-            Assert.AreEqual("https://apps.apple.com/app/id6818805727?action=write-review", ReviewPrompt.Url(RuntimePlatform.IPhonePlayer));
-            Assert.AreEqual("https://play.google.com/store/apps/details?id=com.arttechsoo.wordrpg", ReviewPrompt.Url(RuntimePlatform.Android));
+            Assert.IsNull(ReviewPrompt.Url(RuntimePlatform.IPhonePlayer), "앱스토어에 앱을 만들기 전엔 아이폰 링크 없음 (AppStoreId)");
+            Assert.AreEqual("https://play.google.com/store/apps/details?id=" + WordRPG.EditorTools.MobileBuild.PackageName, ReviewPrompt.Url(RuntimePlatform.Android));
         }
     }
 }

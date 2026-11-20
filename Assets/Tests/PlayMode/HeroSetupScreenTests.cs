@@ -323,7 +323,7 @@ namespace WordRPG.Tests
 
             // 환영 (존댓말, 사용자) → 혼잣말 두 줄 → 깃펜으로 떠오른 이름
             yield return WaitFor(() => field.PauseTutorial.IsShowing, 2f);
-            StringAssert.Contains("영단어RPG에 오신 걸 환영합니다", field.PauseTutorial.Message);
+            StringAssert.Contains("Korean Word RPG에 오신 걸 환영합니다", field.PauseTutorial.Message);
             Assert.AreEqual("확인", UiKit.LabelOf(ActiveButton(field.transform, "TutorialNextButton")).text);
             ActiveButton(field.transform, "TutorialNextButton").onClick.Invoke();
             yield return WaitFor(() => field.NameEntry.IsOpen, 3f);

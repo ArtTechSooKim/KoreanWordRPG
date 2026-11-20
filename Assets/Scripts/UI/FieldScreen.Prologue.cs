@@ -128,7 +128,7 @@ namespace WordRPG.UI
 
             if (fresh)
             {
-                yield return pauseTutorial.Tell(new[] { "영단어RPG에 오신 걸 환영합니다!" });
+                yield return pauseTutorial.Tell(new[] { "Korean Word RPG에 오신 걸 환영합니다!" });
                 yield return Monologue("여긴 어디지…?\n내 이름조차 기억나지 않아.", 2.8f);
                 yield return Monologue("하지만 이 깃펜은…\n처음 보는 물건 같지 않아.", 2.8f);
             }
