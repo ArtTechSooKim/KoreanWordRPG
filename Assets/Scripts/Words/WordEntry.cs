@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace WordRPG.Words
 {
-    // 단어 1개. CSV 한 줄과 1:1 대응 (id, english, meaning, pos, example, exampleMeaning, story, storyHeading)
+    // 단어 1개. CSV 한 줄과 1:1 대응 (id, english, meaning, pos, example, exampleMeaning, story, storyHeading, romanization)
+    // Korean Word RPG: english 칸 = 배우는 말(한국어 단어), meaning = 영어 뜻, example = 한국어 예문, exampleMeaning = 영어 해석 (#1)
     [Serializable]
     public class WordEntry
     {
@@ -18,6 +19,8 @@ namespace WordRPG.Words
         [SerializeField] private int story;
         [Tooltip("이 줄부터 시작하는 묶음의 제목. 비어 있으면 앞 묶음이 이어짐")]
         [SerializeField] private string storyHeading;
+        [Tooltip("한국어 단어의 로마자 (국어의 로마자 표기법 — 소리 나는 대로). 단어 아래 작은 글씨")]
+        [SerializeField] private string romanization;
 
         public string Id => id;
         public string English => english;
@@ -27,11 +30,12 @@ namespace WordRPG.Words
         public string ExampleMeaning => exampleMeaning;
         public int Story => story;
         public string StoryHeading => storyHeading ?? "";
+        public string Romanization => romanization ?? "";
 
         private WordEntry() { } // Unity 직렬화용
 
         public WordEntry(string id, string english, string meaning, string partOfSpeech = "",
-            string example = "", string exampleMeaning = "", int story = 0, string storyHeading = "")
+            string example = "", string exampleMeaning = "", int story = 0, string storyHeading = "", string romanization = "")
         {
             this.english = english.Trim();
             this.id = string.IsNullOrWhiteSpace(id) ? this.english.ToLowerInvariant() : id.Trim();
@@ -41,6 +45,7 @@ namespace WordRPG.Words
             this.exampleMeaning = (exampleMeaning ?? "").Trim();
             this.story = story;
             this.storyHeading = (storyHeading ?? "").Trim();
+            this.romanization = (romanization ?? "").Trim();
         }
 
         // "버리다, 포기하다" → ["버리다", "포기하다"]. 오답 보기 중복 판정에 사용

@@ -18,7 +18,7 @@ MonoBehaviour:
     \uC601\uB2E8\uC5B4"
   order: 1
   sampleWordIds:
-  - access
-  - choice
-  - evidence
+  - ko_ireum
+  - ko_hakgyo
+  - ko_chaek
   books: []

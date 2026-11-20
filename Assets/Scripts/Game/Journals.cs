@@ -40,9 +40,11 @@ namespace WordRPG.Game
         }
 
         // 문장에서 그 단어가 처음 나오는 자리 (낱말 전체로, 대소문자 무시). 없으면 start = -1
-        public static (int start, int length) WordSpan(string sentence, string word)
+        // 한국어 단어는 어미·조사가 붙으니 KoreanWords 규칙으로 (Korean Word RPG #1 — 품사가 있어야 동사를 앎)
+        public static (int start, int length) WordSpan(string sentence, string word, string partOfSpeech = "")
         {
             if (string.IsNullOrEmpty(sentence) || string.IsNullOrEmpty(word)) return (-1, 0);
+            if (KoreanWords.HasHangul(word)) return KoreanWords.Find(sentence, word, partOfSpeech);
             int from = 0;
             while (from <= sentence.Length - word.Length)
             {

@@ -1,0 +1,261 @@
+<title>한국어 단어장 검수</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap">
+<style>
+/* 레이아웃: 위 = 단어장 탭 + 찾기 + 고칠 것 수(붙어 있음), 아래 = 단어 줄(한국어 단어·로마자·영어 뜻·예문). 게임 화면과 같은 남색·금색 */
+:root {
+  --bg: #eef1f8; --panel: #ffffff; --panel-2: #e3e8f4; --fg: #1b2140; --dim: #5d6787;
+  --accent: #a8740c; --accent-soft: #fbefcf; --line: #d3d9e8; --edit: #2f6fdb; --remove: #c0392b;
+  --display: "Jua", "Noto Sans KR", system-ui, sans-serif;
+  --body: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121424; --panel: #1d2138; --panel-2: #283052; --fg: #f2f5ff; --dim: #a6b3d1;
+  --accent: #ffd140; --accent-soft: #3a3320; --line: #2f3658; --edit: #7fb0ff; --remove: #ff7b6b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121424; --panel: #1d2138; --panel-2: #283052; --fg: #f2f5ff; --dim: #a6b3d1;
+  --accent: #ffd140; --accent-soft: #3a3320; --line: #2f3658; --edit: #7fb0ff; --remove: #ff7b6b; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 48px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 760px; margin: 0 auto; }
+h1 { font-family: var(--display); font-weight: 400; font-size: 30px; margin: 20px 0 4px; color: var(--accent); text-wrap: balance; }
+.lead { color: var(--dim); margin: 0 0 12px; max-width: 65ch; }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; display: grid; gap: 10px; border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 8px; }
+.tab { flex: 1; font-family: var(--display); font-size: 18px; padding: 10px 8px; border-radius: 12px; border: 2px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; }
+.tab small { font-family: var(--body); font-size: 12px; color: var(--dim); margin-left: 4px; }
+.tab[aria-selected="true"] { border-color: var(--accent); color: var(--accent); }
+.row2 { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+#search { flex: 1; min-width: 0; font: inherit; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); }
+.count { font-size: 14px; color: var(--dim); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.count b { color: var(--edit); }
+.notice { background: var(--accent-soft); border-radius: 10px; padding: 10px 12px; margin: 12px 0 0; font-size: 14px; }
+section.book { margin-top: 22px; }
+.book-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.book-head h2 { font-family: var(--display); font-weight: 400; font-size: 21px; margin: 0; }
+.book-head h2 small { font-family: var(--body); font-size: 13px; color: var(--dim); margin-left: 6px; }
+.done { font: inherit; font-size: 14px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--dim); cursor: pointer; }
+.done[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #1b2140; font-weight: 700; }
+ol.words { list-style: none; padding: 0; margin: 10px 0 0; background: var(--panel); border-radius: 14px; overflow: hidden; border: 1px solid var(--line); }
+li.word { display: grid; grid-template-columns: 2.4em minmax(0, 1fr) auto; gap: 4px 10px; align-items: start; padding: 10px 12px; border-top: 1px solid var(--line); }
+li.word:first-child { border-top: 0; }
+.no { color: var(--dim); font-size: 12px; font-variant-numeric: tabular-nums; padding-top: 6px; }
+.text { min-width: 0; display: grid; gap: 2px; }
+.head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.kw { font-family: var(--display); font-size: 22px; line-height: 1.2; }
+.rr { font-size: 14px; color: var(--dim); font-style: italic; }
+.badge { display: inline-block; font-size: 11px; color: var(--dim); border: 1px solid var(--line); border-radius: 6px; padding: 0 5px; }
+.badge.lv { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.mean { font-weight: 700; }
+.ex { font-size: 13px; color: var(--dim); }
+.ex .hl { color: var(--fg); font-weight: 700; }
+.fix { font-size: 14px; color: var(--edit); font-weight: 700; }
+.fix.remove { color: var(--remove); }
+.memo { font-size: 13px; color: var(--dim); }
+.by { font-size: 12px; color: var(--dim); }
+li.word.noted { background: color-mix(in srgb, var(--edit) 9%, var(--panel)); }
+.edit-btn { font: inherit; font-size: 13px; padding: 5px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--fg); cursor: pointer; }
+.editor { grid-column: 1 / -1; display: grid; gap: 8px; padding: 10px 0 4px; }
+.editor label { font-size: 13px; color: var(--dim); display: grid; gap: 4px; }
+.editor input[type="text"] { font: inherit; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+.editor .check { display: flex; gap: 6px; align-items: center; color: var(--fg); }
+.editor .acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.editor button { font: inherit; font-size: 14px; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--fg); cursor: pointer; }
+.editor button.save { background: var(--edit); border-color: var(--edit); color: #fff; font-weight: 700; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.empty { padding: 14px; color: var(--dim); text-align: center; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <h1>한국어 단어장 검수</h1>
+  <p class="lead">Korean Word RPG에 들어갈 한국어 단어 450개예요. 영단어RPG '누군가의 기록'의 한국어 문장마다 그 안에 나오는 단어를 하나씩 골랐어요. 그래서 예문은 그때 검수한 문장 그대로예요.</p>
+  <p class="lead">영어 뜻이나 로마자가 틀렸거나 어색한 단어만 [고치기]로 적어 주세요. 로마자는 「국어의 로마자 표기법」처럼 소리 나는 대로 적었어요(학교 hakgyo, 신라 Silla). 등급은 국립국어원 「한국어 학습용 어휘 목록」의 초급·중급·고급이에요.</p>
+  <div class="bar">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-tier1" aria-selected="true" data-book="tier1">초원·서고<small>150</small></button>
+      <button class="tab" role="tab" id="tab-tier2" aria-selected="false" data-book="tier2">숲·정글·동굴<small>300</small></button>
+    </div>
+    <div class="row2">
+      <input id="search" type="search" placeholder="한국어·영어·로마자로 찾기" autocomplete="off">
+      <span class="count" id="count">고칠 것 <b>0</b>개</span>
+    </div>
+  </div>
+  <p class="notice" id="offline" hidden>저장 기능을 열지 못해서 지금은 보기만 할 수 있어요. 잠시 뒤 다시 열어 주세요.</p>
+  <div id="books"></div>
+</div>
+
+<script>
+const WORDS = __WORDS__;
+// 단어장 하나를 100개씩 묶어서 (다 봤어요 표시를 묶음마다)
+const BOOKS = { tier1: { name: "초원·서고", note: "기록: 일기" }, tier2: { name: "숲·정글·동굴", note: "기록: 생존일지" } };
+const CHUNK = 100;
+const POS = { n: "명사", v: "동사", adj: "형용사·관형사", adv: "부사" };
+const LEVEL = { A: "초급", B: "중급", C: "고급", "-": "목록 밖" };
+let tab = "tier1";
+let notes = {};      // wordId → {suggestion, romanSuggestion, remove, memo, by}
+let done = {};       // 묶음 id → true
+let names = {};      // 적은 사람 id → 이름
+let db = null, user = null, myId = null, openEditor = null;
+
+try { const saved = localStorage.getItem("ko-review-tab"); if (saved === "tier1" || saved === "tier2") tab = saved; } catch (e) {}
+
+function el(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+
+// 예문의 단어 자리(h = [시작, 길이] — 게임의 KoreanWords와 같은 규칙으로 미리 계산)를 굵게
+function example(w) {
+  const box = el("div", "ex");
+  const line = el("div");
+  if (w.h && w.h[0] >= 0) {
+    line.append(document.createTextNode(w.x.slice(0, w.h[0])), el("span", "hl", w.x.slice(w.h[0], w.h[0] + w.h[1])), document.createTextNode(w.x.slice(w.h[0] + w.h[1])));
+  } else line.textContent = w.x;
+  box.append(line, el("div", null, w.t));
+  return box;
+}
+
+function render() {
+  for (const t of document.querySelectorAll(".tab")) t.setAttribute("aria-selected", String(t.dataset.book === tab));
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  const root = document.getElementById("books");
+  root.replaceChildren();
+  const words = WORDS[tab];
+  for (let s = 0; s < words.length; s += CHUNK) {
+    const part = words.slice(s, s + CHUNK);
+    const key = `${tab}_${s / CHUNK + 1}`;
+    const match = part.map((w, i) => [w, s + i]).filter(([w]) => !q || w.w.includes(q) || w.m.toLowerCase().includes(q) || w.r.includes(q));
+    if (q && !match.length) continue;
+    const sec = el("section", "book");
+    const head = el("div", "book-head");
+    const h = el("h2", null, `${BOOKS[tab].name} ${s / CHUNK + 1}`);
+    h.append(el("small", null, `${s + 1}~${s + part.length} · ${BOOKS[tab].note}`));
+    const btn = el("button", "done", done[key] ? "다 봤어요 ✓" : "다 봤어요");
+    btn.id = "done-" + key;
+    btn.setAttribute("aria-pressed", String(!!done[key]));
+    btn.disabled = !db;
+    btn.onclick = () => toggleDone(key);
+    head.append(h, btn);
+    sec.append(head);
+    const list = el("ol", "words");
+    if (!match.length) list.append(el("li", "empty", "찾는 단어가 없어요"));
+    for (const [w, i] of match) list.append(row(w, i));
+    sec.append(list);
+    root.append(sec);
+  }
+  const mine = Object.keys(notes).filter(id => WORDS[tab].some(w => w.id === id)).length;
+  document.getElementById("count").innerHTML = `고칠 것 <b>${mine}</b>개 · 전체 ${Object.keys(notes).length}개`;
+}
+
+function row(w, i) {
+  const li = el("li", "word");
+  const note = notes[w.id];
+  if (note) li.classList.add("noted");
+  li.append(el("span", "no", w.s ? String(w.s) : "+"));
+  const text = el("div", "text");
+  const head = el("div", "head");
+  head.append(el("span", "kw", w.w), el("span", "rr", w.r), el("span", "badge", POS[w.p] || w.p), el("span", "badge lv", LEVEL[w.g] || w.g));
+  text.append(head, el("div", "mean", w.m), example(w));
+  if (note) {
+    if (note.remove) text.append(el("div", "fix remove", "빼기"));
+    if (note.suggestion) text.append(el("div", "fix", "뜻 → " + note.suggestion));
+    if (note.romanSuggestion) text.append(el("div", "fix", "로마자 → " + note.romanSuggestion));
+    if (note.memo) text.append(el("div", "memo", note.memo));
+    if (note.by && names[note.by]) text.append(el("div", "by", "적은 사람: " + names[note.by]));
+  }
+  li.append(text);
+  const edit = el("button", "edit-btn", note ? "고친 것" : "고치기");
+  edit.id = "edit-" + w.id;
+  edit.disabled = !db;
+  edit.onclick = () => { openEditor = openEditor === w.id ? null : w.id; render(); focusEditor(); };
+  li.append(edit);
+  if (openEditor === w.id) li.append(editor(w, note));
+  return li;
+}
+
+function editor(w, note) {
+  const box = el("div", "editor");
+  const field = (label, id, value) => {
+    const l = el("label", null, label);
+    const input = document.createElement("input");
+    input.type = "text"; input.id = id; input.value = value;
+    l.append(input);
+    return [l, input];
+  };
+  const [l1, meaning] = field("영어 뜻 (짧게, 쉼표로 두 개까지)", "suggest-" + w.id, note && note.suggestion ? note.suggestion : w.m);
+  const [l2, roman] = field("로마자 (소리 나는 대로)", "roman-" + w.id, note && note.romanSuggestion ? note.romanSuggestion : w.r);
+  const l3 = el("label", "check");
+  const rm = document.createElement("input");
+  rm.type = "checkbox"; rm.id = "remove-" + w.id; rm.checked = !!(note && note.remove);
+  l3.append(rm, document.createTextNode("이 단어는 빼 주세요"));
+  const [l4, memo] = field("메모 (안 써도 돼요)", "memo-" + w.id, note && note.memo ? note.memo : "");
+  const acts = el("div", "acts");
+  const save = el("button", "save", "저장");
+  save.onclick = async () => {
+    const m = meaning.value.trim(), r = roman.value.trim();
+    const changed = rm.checked || memo.value.trim() || (m && m !== w.m) || (r && r !== w.r);
+    save.disabled = true;
+    try {
+      if (!changed) await db.doc("notes/" + w.id).delete();
+      else await db.doc("notes/" + w.id).set({ book: tab, word: w.w, meaning: w.m, roman: w.r,
+        suggestion: m !== w.m ? m : "", romanSuggestion: r !== w.r ? r : "", remove: rm.checked, memo: memo.value.trim(),
+        updatedAt: Date.now(), ...(myId ? { by: myId } : {}) });
+      openEditor = null;
+    } catch (e) { save.disabled = false; save.textContent = "저장하지 못했어요 — 다시 눌러 주세요"; }
+  };
+  const clear = el("button", null, "고친 것 지우기");
+  clear.hidden = !note;
+  clear.onclick = async () => { try { await db.doc("notes/" + w.id).delete(); openEditor = null; render(); } catch (e) {} };
+  const close = el("button", null, "닫기");
+  close.onclick = () => { openEditor = null; render(); };
+  acts.append(save, clear, close);
+  box.append(l1, l2, l3, l4, acts);
+  return box;
+}
+
+function focusEditor() { if (openEditor) { const i = document.getElementById("suggest-" + openEditor); if (i) i.focus(); } }
+
+async function toggleDone(key) {
+  try {
+    if (done[key]) await db.doc("sections/" + key).delete();
+    else await db.doc("sections/" + key).set({ done: true, at: Date.now() });
+  } catch (e) {}
+}
+
+for (const t of document.querySelectorAll(".tab")) t.onclick = () => {
+  tab = t.dataset.book; openEditor = null;
+  try { localStorage.setItem("ko-review-tab", tab); } catch (e) {}
+  render();
+};
+document.getElementById("search").oninput = () => render();
+render();
+
+(async () => {
+  const timer = setTimeout(() => { if (!db) document.getElementById("offline").hidden = false; }, 10000);
+  try { db = await (window.claude && window.claude.use ? window.claude.use("db") : null); } catch (e) { db = null; }
+  clearTimeout(timer);
+  if (!db) { document.getElementById("offline").hidden = false; render(); return; }
+  render();
+  try {
+    user = window.claude && window.claude.use ? await window.claude.use("user") : null;
+    if (user) myId = await user.id();
+  } catch (e) { user = null; }
+  db.collection("notes").onSnapshot(async snap => {
+    notes = {};
+    for (const d of snap.docs) notes[d.id] = d.data();
+    render(); focusEditor();
+    const ids = [...new Set(Object.values(notes).map(n => n.by).filter(Boolean))].filter(id => !(id in names));
+    if (user && ids.length) {
+      try {
+        const ps = await user.profiles(ids);
+        for (const id of ids) names[id] = (ps[id] && ps[id].name) || "";
+        render(); focusEditor();
+      } catch (e) {}
+    }
+  }, () => { document.getElementById("offline").hidden = false; });
+  db.collection("sections").onSnapshot(snap => {
+    done = {};
+    for (const d of snap.docs) if (d.data() && d.data().done) done[d.id] = true;
+    render(); focusEditor();
+  });
+})();
+</script>

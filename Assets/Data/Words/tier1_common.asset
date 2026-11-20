@@ -30,1357 +30,1507 @@ MonoBehaviour:
     storyOrder: 2
   journal: {fileID: 11400000, guid: d3ca025eed4f773429009a74ee4c26d4, type: 2}
   words:
-  - id: able
-    english: able
-    meaning: "\uD560 \uC218 \uC788\uB294, \uC720\uB2A5\uD55C"
-    partOfSpeech: adj
-    example: I was not able to say my sister's name today.
-    exampleMeaning: "\uC624\uB298 \uB098\uB294 \uB3D9\uC0DD\uC758 \uC774\uB984\uC744
-      \uB9D0\uD560 \uC218 \uC5C6\uC5C8\uB2E4."
-    story: 140
-    storyHeading: "\uB9C8\uC9C0\uB9C9 \uCABD"
-  - id: access
-    english: access
-    meaning: "\uC811\uADFC, \uC774\uC6A9"
-    partOfSpeech: n
-    example: A locked gate now blocked my access to my sister.
-    exampleMeaning: "\uC774\uC81C \uC7A0\uAE34 \uBB38\uC774 \uB3D9\uC0DD\uC5D0\uAC8C
-      \uAC00\uB294 \uAE38\uC744 \uB9C9\uACE0 \uC788\uB2E4."
-    story: 137
-    storyHeading: 
-  - id: account
-    english: account
-    meaning: "\uACC4\uC88C, \uACC4\uC815, \uC124\uBA85"
-    partOfSpeech: n
-    example: A traveler gave us an account of the library.
-    exampleMeaning: "\uD55C \uC5EC\uD589\uC790\uAC00 \uC11C\uACE0\uC5D0 \uB300\uD574
-      \uC124\uBA85\uD574 \uC8FC\uC5C8\uB2E4."
-    story: 102
-    storyHeading: 
-  - id: amount
-    english: amount
-    meaning: "\uC591, \uCD1D\uC561"
-    partOfSpeech: n
-    example: I measured the amount of blank space on each page.
-    exampleMeaning: "\uB098\uB294 \uCABD\uB9C8\uB2E4 \uBE44\uC5B4 \uC788\uB294 \uACF5\uAC04\uC758
-      \uC591\uC744 \uC7AC\uC5B4 \uBCF4\uC558\uB2E4."
-    story: 41
-    storyHeading: 
-  - id: army
-    english: army
-    meaning: "\uAD70\uB300"
-    partOfSpeech: n
-    example: The army had forgotten which side it was fighting for.
-    exampleMeaning: "\uAD70\uB300\uB294 \uC790\uC2E0\uB4E4\uC774 \uC5B4\uB290 \uD3B8\uC744
-      \uC704\uD574 \uC2F8\uC6B0\uB294\uC9C0 \uC78A\uC5B4\uBC84\uB838\uB2E4."
-    story: 78
-    storyHeading: 
-  - id: article
-    english: article
-    meaning: "\uAE30\uC0AC, \uBB3C\uD488"
-    partOfSpeech: n
-    example: I found an old article about the first blank pages.
-    exampleMeaning: "\uCCAB \uBE48 \uCABD\uB4E4\uC5D0 \uAD00\uD55C \uC624\uB798\uB41C
-      \uAE30\uC0AC\uB97C \uCC3E\uC558\uB2E4."
-    story: 113
-    storyHeading: 
-  - id: attack
-    english: attack
-    meaning: "\uACF5\uACA9\uD558\uB2E4"
-    partOfSpeech: v
-    example: Small goblins began to attack travelers, trying to steal their words.
-    exampleMeaning: "\uC791\uC740 \uB3C4\uAE68\uBE44\uB4E4\uC774 \uC5EC\uD589\uC790\uB4E4\uC758
-      \uB9D0\uC744 \uBE7C\uC557\uC73C\uB824\uACE0 \uACF5\uACA9\uD558\uAE30 \uC2DC\uC791\uD588\uB2E4."
-    story: 79
-    storyHeading: 
-  - id: attention
-    english: attention
-    meaning: "\uC8FC\uC758, \uAD00\uC2EC"
-    partOfSpeech: n
-    example: 'Pay attention: the goblins appear whenever you read aloud.'
-    exampleMeaning: "\uC8FC\uC758\uD560 \uAC83. \uC18C\uB9AC \uB0B4\uC5B4 \uC77D\uC744
-      \uB54C\uB9C8\uB2E4 \uB3C4\uAE68\uBE44\uB4E4\uC774 \uB098\uD0C0\uB09C\uB2E4."
-    story: 134
-    storyHeading: 
-  - id: average
-    english: average
-    meaning: "\uD3C9\uADE0"
-    partOfSpeech: n
-    example: On average, three words vanished every day.
-    exampleMeaning: "\uD3C9\uADE0\uC801\uC73C\uB85C \uD558\uB8E8\uC5D0 \uC138 \uB2E8\uC5B4\uAC00
-      \uC0AC\uB77C\uC84C\uB2E4."
-    story: 42
-    storyHeading: 
-  - id: bit
-    english: bit
-    meaning: "\uC870\uAE08, \uC57D\uAC04"
-    partOfSpeech: n
-    example: My sister is a bit afraid of the dark, which I find rather funny.
-    exampleMeaning: "\uB3D9\uC0DD\uC740 \uC5B4\uB460\uC744 \uC870\uAE08 \uBB34\uC11C\uC6CC\uD558\uB294\uB370,
-      \uB098\uB294 \uADF8\uAC8C \uAF64 \uC6B0\uC2B5\uB2E4."
-    story: 16
-    storyHeading: 
-  - id: capital
-    english: capital
-    meaning: "\uC218\uB3C4, \uC790\uBCF8"
-    partOfSpeech: n
-    example: It is bigger than any building in the capital.
-    exampleMeaning: "\uC218\uB3C4\uC758 \uC5B4\uB5A4 \uAC74\uBB3C\uBCF4\uB2E4\uB3C4
-      \uD06C\uB2E4."
-    story: 107
-    storyHeading: 
-  - id: career
-    english: career
-    meaning: "\uC9C1\uC5C5, \uACBD\uB825"
-    partOfSpeech: n
-    example: Teaching children to read and write has been my career for many years.
-    exampleMeaning: "\uC544\uC774\uB4E4\uC5D0\uAC8C \uC77D\uACE0 \uC4F0\uB294 \uBC95\uC744
-      \uAC00\uB974\uCE58\uB294 \uC77C\uC740 \uC624\uB7AB\uB3D9\uC548 \uB0B4 \uC9C1\uC5C5\uC774\uC5C8\uB2E4."
-    story: 3
-    storyHeading: 
-  - id: cause
-    english: cause
-    meaning: "\uC6D0\uC778, \uC774\uC720"
-    partOfSpeech: n
-    example: Nobody could find the cause.
-    exampleMeaning: "\uC544\uBB34\uB3C4 \uC6D0\uC778\uC744 \uCC3E\uC9C0 \uBABB\uD588\uB2E4."
-    story: 46
-    storyHeading: 
-  - id: century
-    english: century
-    meaning: "\uC138\uAE30, 100\uB144"
-    partOfSpeech: n
-    example: It has guarded every word for more than a century.
-    exampleMeaning: "\uC11C\uACE0\uB294 \uBC31 \uB144 \uB118\uAC8C \uBAA8\uB4E0 \uB9D0\uC744
-      \uC9C0\uCF1C \uC654\uB2E4."
-    story: 106
-    storyHeading: 
-  - id: character
-    english: character
-    meaning: "\uC131\uACA9, \uB4F1\uC7A5\uC778\uBB3C"
-    partOfSpeech: n
-    example: My sister has a cheerful character and a sharp tongue.
-    exampleMeaning: "\uB3D9\uC0DD\uC740 \uC131\uACA9\uC774 \uBC1D\uC9C0\uB9CC \uB9D0\uC740
-      \uAF64 \uB0A0\uCE74\uB86D\uB2E4."
-    story: 10
-    storyHeading: 
-  - id: charge
-    english: charge
-    meaning: "\uC694\uAE08, \uCC45\uC784"
-    partOfSpeech: n
-    example: The person in charge of the library had vanished.
-    exampleMeaning: "\uC11C\uACE0 \uCC45\uC784\uC790\uB294 \uC0AC\uB77C\uC9C0\uACE0
-      \uC5C6\uC5C8\uB2E4."
-    story: 132
-    storyHeading: 
-  - id: chief
-    english: chief
-    meaning: "\uC6B0\uB450\uBA38\uB9AC, \uC7A5"
-    partOfSpeech: n
-    example: The chief of the village could not remember my name.
-    exampleMeaning: "\uCD0C\uC7A5\uC740 \uB0B4 \uC774\uB984\uC744 \uAE30\uC5B5\uD558\uC9C0
-      \uBABB\uD588\uB2E4."
-    story: 50
-    storyHeading: 
-  - id: choice
-    english: choice
-    meaning: "\uC120\uD0DD"
-    partOfSpeech: n
-    example: In the end, we had only one choice.
-    exampleMeaning: "\uACB0\uAD6D \uC6B0\uB9AC\uC5D0\uAC8C\uB294 \uC120\uD0DD\uC9C0\uAC00
-      \uD558\uB098\uBFD0\uC774\uC5C8\uB2E4."
-    story: 63
-    storyHeading: 
-  - id: code
-    english: code
-    meaning: "\uC554\uD638, \uADDC\uBC94"
-    partOfSpeech: n
-    example: The librarians had hidden some books in a secret code.
-    exampleMeaning: "\uC0AC\uC11C\uB4E4\uC740 \uBA87\uBA87 \uCC45\uC744 \uBE44\uBC00
-      \uC554\uD638\uB85C \uC228\uACA8 \uB450\uC5C8\uB2E4."
-    story: 121
-    storyHeading: 
-  - id: committee
-    english: committee
-    meaning: "\uC704\uC6D0\uD68C"
-    partOfSpeech: n
-    example: A committee was formed, but soon its members forgot why they had gathered.
-    exampleMeaning: "\uC704\uC6D0\uD68C\uAC00 \uAFB8\uB824\uC84C\uC9C0\uB9CC, \uACE7
-      \uC704\uC6D0\uB4E4\uC740 \uC65C \uBAA8\uC600\uB294\uC9C0 \uC78A\uC5B4\uBC84\uB838\uB2E4."
-    story: 52
-    storyHeading: 
-  - id: common
-    english: common
-    meaning: "\uD754\uD55C, \uACF5\uD1B5\uC758"
-    partOfSpeech: adj
-    example: In those days, words were as common as grass.
-    exampleMeaning: "\uADF8 \uC2DC\uC808 \uB9D0\uC740 \uD480\uCC98\uB7FC \uD754\uD588\uB2E4."
-    story: 23
-    storyHeading: 
-  - id: community
-    english: community
-    meaning: "\uACF5\uB3D9\uCCB4, \uC9C0\uC5ED \uC0AC\uD68C"
-    partOfSpeech: n
-    example: Our small community lives on a green meadow.
-    exampleMeaning: "\uC6B0\uB9AC\uC758 \uC791\uC740 \uACF5\uB3D9\uCCB4\uB294 \uD478\uB978
-      \uCD08\uC6D0\uC5D0 \uC0B0\uB2E4."
-    story: 19
-    storyHeading: 
-  - id: complete
-    english: complete
-    meaning: "\uC644\uC804\uD55C, \uC644\uB8CC\uB41C"
-    partOfSpeech: adj
-    example: This diary is not complete, and I am sorry.
-    exampleMeaning: "\uC774 \uC77C\uAE30\uB294 \uC644\uC131\uB418\uC9C0 \uBABB\uD588\uB2E4.
-      \uBBF8\uC548\uD558\uB2E4."
-    story: 146
-    storyHeading: 
-  - id: content
-    english: content
-    meaning: "\uB0B4\uC6A9, \uBAA9\uCC28"
-    partOfSpeech: n
-    example: The content of every book was fading from the last page.
-    exampleMeaning: "\uBAA8\uB4E0 \uCC45\uC758 \uB0B4\uC6A9\uC774 \uB9C8\uC9C0\uB9C9
-      \uCABD\uBD80\uD130 \uC0AC\uB77C\uC9C0\uACE0 \uC788\uC5C8\uB2E4."
-    story: 114
-    storyHeading: 
-  - id: continue
-    english: continue
-    meaning: "\uACC4\uC18D\uD558\uB2E4"
-    partOfSpeech: v
-    example: Our neighbor could not continue the story.
-    exampleMeaning: "\uC606\uC9D1 \uC5B4\uB974\uC2E0\uC740 \uC774\uC57C\uAE30\uB97C
-      \uC774\uC5B4 \uAC00\uC9C0 \uBABB\uD588\uB2E4."
-    story: 55
-    storyHeading: 
-  - id: council
-    english: council
-    meaning: "\uC758\uD68C, \uC704\uC6D0\uD68C"
-    partOfSpeech: n
-    example: The village council met that very night.
-    exampleMeaning: "\uB9C8\uC744 \uC758\uD68C\uB294 \uBC14\uB85C \uADF8\uB0A0 \uBC24
-      \uBAA8\uC600\uB2E4."
-    story: 49
-    storyHeading: 
-  - id: county
-    english: county
-    meaning: "\uAD70(\uD589\uC815 \uAD6C\uC5ED), \uC8FC"
-    partOfSpeech: n
-    example: We crossed into the neighboring county at noon.
-    exampleMeaning: "\uC815\uC624\uC5D0 \uC6B0\uB9AC\uB294 \uC774\uC6C3 \uACE0\uC744\uB85C
-      \uB118\uC5B4\uAC14\uB2E4."
-    story: 71
-    storyHeading: "\uAE38 \uC704\uC5D0\uC11C"
-  - id: current
-    english: current
-    meaning: "\uD604\uC7AC\uC758, \uC9C0\uAE08\uC758"
-    partOfSpeech: adj
-    example: My current fear is that I will forget why I came here.
-    exampleMeaning: "\uC9C0\uAE08 \uB0B4\uAC00 \uB450\uB824\uC6CC\uD558\uB294 \uAC83\uC740
-      \uB0B4\uAC00 \uC65C \uC774\uACF3\uC5D0 \uC654\uB294\uC9C0 \uC78A\uC5B4\uBC84\uB9AC\uB294
-      \uAC83\uC774\uB2E4."
-    story: 139
-    storyHeading: 
-  - id: deal
-    english: deal
-    meaning: "\uB2E4\uB8E8\uB2E4, \uAC70\uB798\uD558\uB2E4"
-    partOfSpeech: v
-    example: We learned to deal with hunger and cold.
-    exampleMeaning: "\uC6B0\uB9AC\uB294 \uAD76\uC8FC\uB9BC\uACFC \uCD94\uC704\uC5D0
-      \uB300\uCC98\uD558\uB294 \uBC95\uC744 \uC775\uD614\uB2E4."
-    story: 84
-    storyHeading: 
-  - id: district
-    english: district
-    meaning: "\uC9C0\uC5ED, \uAD6C\uC5ED"
-    partOfSpeech: n
-    example: Every district we passed had the same blank signs.
-    exampleMeaning: "\uC9C0\uB098\uB294 \uAD6C\uC5ED\uB9C8\uB2E4 \uD45C\uC9C0\uD310\uC774
-      \uB611\uAC19\uC774 \uBE44\uC5B4 \uC788\uC5C8\uB2E4."
-    story: 72
-    storyHeading: 
-  - id: due
-    english: due
-    meaning: "~\uD558\uAE30\uB85C \uB418\uC5B4 \uC788\uB294, ~ \uB54C\uBB38\uC778"
-    partOfSpeech: adj
-    example: The books were due back a hundred years ago.
-    exampleMeaning: "\uADF8 \uCC45\uB4E4\uC740 \uBC31 \uB144 \uC804\uC5D0 \uBC18\uB0A9\uD558\uAE30\uB85C
-      \uB418\uC5B4 \uC788\uC5C8\uB2E4."
-    story: 135
-    storyHeading: 
-  - id: entire
-    english: entire
-    meaning: "\uC804\uCCB4\uC758"
-    partOfSpeech: adj
-    example: An entire wall of books had gone white.
-    exampleMeaning: "\uCC45\uC73C\uB85C \uAC00\uB4DD\uD55C \uBCBD \uC804\uCCB4\uAC00
-      \uD558\uC597\uAC8C \uBCC0\uD574 \uC788\uC5C8\uB2E4."
-    story: 111
-    storyHeading: 
-  - id: event
-    english: event
-    meaning: "\uD589\uC0AC, \uC0AC\uAC74"
-    partOfSpeech: n
-    example: The harvest festival was the biggest event of the year.
-    exampleMeaning: "\uC218\uD655 \uCD95\uC81C\uB294 \uD55C \uD574 \uC911 \uAC00\uC7A5
-      \uD070 \uD589\uC0AC\uC600\uB2E4."
-    story: 31
-    storyHeading: 
-  - id: evidence
-    english: evidence
-    meaning: "\uC99D\uAC70"
-    partOfSpeech: n
-    example: I kept every blank page as evidence.
-    exampleMeaning: "\uB098\uB294 \uBE48 \uCABD\uC744 \uBAA8\uB450 \uC99D\uAC70\uB85C
-      \uB0A8\uACA8 \uB450\uC5C8\uB2E4."
-    story: 47
-    storyHeading: 
-  - id: experience
-    english: experience
-    meaning: "\uACBD\uD5D8"
-    partOfSpeech: n
-    example: Nothing in my experience had prepared me for this.
-    exampleMeaning: "\uB0B4 \uACBD\uD5D8 \uC5B4\uB514\uC5D0\uB3C4 \uC774\uB7F0 \uC77C\uC740
-      \uC5C6\uC5C8\uB2E4."
-    story: 95
-    storyHeading: 
-  - id: figure
-    english: figure
-    meaning: "\uC218\uCE58, \uC778\uBB3C"
-    partOfSpeech: n
-    example: A huge figure moved past us, and my sister ran after it.
-    exampleMeaning: "\uAC70\uB300\uD55C \uD615\uCCB4 \uD558\uB098\uAC00 \uC6B0\uB9AC
-      \uC55E\uC744 \uC9C0\uB098\uAC14\uACE0, \uB3D9\uC0DD\uC740 \uADF8\uAC83\uC744
-      \uCAD3\uC544 \uB2EC\uB824\uAC14\uB2E4."
-    story: 136
-    storyHeading: 
-  - id: final
-    english: final
-    meaning: "\uB9C8\uC9C0\uB9C9\uC758, \uCD5C\uC885\uC758"
-    partOfSpeech: adj
-    example: My final glimpse of the village was blurred by tears.
-    exampleMeaning: "\uB208\uBB3C \uB54C\uBB38\uC5D0 \uB9C8\uC744\uC744 \uB9C8\uC9C0\uB9C9\uC73C\uB85C
-      \uBC14\uB77C\uBCF8 \uD48D\uACBD\uC740 \uD750\uB9BF\uD588\uB2E4."
-    story: 68
-    storyHeading: 
-  - id: follow
-    english: follow
-    meaning: "\uB530\uB77C\uAC00\uB2E4, \uB530\uB974\uB2E4"
-    partOfSpeech: v
-    example: My little sister likes to follow me to school.
-    exampleMeaning: "\uC5B4\uB9B0 \uB3D9\uC0DD\uC740 \uB098\uB97C \uB530\uB77C \uD559\uAD50\uC5D0
-      \uC624\uB294 \uAC83\uC744 \uC88B\uC544\uD55C\uB2E4."
-    story: 9
-    storyHeading: 
-  - id: force
-    english: force
-    meaning: "\uD798, \uC138\uB825"
-    partOfSpeech: n
-    example: Some dark force was eating away at the letters.
-    exampleMeaning: "\uC5B4\uB5A4 \uC5B4\uB460\uC758 \uD798\uC774 \uAE00\uC790\uB4E4\uC744
-      \uC870\uAE08\uC529 \uAC09\uC544\uBA39\uACE0 \uC788\uC5C8\uB2E4."
-    story: 80
-    storyHeading: 
-  - id: foreign
-    english: foreign
-    meaning: "\uC678\uAD6D\uC758"
-    partOfSpeech: adj
-    example: A foreign trader told us the same thing was happening across the sea.
-    exampleMeaning: "\uD55C \uC678\uAD6D \uC0C1\uC778\uC740 \uBC14\uB2E4 \uAC74\uB108\uC5D0\uC11C\uB3C4
-      \uB611\uAC19\uC740 \uC77C\uC774 \uBC8C\uC5B4\uC9C0\uACE0 \uC788\uB2E4\uACE0
-      \uB9D0\uD588\uB2E4."
-    story: 81
-    storyHeading: 
-  - id: found
-    english: found
-    meaning: "\uC124\uB9BD\uD558\uB2E4, \uC138\uC6B0\uB2E4"
-    partOfSpeech: v
-    example: Scholars came together to found the library long ago.
-    exampleMeaning: "\uC624\uB798\uC804 \uD559\uC790\uB4E4\uC774 \uBAA8\uC5EC \uC11C\uACE0\uB97C
-      \uC138\uC6E0\uB2E4."
-    story: 105
-    storyHeading: "\uC11C\uACE0"
-  - id: general
-    english: general
-    meaning: "\uC77C\uBC18\uC801\uC778, \uC804\uBC18\uC801\uC778"
-    partOfSpeech: adj
-    example: The general feeling was that nothing could be done.
-    exampleMeaning: "\uB300\uCCB4\uC801\uC778 \uBD84\uC704\uAE30\uB294 \uC544\uBB34\uAC83\uB3C4
-      \uD560 \uC218 \uC5C6\uB2E4\uB294 \uAC83\uC774\uC5C8\uB2E4."
-    story: 82
-    storyHeading: 
-  - id: half
-    english: half
-    meaning: "\uC808\uBC18"
-    partOfSpeech: n
-    example: Half the village came out to say goodbye.
-    exampleMeaning: "\uB9C8\uC744 \uC0AC\uB78C\uB4E4\uC758 \uC808\uBC18\uC774 \uBC30\uC6C5\uD558\uB7EC
-      \uB098\uC654\uB2E4."
-    story: 65
-    storyHeading: 
-  - id: happen
-    english: happen
-    meaning: "\uC77C\uC5B4\uB098\uB2E4, \uBC1C\uC0DD\uD558\uB2E4"
-    partOfSpeech: v
-    example: Then something strange began to happen.
-    exampleMeaning: "\uADF8\uB7EC\uB2E4 \uC774\uC0C1\uD55C \uC77C\uC774 \uC77C\uC5B4\uB098\uAE30
-      \uC2DC\uC791\uD588\uB2E4."
-    story: 33
-    storyHeading: "\uCCAB \uBE48\uCE78"
-  - id: health
-    english: health
-    meaning: "\uAC74\uAC15"
-    partOfSpeech: n
-    example: We asked about each other's health every morning.
-    exampleMeaning: "\uC6B0\uB9AC\uB294 \uC544\uCE68\uB9C8\uB2E4 \uC11C\uB85C\uC758
-      \uAC74\uAC15\uC744 \uBB3C\uC5C8\uB2E4."
-    story: 30
-    storyHeading: 
-  - id: hear
-    english: hear
-    meaning: "\uB4E3\uB2E4, \uB4E4\uB9AC\uB2E4"
-    partOfSpeech: v
-    example: One morning, I could not hear my sister's name.
-    exampleMeaning: "\uC5B4\uB290 \uC544\uCE68, \uB3D9\uC0DD\uC758 \uC774\uB984\uC774
-      \uB4E4\uB9AC\uC9C0 \uC54A\uC558\uB2E4."
-    story: 34
-    storyHeading: 
-  - id: hell
-    english: hell
-    meaning: "\uC9C0\uC625"
-    partOfSpeech: n
-    example: My sister said this road felt like hell.
-    exampleMeaning: "\uB3D9\uC0DD\uC740 \uC774 \uAE38\uC774 \uC9C0\uC625 \uAC19\uB2E4\uACE0
-      \uB9D0\uD588\uB2E4."
-    story: 83
-    storyHeading: 
-  - id: huge
-    english: huge
-    meaning: "\uAC70\uB300\uD55C"
-    partOfSpeech: adj
-    example: Our old neighbor owns a huge dictionary.
-    exampleMeaning: "\uC606\uC9D1 \uC5B4\uB974\uC2E0\uC740 \uCEE4\uB2E4\uB780 \uC0AC\uC804\uC744
-      \uAC00\uC9C0\uACE0 \uC788\uB2E4."
-    story: 11
-    storyHeading: 
-  - id: include
-    english: include
-    meaning: "\uD3EC\uD568\uD558\uB2E4"
-    partOfSpeech: v
-    example: My list must include everyone I can still remember.
-    exampleMeaning: "\uB0B4 \uBAA9\uB85D\uC5D0\uB294 \uC544\uC9C1 \uAE30\uC5B5\uD560
-      \uC218 \uC788\uB294 \uBAA8\uB4E0 \uC0AC\uB78C\uC744 \uD3EC\uD568\uD574\uC57C
-      \uD55C\uB2E4."
-    story: 142
-    storyHeading: 
-  - id: increase
-    english: increase
-    meaning: "\uC99D\uAC00\uD558\uB2E4, \uB298\uB9AC\uB2E4"
-    partOfSpeech: v
-    example: Each week, the blanks began to increase.
-    exampleMeaning: "\uB9E4\uC8FC \uBE48\uCE78\uC774 \uB298\uC5B4\uB098\uAE30 \uC2DC\uC791\uD588\uB2E4."
-    story: 40
-    storyHeading: 
-  - id: industry
-    english: industry
-    meaning: "\uC0B0\uC5C5"
-    partOfSpeech: n
-    example: The paper industry in this town had stopped long ago.
-    exampleMeaning: "\uC774 \uB9C8\uC744\uC758 \uC885\uC774 \uC0B0\uC5C5\uC740 \uC624\uB798\uC804\uC5D0
-      \uBA48\uCDB0 \uC788\uC5C8\uB2E4."
-    story: 100
-    storyHeading: 
-  - id: interest
-    english: interest
-    meaning: "\uAD00\uC2EC, \uD765\uBBF8, \uC774\uC790"
-    partOfSpeech: n
-    example: My sister listened with great interest.
-    exampleMeaning: "\uB3D9\uC0DD\uC740 \uD070 \uD765\uBBF8\uB97C \uBCF4\uC774\uBA70
-      \uADC0\uB97C \uAE30\uC6B8\uC600\uB2E4."
-    story: 103
-    storyHeading: 
-  - id: language
-    english: language
-    meaning: "\uC5B8\uC5B4"
-    partOfSpeech: n
-    example: Language keeps our memories alive.
-    exampleMeaning: "\uC5B8\uC5B4\uB294 \uC6B0\uB9AC\uC758 \uAE30\uC5B5\uC744 \uC0B4\uC544
-      \uC788\uAC8C \uD55C\uB2E4."
-    story: 4
-    storyHeading: 
-  - id: law
-    english: law
-    meaning: "\uBC95, \uBC95\uB960"
-    partOfSpeech: n
-    example: 'A new law said: write your name on your door.'
-    exampleMeaning: "\uC0C8 \uBC95\uC774 \uC0DD\uACBC\uB2E4. \uBB38\uC5D0 \uC790\uAE30
-      \uC774\uB984\uC744 \uC801\uC744 \uAC83."
-    story: 53
-    storyHeading: 
-  - id: lead
-    english: lead
-    meaning: "\uC774\uB04C\uB2E4, \uC548\uB0B4\uD558\uB2E4"
-    partOfSpeech: v
-    example: My sister would lead the way to the old library.
-    exampleMeaning: "\uB3D9\uC0DD\uC774 \uC624\uB798\uB41C \uC11C\uACE0\uAE4C\uC9C0
-      \uC6B0\uB9AC\uB97C \uC548\uB0B4\uD558\uAE30\uB85C \uD588\uB2E4."
-    story: 67
-    storyHeading: 
-  - id: league
-    english: league
-    meaning: "\uB9AC\uADF8, \uC5F0\uB9F9"
-    partOfSpeech: n
-    example: A league of traders once ruled this road.
-    exampleMeaning: "\uC61B\uB0A0\uC5D0\uB294 \uC0C1\uC778 \uC5F0\uB9F9\uC774 \uC774
-      \uAE38\uC744 \uB2E4\uC2A4\uB838\uB2E4."
-    story: 99
-    storyHeading: 
-  - id: leave
-    english: leave
-    meaning: "\uB5A0\uB098\uB2E4, \uB0A8\uAE30\uB2E4"
-    partOfSpeech: v
-    example: We would leave at dawn, before the names faded.
-    exampleMeaning: "\uC6B0\uB9AC\uB294 \uC774\uB984\uC774 \uD750\uB824\uC9C0\uAE30
-      \uC804\uC5D0 \uC0C8\uBCBD\uC5D0 \uB5A0\uB098\uAE30\uB85C \uD588\uB2E4."
-    story: 64
-    storyHeading: 
-  - id: legal
-    english: legal
-    meaning: "\uBC95\uB960\uC758, \uD569\uBC95\uC801\uC778"
-    partOfSpeech: adj
-    example: Tearing pages out of a library book was never legal.
-    exampleMeaning: "\uB3C4\uC11C\uAD00 \uCC45\uC5D0\uC11C \uD398\uC774\uC9C0\uB97C
-      \uCC22\uC5B4 \uB0B4\uB294 \uC77C\uC740 \uACB0\uCF54 \uD569\uBC95\uC774 \uC544\uB2C8\uC5C8\uB2E4."
-    story: 131
-    storyHeading: 
-  - id: let
-    english: let
-    meaning: "~\uD558\uAC8C \uD558\uB2E4, \uD5C8\uB77D\uD558\uB2E4"
-    partOfSpeech: v
-    example: The guards let us pass because they had forgotten why they were standing
-      there.
-    exampleMeaning: "\uACBD\uBE44\uBCD1\uB4E4\uC740 \uC790\uC2E0\uB4E4\uC774 \uC65C
-      \uADF8\uACF3\uC5D0 \uC11C \uC788\uB294\uC9C0 \uC78A\uC5B4\uBC84\uB838\uAE30\uC5D0
-      \uC6B0\uB9AC\uB97C \uD1B5\uACFC\uC2DC\uCF30\uB2E4."
-    story: 76
-    storyHeading: 
-  - id: level
-    english: level
-    meaning: "\uC218\uC900, \uB192\uC774"
-    partOfSpeech: n
-    example: The level of water in our bottle kept dropping.
-    exampleMeaning: "\uBB3C\uBCD1 \uC18D \uC218\uC704\uB294 \uACC4\uC18D \uB0AE\uC544\uC84C\uB2E4."
-    story: 87
-    storyHeading: 
-  - id: list
-    english: list
-    meaning: "\uBAA9\uB85D"
-    partOfSpeech: n
-    example: My list of students grows longer every year.
-    exampleMeaning: "\uB0B4 \uC81C\uC790 \uBAA9\uB85D\uC740 \uD574\uB9C8\uB2E4 \uAE38\uC5B4\uC9C4\uB2E4."
-    story: 7
-    storyHeading: 
-  - id: local
-    english: local
-    meaning: "\uC9C0\uC5ED\uC758, \uD604\uC9C0\uC758"
-    partOfSpeech: adj
-    example: The local children learn to read and write from me.
-    exampleMeaning: "\uB9C8\uC744 \uC544\uC774\uB4E4\uC740 \uB0B4\uAC8C \uC77D\uACE0
-      \uC4F0\uB294 \uBC95\uC744 \uBC30\uC6B4\uB2E4."
-    story: 20
-    storyHeading: 
-  - id: lose
-    english: lose
-    meaning: "\uC783\uB2E4, \uC9C0\uB2E4"
-    partOfSpeech: v
-    example: If we lose a word, we lose a memory too.
-    exampleMeaning: "\uB9D0\uC744 \uD558\uB098 \uC783\uC73C\uBA74, \uAE30\uC5B5\uB3C4
-      \uD558\uB098 \uC783\uB294\uB2E4."
-    story: 38
-    storyHeading: 
-  - id: loss
-    english: loss
-    meaning: "\uC190\uC2E4, \uC0C1\uC2E4"
-    partOfSpeech: n
-    example: The loss was small at first, just a word or two.
-    exampleMeaning: "\uCC98\uC74C\uC5D0\uB294 \uC190\uC2E4\uC774 \uC791\uC558\uB2E4.
-      \uB9D0 \uD55C\uB450 \uAC1C\uBFD0\uC774\uC5C8\uB2E4."
-    story: 39
-    storyHeading: 
-  - id: lot
-    english: lot
-    meaning: "\uB9CE\uC74C, \uBD80\uC9C0"
-    partOfSpeech: n
-    example: We walked a lot and spoke very little.
-    exampleMeaning: "\uC6B0\uB9AC\uB294 \uB9CE\uC774 \uAC78\uC5C8\uACE0 \uB9D0\uC740
-      \uAC70\uC758 \uD558\uC9C0 \uC54A\uC558\uB2E4."
-    story: 85
-    storyHeading: 
-  - id: main
-    english: main
-    meaning: "\uC8FC\uB41C, \uC8FC\uC694\uD55C"
-    partOfSpeech: adj
-    example: The main door was open, and cold fog rolled out.
-    exampleMeaning: "\uC815\uBB38\uC740 \uC5F4\uB824 \uC788\uC5C8\uACE0 \uCC28\uAC00\uC6B4
-      \uC548\uAC1C\uAC00 \uD758\uB7EC\uB098\uC654\uB2E4."
-    story: 109
-    storyHeading: 
-  - id: major
-    english: major
-    meaning: "\uC8FC\uC694\uD55C, \uD070"
-    partOfSpeech: adj
-    example: Every major shelf stood in a long maze.
-    exampleMeaning: "\uC8FC\uC694 \uCC45\uC7A5\uB4E4\uC774 \uAE34 \uBBF8\uB85C\uCC98\uB7FC
-      \uC11C \uC788\uC5C8\uB2E4."
-    story: 110
-    storyHeading: 
-  - id: mark
-    english: mark
-    meaning: "\uD45C\uC2DC, \uC810\uC218"
-    partOfSpeech: n
-    example: Near the torn edge, I found a mark that looked like a dragon's scale.
-    exampleMeaning: "\uCC22\uC5B4\uC9C4 \uAC00\uC7A5\uC790\uB9AC \uADFC\uCC98\uC5D0\uC11C
-      \uC6A9\uC758 \uBE44\uB298\uCC98\uB7FC \uC0DD\uAE34 \uC790\uAD6D\uC744 \uBC1C\uACAC\uD588\uB2E4."
-    story: 129
-    storyHeading: 
-  - id: match
-    english: match
-    meaning: "\uACBD\uAE30, \uC131\uB0E5"
-    partOfSpeech: n
-    example: I lit our last match and read by its light.
-    exampleMeaning: "\uB9C8\uC9C0\uB9C9 \uC131\uB0E5\uC744 \uCF1C\uC11C \uADF8 \uBE5B\uC73C\uB85C
-      \uAE00\uC744 \uC77D\uC5C8\uB2E4."
-    story: 86
-    storyHeading: 
-  - id: matter
-    english: matter
-    meaning: "\uBB38\uC81C, \uC77C"
-    partOfSpeech: n
-    example: Nobody wanted to talk about the matter.
-    exampleMeaning: "\uC544\uBB34\uB3C4 \uADF8 \uBB38\uC81C\uB97C \uC785\uC5D0 \uC62C\uB9AC\uACE0
-      \uC2F6\uC5B4 \uD558\uC9C0 \uC54A\uC558\uB2E4."
-    story: 45
-    storyHeading: 
-  - id: mean
-    english: mean
-    meaning: "\uC758\uBBF8\uD558\uB2E4"
-    partOfSpeech: v
-    example: What does a name mean if no one can say it?
-    exampleMeaning: "\uC544\uBB34\uB3C4 \uBD80\uB97C \uC218 \uC5C6\uB2E4\uBA74 \uC774\uB984\uC740
-      \uBB34\uC5C7\uC744 \uC758\uBBF8\uD560\uAE4C?"
-    story: 93
-    storyHeading: 
-  - id: medical
-    english: medical
-    meaning: "\uC758\uD559\uC758, \uC758\uB8CC\uC758"
-    partOfSpeech: adj
-    example: A medical book lay open, its pages completely blank.
-    exampleMeaning: "\uC758\uD559 \uCC45 \uD55C \uAD8C\uC774 \uD3BC\uCCD0\uC838 \uC788\uC5C8\uC9C0\uB9CC
-      \uD398\uC774\uC9C0\uB294 \uC644\uC804\uD788 \uBE44\uC5B4 \uC788\uC5C8\uB2E4."
-    story: 101
-    storyHeading: 
-  - id: military
-    english: military
-    meaning: "\uAD70\uC0AC\uC758, \uAD70\uB300\uC758"
-    partOfSpeech: adj
-    example: A military camp stood empty, its flags stripped of all lettering.
-    exampleMeaning: "\uAD70\uC601\uC740 \uD145 \uBE44\uC5B4 \uC788\uC5C8\uACE0, \uAE43\uBC1C\uC5D0
-      \uC801\uD600 \uC788\uB358 \uAE00\uC790\uB3C4 \uBAA8\uB450 \uC0AC\uB77C\uC838
-      \uC788\uC5C8\uB2E4."
-    story: 77
-    storyHeading: 
-  - id: modern
-    english: modern
-    meaning: "\uD604\uB300\uC758"
-    partOfSpeech: adj
-    example: Modern books faded first, while the older ones lasted longer.
-    exampleMeaning: "\uD604\uB300\uC758 \uCC45\uB4E4\uC774 \uBA3C\uC800 \uC0AC\uB77C\uC84C\uACE0,
-      \uC624\uB798\uB41C \uCC45\uB4E4\uC740 \uB354 \uC624\uB798 \uBC84\uD17C\uB2E4."
-    story: 126
-    storyHeading: 
-  - id: moment
-    english: moment
-    meaning: "\uC21C\uAC04, \uC7A0\uAE50"
-    partOfSpeech: n
-    example: In a moment, the old man's final word vanished.
-    exampleMeaning: "\uD55C\uC21C\uAC04\uC5D0 \uC5B4\uB974\uC2E0\uC758 \uB9C8\uC9C0\uB9C9
-      \uB9D0\uC774 \uC0AC\uB77C\uC84C\uB2E4."
-    story: 59
-    storyHeading: 
-  - id: officer
-    english: officer
-    meaning: "\uC7A5\uAD50, \uACBD\uCC30\uAD00, \uAD00\uB9AC"
-    partOfSpeech: n
-    example: The officer at the bridge could no longer read.
-    exampleMeaning: "\uB2E4\uB9AC \uC704\uC758 \uAD00\uB9AC\uB294 \uB354 \uC774\uC0C1
-      \uAE00\uC790\uB97C \uC77D\uC9C0 \uBABB\uD588\uB2E4."
-    story: 74
-    storyHeading: 
-  - id: order
-    english: order
-    meaning: "\uC8FC\uBB38, \uBA85\uB839, \uC21C\uC11C"
-    partOfSpeech: n
-    example: The order posted on the wall was nothing but a blank sheet.
-    exampleMeaning: "\uBCBD\uC5D0 \uBD99\uC740 \uBA85\uB839\uC11C\uB294 \uAE00\uC790
-      \uD558\uB098 \uC5C6\uB294 \uBE48 \uC885\uC774\uC77C \uBFD0\uC774\uC5C8\uB2E4."
-    story: 75
-    storyHeading: 
-  - id: past
-    english: past
-    meaning: "\uACFC\uAC70"
-    partOfSpeech: n
-    example: The past was now something I had to carry with me.
-    exampleMeaning: "\uC774\uC81C \uACFC\uAC70\uB294 \uB0B4\uAC00 \uC9CA\uC5B4\uC9C0\uACE0
-      \uAC00\uC57C \uD560 \uAC83\uC774 \uB418\uC5C8\uB2E4."
-    story: 69
-    storyHeading: 
-  - id: perfect
-    english: perfect
-    meaning: "\uC644\uBCBD\uD55C"
-    partOfSpeech: adj
-    example: My memory was never perfect, but it was mine.
-    exampleMeaning: "\uB0B4 \uAE30\uC5B5\uC740 \uC644\uBCBD\uD558\uC9C0 \uC54A\uC558\uC9C0\uB9CC
-      \uB0B4 \uAC83\uC774\uC5C8\uB2E4."
-    story: 144
-    storyHeading: 
-  - id: period
-    english: period
-    meaning: "\uAE30\uAC04, \uC2DC\uAE30"
-    partOfSpeech: n
-    example: For a short period, we slept between the shelves.
-    exampleMeaning: "\uC7A0\uAE50 \uB3D9\uC548 \uC6B0\uB9AC\uB294 \uCC45\uC7A5 \uC0AC\uC774\uC5D0\uC11C
-      \uC7A4\uB2E4."
-    story: 125
-    storyHeading: 
-  - id: person
-    english: person
-    meaning: "\uC0AC\uB78C"
-    partOfSpeech: n
-    example: Every person in the village has a name and a story.
-    exampleMeaning: "\uB9C8\uC744 \uC0AC\uB78C\uC740 \uB204\uAD6C\uB098 \uC774\uB984\uACFC
-      \uC774\uC57C\uAE30\uB97C \uAC00\uC9C0\uACE0 \uC788\uB2E4."
-    story: 5
-    storyHeading: 
-  - id: policy
-    english: policy
-    meaning: "\uC815\uCC45, \uBC29\uCE68"
-    partOfSpeech: n
-    example: Our only policy was to keep walking north.
-    exampleMeaning: "\uC6B0\uB9AC\uC758 \uC720\uC77C\uD55C \uBC29\uCE68\uC740 \uACC4\uC18D
-      \uBD81\uCABD\uC73C\uB85C \uAC77\uB294 \uAC83\uC774\uC5C8\uB2E4."
-    story: 98
-    storyHeading: 
-  - id: popular
-    english: popular
-    meaning: "\uC778\uAE30 \uC788\uB294"
-    partOfSpeech: adj
-    example: Our neighbor is popular with the children in the village.
-    exampleMeaning: "\uC606\uC9D1 \uC5B4\uB974\uC2E0\uC740 \uB9C8\uC744 \uC544\uC774\uB4E4\uC5D0\uAC8C
-      \uC778\uAE30\uAC00 \uB9CE\uB2E4."
-    story: 17
-    storyHeading: 
-  - id: possible
-    english: possible
-    meaning: "\uAC00\uB2A5\uD55C"
-    partOfSpeech: adj
-    example: Is it possible to miss someone whose name you have forgotten?
-    exampleMeaning: "\uC774\uB984\uC744 \uC78A\uC5B4\uBC84\uB9B0 \uC0AC\uB78C\uC744
-      \uADF8\uB9AC\uC6CC\uD558\uB294 \uAC83\uC774 \uAC00\uB2A5\uD560\uAE4C?"
-    story: 70
-    storyHeading: 
-  - id: post
-    english: post
-    meaning: "\uAC8C\uC2DC\uD558\uB2E4, \uC6B0\uD3B8\uC73C\uB85C \uBCF4\uB0B4\uB2E4"
-    partOfSpeech: v
-    example: We post names on every door and wall.
-    exampleMeaning: "\uC6B0\uB9AC\uB294 \uBAA8\uB4E0 \uBB38\uACFC \uBCBD\uC5D0 \uC774\uB984\uC744
-      \uBD99\uC5EC \uB454\uB2E4."
-    story: 54
-    storyHeading: 
-  - id: potential
-    english: potential
-    meaning: "\uC7A0\uC7AC\uB825, \uAC00\uB2A5\uC131"
-    partOfSpeech: n
-    example: I believe every child has potential.
-    exampleMeaning: "\uB098\uB294 \uBAA8\uB4E0 \uC544\uC774\uC5D0\uAC8C \uC7A0\uC7AC\uB825\uC774
-      \uC788\uB2E4\uACE0 \uBBFF\uB294\uB2E4."
-    story: 22
-    storyHeading: 
-  - id: practice
-    english: practice
-    meaning: "\uC5F0\uC2B5\uD558\uB2E4"
-    partOfSpeech: v
-    example: They practice writing their names in the dirt with sticks.
-    exampleMeaning: "\uC544\uC774\uB4E4\uC740 \uB9C9\uB300\uAE30\uB85C \uD759\uBC14\uB2E5\uC5D0
-      \uC790\uAE30 \uC774\uB984\uC744 \uC4F0\uBA70 \uC5F0\uC2B5\uD55C\uB2E4."
-    story: 21
-    storyHeading: 
-  - id: press
-    english: press
-    meaning: "\uB204\uB974\uB2E4"
-    partOfSpeech: v
-    example: I press each page flat to make out the last faint lines.
-    exampleMeaning: "\uB9C8\uC9C0\uB9C9\uC73C\uB85C \uD76C\uBBF8\uD558\uAC8C \uB0A8\uC740
-      \uBB38\uC7A5\uB4E4\uC744 \uC77D\uC73C\uB824\uACE0 \uD398\uC774\uC9C0\uB97C
-      \uAFB9 \uB20C\uB7EC \uD3B8\uB2E4."
-    story: 128
-    storyHeading: 
-  - id: price
-    english: price
-    meaning: "\uAC00\uACA9"
-    partOfSpeech: n
-    example: The price of a good story was one warm meal.
-    exampleMeaning: "\uC88B\uC740 \uC774\uC57C\uAE30\uC758 \uAC12\uC740 \uB530\uB73B\uD55C
-      \uBC25 \uD55C \uB07C\uC600\uB2E4."
-    story: 28
-    storyHeading: 
-  - id: private
-    english: private
-    meaning: "\uC0AC\uC801\uC778, \uAC1C\uC778\uC758"
-    partOfSpeech: adj
-    example: We locked it away in a private chest above the village.
-    exampleMeaning: "\uC6B0\uB9AC\uB294 \uADF8\uAC83\uC744 \uB9C8\uC744 \uC704\uCABD\uC5D0
-      \uC788\uB294 \uAC1C\uC778 \uBCF4\uAD00\uD568\uC5D0 \uB123\uC5B4 \uC7A0\uAC00
-      \uB450\uC5C8\uB2E4."
-    story: 61
-    storyHeading: 
-  - id: process
-    english: process
-    meaning: "\uACFC\uC815, \uC808\uCC28"
-    partOfSpeech: n
-    example: The process was slow because each book faded as I read it.
-    exampleMeaning: "\uCC45\uC744 \uC77D\uB294 \uB3D9\uC548\uC5D0\uB3C4 \uAE00\uC790\uAC00
-      \uC0AC\uB77C\uC84C\uAE30 \uB54C\uBB38\uC5D0 \uC870\uC0AC \uACFC\uC815\uC740
-      \uB354\uB3A0\uB2E4."
-    story: 119
-    storyHeading: 
-  - id: property
-    english: property
-    meaning: "\uC7AC\uC0B0, \uC18C\uC720\uBB3C"
-    partOfSpeech: n
-    example: The dictionary was the old man's only property.
-    exampleMeaning: "\uADF8 \uC0AC\uC804\uC740 \uC5B4\uB974\uC2E0\uC758 \uC720\uC77C\uD55C
-      \uC7AC\uC0B0\uC774\uC5C8\uB2E4."
-    story: 60
-    storyHeading: 
-  - id: provide
-    english: provide
-    meaning: "\uC81C\uACF5\uD558\uB2E4"
-    partOfSpeech: v
-    example: This chest will provide a safe place for my diary.
-    exampleMeaning: "\uC774 \uC0C1\uC790\uB294 \uB0B4 \uC77C\uAE30\uB97C \uC548\uC804\uD558\uAC8C
-      \uBCF4\uAD00\uD560 \uC7A5\uC18C\uAC00 \uB418\uC5B4 \uC904 \uAC83\uC774\uB2E4."
-    story: 147
-    storyHeading: 
-  - id: public
-    english: public
-    meaning: "\uACF5\uACF5\uC758, \uB300\uC911\uC758"
-    partOfSpeech: adj
-    example: In one public square, people stood silently like stones.
-    exampleMeaning: "\uC5B4\uB290 \uACF5\uACF5 \uAD11\uC7A5\uC5D0\uC11C\uB294 \uC0AC\uB78C\uB4E4\uC774
-      \uB3CC\uCC98\uB7FC \uB9D0\uC5C6\uC774 \uC11C \uC788\uC5C8\uB2E4."
-    story: 96
-    storyHeading: 
-  - id: quality
-    english: quality
-    meaning: "\uC9C8, \uD488\uC9C8"
-    partOfSpeech: n
-    example: The quality of the ink made no difference; it all faded away.
-    exampleMeaning: "\uC789\uD06C\uC758 \uD488\uC9C8\uC740 \uC544\uBB34\uB7F0 \uC0C1\uAD00\uC774
-      \uC5C6\uC5C8\uB2E4. \uC789\uD06C\uB294 \uBAA8\uB450 \uBC14\uB798 \uBC84\uB838\uB2E4."
-    story: 124
-    storyHeading: 
-  - id: range
-    english: range
-    meaning: "\uBC94\uC704"
-    partOfSpeech: n
-    example: The range of missing words expanded from names to colors.
-    exampleMeaning: "\uC0AC\uB77C\uC9C0\uB294 \uB2E8\uC5B4\uC758 \uBC94\uC704\uB294
-      \uC774\uB984\uC5D0\uC11C \uC0C9\uAE54\uB85C\uAE4C\uC9C0 \uB113\uC5B4\uC84C\uB2E4."
-    story: 88
-    storyHeading: 
-  - id: rate
-    english: rate
-    meaning: "\uBE44\uC728, \uC18D\uB3C4"
-    partOfSpeech: n
-    example: At this rate, the village will forget its own name.
-    exampleMeaning: "\uC774 \uC18D\uB3C4\uB77C\uBA74 \uB9C8\uC744\uC740 \uC790\uAE30
-      \uC774\uB984\uB3C4 \uC78A\uC744 \uAC83\uC774\uB2E4."
-    story: 43
-    storyHeading: 
-  - id: real
-    english: real
-    meaning: "\uC9C4\uC9DC\uC758, \uC2E4\uC81C\uC758"
-    partOfSpeech: adj
-    example: Are my memories real if no one else remembers them?
-    exampleMeaning: "\uB2E4\uB978 \uB204\uAD6C\uB3C4 \uAE30\uC5B5\uD558\uC9C0 \uBABB\uD55C\uB2E4\uBA74
-      \uB0B4 \uAE30\uC5B5\uC740 \uC9C4\uC9DC\uC77C\uAE4C?"
-    story: 94
-    storyHeading: 
-  - id: reason
-    english: reason
-    meaning: "\uC774\uC720"
-    partOfSpeech: n
-    example: Who tore those pages out? I cannot find the reason.
-    exampleMeaning: "\uB204\uAC00 \uADF8 \uD398\uC774\uC9C0\uB4E4\uC744 \uCC22\uC5B4
-      \uAC14\uC744\uAE4C? \uC774\uC720\uB97C \uC54C \uC218 \uC5C6\uB2E4."
-    story: 130
-    storyHeading: 
-  - id: recent
-    english: recent
-    meaning: "\uCD5C\uADFC\uC758"
-    partOfSpeech: adj
-    example: The recent pages of my diary had holes where words should have been.
-    exampleMeaning: "\uCD5C\uADFC\uC5D0 \uC4F4 \uC77C\uAE30\uC7A5 \uCABD\uC5D0\uB294
-      \uB9D0\uC774 \uC788\uC5B4\uC57C \uD560 \uC790\uB9AC\uAC00 \uB6AB\uB824 \uC788\uC5C8\uB2E4."
-    story: 36
-    storyHeading: 
-  - id: record
-    english: record
-    meaning: "\uAE30\uB85D\uD558\uB2E4, \uB179\uC74C\uD558\uB2E4"
-    partOfSpeech: v
-    example: I record each day in this diary.
-    exampleMeaning: "\uB098\uB294 \uC774 \uC77C\uAE30\uC5D0 \uD558\uB8E8\uD558\uB8E8\uB97C
-      \uAE30\uB85D\uD55C\uB2E4."
-    story: 2
-    storyHeading: 
-  - id: release
-    english: release
-    meaning: "\uD480\uC5B4 \uC8FC\uB2E4, \uBC1C\uD45C\uD558\uB2E4"
-    partOfSpeech: v
-    example: Release the words, and they will find their way home.
-    exampleMeaning: "\uB9D0\uC744 \uD480\uC5B4 \uC8FC\uBA74 \uC2A4\uC2A4\uB85C \uC9D1\uC744
-      \uCC3E\uC544\uAC08 \uAC83\uC774\uB2E4."
-    story: 148
-    storyHeading: 
-  - id: report
-    english: report
-    meaning: "\uBCF4\uACE0\uC11C, \uBCF4\uB3C4"
-    partOfSpeech: n
-    example: I wrote a report and took it to the council.
-    exampleMeaning: "\uB098\uB294 \uBCF4\uACE0\uC11C\uB97C \uC368\uC11C \uC758\uD68C\uC5D0
-      \uAC00\uC838\uAC14\uB2E4."
-    story: 48
-    storyHeading: 
-  - id: research
-    english: research
-    meaning: "\uC5F0\uAD6C, \uC870\uC0AC"
-    partOfSpeech: n
-    example: My research began in the reading room.
-    exampleMeaning: "\uB0B4 \uC870\uC0AC\uB294 \uC5F4\uB78C\uC2E4\uC5D0\uC11C \uC2DC\uC791\uB418\uC5C8\uB2E4."
-    story: 118
-    storyHeading: 
-  - id: respect
-    english: respect
-    meaning: "\uC874\uACBD\uD558\uB2E4, \uC874\uC911\uD558\uB2E4"
-    partOfSpeech: v
-    example: Whoever you are, respect the words you find.
-    exampleMeaning: "\uB2F9\uC2E0\uC774 \uB204\uAD6C\uB4E0, \uB2F9\uC2E0\uC774 \uCC3E\uC740
-      \uB9D0\uC744 \uC874\uC911\uD574 \uC8FC\uAE38."
-    story: 149
-    storyHeading: 
-  - id: rest
-    english: rest
-    meaning: "\uD734\uC2DD, \uB098\uBA38\uC9C0"
-    partOfSpeech: n
-    example: Everyone comes to the spring for a rest.
-    exampleMeaning: "\uBAA8\uB450 \uC26C\uB7EC \uC0D8\uC73C\uB85C \uC628\uB2E4."
-    story: 26
-    storyHeading: 
-  - id: result
-    english: result
-    meaning: "\uACB0\uACFC"
-    partOfSpeech: n
-    example: The result of all my searching was a single blank page.
-    exampleMeaning: "\uB0B4\uAC00 \uADF8\uD1A0\uB85D \uCC3E\uC544 \uD5E4\uB9E8 \uB05D\uC5D0
-      \uC5BB\uC740 \uACB0\uACFC\uB294 \uBE48 \uD398\uC774\uC9C0 \uD55C \uC7A5\uBFD0\uC774\uC5C8\uB2E4."
-    story: 138
-    storyHeading: 
-  - id: role
-    english: role
-    meaning: "\uC5ED\uD560"
-    partOfSpeech: n
-    example: Each of us has a role to play in this village.
-    exampleMeaning: "\uC774 \uB9C8\uC744\uC5D0\uC11C \uC6B0\uB9AC \uBAA8\uB450\uB294
-      \uC800\uB9C8\uB2E4 \uB9E1\uC740 \uC5ED\uD560\uC774 \uC788\uB2E4."
-    story: 13
-    storyHeading: 
-  - id: round
-    english: round
-    meaning: "\uB465\uADFC"
-    partOfSpeech: adj
-    example: A round spring sits in the middle of the village.
-    exampleMeaning: "\uB9C8\uC744 \uD55C\uAC00\uC6B4\uB370 \uB465\uADFC \uC0D8\uC774
-      \uC788\uB2E4."
-    story: 25
-    storyHeading: 
-  - id: seem
-    english: seem
-    meaning: "~\uCC98\uB7FC \uBCF4\uC774\uB2E4"
-    partOfSpeech: v
-    example: The letters seem to melt away overnight.
-    exampleMeaning: "\uAE00\uC790\uB4E4\uC774 \uBC24\uC0AC\uC774 \uB179\uC544 \uC5C6\uC5B4\uC9C0\uB294
-      \uAC83 \uAC19\uB2E4."
-    story: 37
-    storyHeading: 
-  - id: self
-    english: self
-    meaning: "\uC790\uAE30 \uC790\uC2E0, \uC790\uC544"
-    partOfSpeech: n
-    example: A name helps hold the self together.
-    exampleMeaning: "\uC774\uB984\uC740 \uC790\uC544\uB97C \uD558\uB098\uB85C \uBD99\uB4E4\uC5B4
-      \uC8FC\uB294 \uC5ED\uD560\uC744 \uD55C\uB2E4."
-    story: 58
-    storyHeading: 
-  - id: sense
-    english: sense
-    meaning: "\uAC10\uAC01, \uC758\uBBF8"
-    partOfSpeech: n
-    example: The old man had no sense of who we were.
-    exampleMeaning: "\uC5B4\uB974\uC2E0\uC740 \uC6B0\uB9AC\uAC00 \uB204\uAD6C\uC778\uC9C0
-      \uC804\uD600 \uC54C\uC544\uBCF4\uC9C0 \uBABB\uD588\uB2E4."
-    story: 57
-    storyHeading: 
-  - id: series
-    english: series
-    meaning: "\uC5F0\uC18D, \uC2DC\uB9AC\uC988"
-    partOfSpeech: n
-    example: A long series of history books had been reduced to their titles.
-    exampleMeaning: "\uBC29\uB300\uD55C \uC5ED\uC0AC\uCC45 \uC2DC\uB9AC\uC988\uC5D0\uB294
-      \uC774\uC81C \uC81C\uBAA9\uB9CC \uB0A8\uC544 \uC788\uC5C8\uB2E4."
-    story: 115
-    storyHeading: 
-  - id: serious
-    english: serious
-    meaning: "\uC2EC\uAC01\uD55C, \uC9C4\uC9C0\uD55C"
-    partOfSpeech: adj
-    example: 'By winter, the problem had become serious: people were forgetting their
-      neighbors.'
-    exampleMeaning: "\uACA8\uC6B8\uC774 \uB418\uC790 \uBB38\uC81C\uAC00 \uC2EC\uAC01\uD574\uC84C\uB2E4.
-      \uC0AC\uB78C\uB4E4\uC774 \uC774\uC6C3\uC744 \uC78A\uAE30 \uC2DC\uC791\uD588\uB2E4."
-    story: 44
-    storyHeading: "\uACA8\uC6B8"
-  - id: sex
-    english: sex
-    meaning: "\uC131, \uC131\uBCC4"
-    partOfSpeech: n
-    example: The form asked for a name, age, and sex, but every field was blank.
-    exampleMeaning: "\uC11C\uB958\uC5D0\uB294 \uC774\uB984, \uB098\uC774, \uC131\uBCC4\uC744
-      \uC801\uB294 \uCE78\uC774 \uC788\uC5C8\uC9C0\uB9CC \uBAA8\uB450 \uBE44\uC5B4
-      \uC788\uC5C8\uB2E4."
-    story: 133
-    storyHeading: 
-  - id: share
-    english: share
-    meaning: "\uB098\uB204\uB2E4, \uACF5\uC720\uD558\uB2E4"
-    partOfSpeech: v
-    example: We share our bread and our stories at night.
-    exampleMeaning: "\uBC24\uC774\uBA74 \uC6B0\uB9AC\uB294 \uBE75\uACFC \uC774\uC57C\uAE30\uB97C
-      \uB098\uB208\uB2E4."
-    story: 14
-    storyHeading: 
-  - id: sign
-    english: sign
-    meaning: "\uD45C\uC9C0\uD310, \uC9D5\uD6C4"
-    partOfSpeech: n
-    example: The first sign was a small blank on my page.
-    exampleMeaning: "\uCCAB \uC9D5\uC870\uB294 \uB0B4 \uC77C\uAE30\uC7A5 \uC704\uC758
-      \uC791\uC740 \uBE48\uCE78\uC774\uC5C8\uB2E4."
-    story: 35
-    storyHeading: 
-  - id: similar
-    english: similar
-    meaning: "\uBE44\uC2B7\uD55C"
-    partOfSpeech: adj
-    example: All the faces began to look similar to me.
-    exampleMeaning: "\uBAA8\uB4E0 \uC5BC\uAD74\uC774 \uB0B4\uAC8C \uBE44\uC2B7\uBE44\uC2B7\uD558\uAC8C
-      \uBCF4\uC774\uAE30 \uC2DC\uC791\uD588\uB2E4."
-    story: 91
-    storyHeading: 
-  - id: simple
-    english: simple
-    meaning: "\uAC04\uB2E8\uD55C, \uB2E8\uC21C\uD55C"
-    partOfSpeech: adj
-    example: 'My rule is simple: write things down before they fade.'
-    exampleMeaning: "\uB0B4 \uADDC\uCE59\uC740 \uAC04\uB2E8\uD558\uB2E4. \uC0AC\uB77C\uC9C0\uAE30
-      \uC804\uC5D0 \uAE30\uB85D\uD560 \uAC83."
-    story: 8
-    storyHeading: 
-  - id: single
-    english: single
-    meaning: "\uB2E8 \uD558\uB098\uC758, \uB3C5\uC2E0\uC758"
-    partOfSpeech: adj
-    example: 'Every night, I wrote down a single word: my sister''s name.'
-    exampleMeaning: "\uB098\uB294 \uB9E4\uC77C \uBC24 \uB2E8 \uD55C \uB2E8\uC5B4\uB97C
-      \uC801\uC5C8\uB2E4. \uBC14\uB85C \uB3D9\uC0DD\uC758 \uC774\uB984\uC774\uC5C8\uB2E4."
-    story: 92
-    storyHeading: 
-  - id: site
-    english: site
-    meaning: "\uC7A5\uC18C, \uBD80\uC9C0, \uC0AC\uC774\uD2B8"
-    partOfSpeech: n
-    example: The library stands on the site of an old castle.
-    exampleMeaning: "\uC11C\uACE0\uB294 \uC61B \uC131\uD130\uC5D0 \uC11C \uC788\uB2E4."
-    story: 104
-    storyHeading: 
-  - id: social
-    english: social
-    meaning: "\uC0AC\uD68C\uC758, \uC0AC\uAD50\uC801\uC778"
-    partOfSpeech: adj
-    example: Humans are social creatures who need words to stay connected.
-    exampleMeaning: "\uC778\uAC04\uC740 \uC11C\uB85C \uC5F0\uACB0\uB418\uAE30 \uC704\uD574
-      \uB9D0\uC774 \uD544\uC694\uD55C \uC0AC\uD68C\uC801 \uC874\uC7AC\uB2E4."
-    story: 97
-    storyHeading: 
-  - id: society
-    english: society
-    meaning: "\uC0AC\uD68C"
-    partOfSpeech: n
-    example: A society without words is nothing more than a crowd.
-    exampleMeaning: "\uB9D0\uC774 \uC5C6\uB294 \uC0AC\uD68C\uB294 \uADF8\uC800 \uAD70\uC911\uC5D0
-      \uC9C0\uB098\uC9C0 \uC54A\uB294\uB2E4."
-    story: 29
-    storyHeading: 
-  - id: source
-    english: source
-    meaning: "\uC6D0\uCC9C, \uCD9C\uCC98"
-    partOfSpeech: n
-    example: I searched for the source of the sickness.
-    exampleMeaning: "\uB098\uB294 \uC774 \uBCD1\uC758 \uC6D0\uCC9C\uC744 \uCC3E\uC558\uB2E4."
-    story: 117
-    storyHeading: 
-  - id: specific
-    english: specific
-    meaning: "\uAD6C\uCCB4\uC801\uC778, \uD2B9\uC815\uD55C"
-    partOfSpeech: adj
-    example: 'I searched for one specific word: my sister''s name.'
-    exampleMeaning: "\uB098\uB294 \uD2B9\uC815\uD55C \uB2E8\uC5B4 \uD558\uB098\uB97C
-      \uCC3E\uC544 \uD5E4\uB9F8\uB2E4. \uBC14\uB85C \uB3D9\uC0DD\uC758 \uC774\uB984\uC774\uC5C8\uB2E4."
-    story: 120
-    storyHeading: 
-  - id: stage
-    english: stage
-    meaning: "\uBB34\uB300, \uB2E8\uACC4"
-    partOfSpeech: n
-    example: On a small stage, the children read their names aloud.
-    exampleMeaning: "\uC791\uC740 \uBB34\uB300\uC5D0\uC11C \uC544\uC774\uB4E4\uC774
-      \uC790\uAE30 \uC774\uB984\uC744 \uC18C\uB9AC \uB0B4\uC5B4 \uC77D\uC5C8\uB2E4."
-    story: 32
-    storyHeading: 
-  - id: standard
-    english: standard
-    meaning: "\uAE30\uC900, \uD45C\uC900"
-    partOfSpeech: n
-    example: By any standard, the library was dying.
-    exampleMeaning: "\uC5B4\uB5A4 \uAE30\uC900\uC73C\uB85C \uBCF4\uC544\uB3C4 \uC11C\uACE0\uB294
-      \uC8FD\uC5B4 \uAC00\uACE0 \uC788\uC5C8\uB2E4."
-    story: 123
-    storyHeading: 
-  - id: state
-    english: state
-    meaning: "\uC0C1\uD0DC, \uC8FC(\u5DDE)"
-    partOfSpeech: n
-    example: 'I found our neighbor in a strange state: silent and pale.'
-    exampleMeaning: "\uC5B4\uB974\uC2E0\uC740 \uB9D0\uC774 \uC5C6\uACE0 \uCC3D\uBC31\uD55C
-      \uC774\uC0C1\uD55C \uC0C1\uD0DC\uB85C \uBC1C\uACAC\uB418\uC5C8\uB2E4."
-    story: 56
-    storyHeading: 
-  - id: step
-    english: step
-    meaning: "\uAC78\uC74C, \uB2E8\uACC4"
-    partOfSpeech: n
-    example: Our neighbor walks to the spring one step at a time.
-    exampleMeaning: "\uC606\uC9D1 \uC5B4\uB974\uC2E0\uC740 \uD55C \uAC78\uC74C\uC529
-      \uCC9C\uCC9C\uD788 \uC0D8\uAE4C\uC9C0 \uAC78\uC5B4\uAC04\uB2E4."
-    story: 12
-    storyHeading: 
-  - id: straight
-    english: straight
-    meaning: "\uACE7\uC740, \uB611\uBC14\uB978"
-    partOfSpeech: adj
-    example: We took the straight road north.
-    exampleMeaning: "\uC6B0\uB9AC\uB294 \uBD81\uCABD\uC73C\uB85C \uB09C \uACE7\uC740
-      \uAE38\uC744 \uD0DD\uD588\uB2E4."
-    story: 66
-    storyHeading: 
-  - id: stuff
-    english: stuff
-    meaning: "\uAC83, \uBB3C\uAC74"
-    partOfSpeech: n
-    example: My sister started calling everything stuff.
-    exampleMeaning: "\uB3D9\uC0DD\uC740 \uBB34\uC5C7\uC774\uB4E0 '\uADF8\uAC70'\uB77C\uACE0
-      \uBD80\uB974\uAE30 \uC2DC\uC791\uD588\uB2E4."
-    story: 90
-    storyHeading: 
-  - id: success
-    english: success
-    meaning: "\uC131\uACF5"
-    partOfSpeech: n
-    example: If you can read this line, my diary was a success.
-    exampleMeaning: "\uC774 \uBB38\uC7A5\uC744 \uC77D\uC744 \uC218 \uC788\uB2E4\uBA74,
-      \uB0B4 \uC77C\uAE30\uB294 \uC131\uACF5\uD55C \uAC83\uC774\uB2E4."
-    story: 150
-    storyHeading: 
-  - id: super
-    english: super
-    meaning: "\uCD5C\uACE0\uC758, \uAD49\uC7A5\uD55C"
-    partOfSpeech: adj
-    example: My sister thinks every new word is super.
-    exampleMeaning: "\uB3D9\uC0DD\uC740 \uC0C8\uB85C\uC6B4 \uB2E8\uC5B4\uB77C\uBA74
-      \uBB34\uC5C7\uC774\uB4E0 \uAD49\uC7A5\uD558\uB2E4\uACE0 \uC0DD\uAC01\uD55C\uB2E4."
-    story: 18
-    storyHeading: 
-  - id: support
-    english: support
-    meaning: "\uC9C0\uC9C0\uD558\uB2E4, \uC9C0\uC6D0\uD558\uB2E4"
-    partOfSpeech: v
-    example: Only my sister would support my plan.
-    exampleMeaning: "\uB0B4 \uACC4\uD68D\uC744 \uC9C0\uC9C0\uD574 \uC900 \uAC83\uC740
-      \uB3D9\uC0DD\uBFD0\uC774\uC5C8\uB2E4."
-    story: 62
-    storyHeading: "\uB5A0\uB098\uB294 \uB0A0"
-  - id: system
-    english: system
-    meaning: "\uCCB4\uACC4, \uC2DC\uC2A4\uD15C"
-    partOfSpeech: n
-    example: The old shelving system no longer made any sense.
-    exampleMeaning: "\uC624\uB798\uB41C \uCC45\uC7A5 \uBC30\uCE58 \uCCB4\uACC4\uB294
-      \uB354 \uC774\uC0C1 \uC758\uBBF8\uAC00 \uC5C6\uC5C8\uB2E4."
-    story: 122
-    storyHeading: 
-  - id: tax
-    english: tax
-    meaning: "\uC138\uAE08"
-    partOfSpeech: n
-    example: A man at the gate demanded a tax, then forgot the word.
-    exampleMeaning: "\uBB38\uC9C0\uAE30\uB294 \uC138\uAE08\uC744 \uB0B4\uB77C\uACE0
-      \uC694\uAD6C\uD558\uB354\uB2C8, \uACE7 \uADF8 \uB9D0\uC870\uCC28 \uC78A\uC5B4\uBC84\uB838\uB2E4."
-    story: 73
-    storyHeading: 
-  - id: technology
-    english: technology
-    meaning: "\uACFC\uD559 \uAE30\uC220"
-    partOfSpeech: n
-    example: No technology could copy the words quickly enough.
-    exampleMeaning: "\uC5B4\uB5A4 \uAE30\uC220\uB85C\uB3C4 \uAE00\uC790\uB4E4\uC744
-      \uCDA9\uBD84\uD788 \uBE60\uB974\uAC8C \uBCF5\uC0AC\uD560 \uC218 \uC5C6\uC5C8\uB2E4."
-    story: 127
-    storyHeading: 
-  - id: term
-    english: term
-    meaning: "\uC6A9\uC5B4, \uAE30\uAC04"
-    partOfSpeech: n
-    example: I no longer know the term for this feeling.
-    exampleMeaning: "\uC774 \uAE30\uBD84\uC744 \uBD80\uB974\uB294 \uB9D0\uC744 \uB098\uB294
-      \uB354 \uC774\uC0C1 \uBAA8\uB978\uB2E4."
-    story: 141
-    storyHeading: 
-  - id: title
-    english: title
-    meaning: "\uC81C\uBAA9, \uCE6D\uD638"
-    partOfSpeech: n
-    example: The title of this diary was my name, but the ink has faded.
-    exampleMeaning: "\uC774 \uC77C\uAE30\uC5D0\uB294 \uB0B4 \uC774\uB984\uC774 \uC81C\uBAA9\uC73C\uB85C
+  - id: ko_ireum
+    english: "\uC774\uB984"
+    meaning: name
+    partOfSpeech: n
+    example: "\uC774 \uC77C\uAE30\uC5D0\uB294 \uB0B4 \uC774\uB984\uC774 \uC81C\uBAA9\uC73C\uB85C
       \uC801\uD600 \uC788\uC5C8\uC9C0\uB9CC, \uC789\uD06C\uAC00 \uBC14\uB798 \uBC84\uB838\uB2E4."
+    exampleMeaning: The title of this diary was my name, but the ink has faded.
     story: 1
     storyHeading: "\uC6B0\uB9AC \uB9C8\uC744"
-  - id: total
-    english: total
-    meaning: "\uC804\uCCB4\uC758, \uCD1D"
-    partOfSpeech: adj
-    example: 'The total was small: one sister, one old man, and one village.'
-    exampleMeaning: "\uC22B\uC790\uB294 \uC5BC\uB9C8 \uB418\uC9C0 \uC54A\uC558\uB2E4.
-      \uB3D9\uC0DD \uD55C \uBA85, \uC5B4\uB974\uC2E0 \uD55C \uBA85, \uB9C8\uC744
-      \uD558\uB098."
-    story: 143
-    storyHeading: 
-  - id: trade
-    english: trade
-    meaning: "\uBB34\uC5ED, \uAC70\uB798"
+    romanization: ireum
+  - id: ko_na
+    english: "\uB098"
+    meaning: I, me
     partOfSpeech: n
-    example: Trade was brisk, and the market was always bustling.
-    exampleMeaning: "\uAC70\uB798\uB294 \uD65C\uBC1C\uD588\uACE0 \uC7A5\uD130\uB294
-      \uC5B8\uC81C\uB098 \uC2DC\uB04C\uBC85\uC801\uD588\uB2E4."
-    story: 27
+    example: "\uB098\uB294 \uC774 \uC77C\uAE30\uC5D0 \uD558\uB8E8\uD558\uB8E8\uB97C
+      \uAE30\uB85D\uD55C\uB2E4."
+    exampleMeaning: I record each day in this diary.
+    story: 2
     storyHeading: 
-  - id: trust
-    english: trust
-    meaning: "\uBBFF\uB2E4, \uC2E0\uB8B0\uD558\uB2E4"
+    romanization: na
+  - id: ko_gareuchida
+    english: "\uAC00\uB974\uCE58\uB2E4"
+    meaning: to teach
     partOfSpeech: v
-    example: I trust my sister more than my own memory.
-    exampleMeaning: "\uB098\uB294 \uB0B4 \uAE30\uC5B5\uBCF4\uB2E4 \uB3D9\uC0DD\uC744
-      \uB354 \uBBFF\uB294\uB2E4."
-    story: 15
+    example: "\uC544\uC774\uB4E4\uC5D0\uAC8C \uC77D\uACE0 \uC4F0\uB294 \uBC95\uC744
+      \uAC00\uB974\uCE58\uB294 \uC77C\uC740 \uC624\uB7AB\uB3D9\uC548 \uB0B4 \uC9C1\uC5C5\uC774\uC5C8\uB2E4."
+    exampleMeaning: Teaching children to read and write has been my career for many
+      years.
+    story: 3
     storyHeading: 
-  - id: university
-    english: university
-    meaning: "\uB300\uD559\uAD50"
+    romanization: gareuchida
+  - id: ko_uri
+    english: "\uC6B0\uB9AC"
+    meaning: we, us
     partOfSpeech: n
-    example: Even the university sends its students here.
-    exampleMeaning: "\uB300\uD559\uAD50\uC5D0\uC11C\uB3C4 \uD559\uC0DD\uB4E4\uC744
-      \uC774\uACF3\uC73C\uB85C \uBCF4\uB0B8\uB2E4."
-    story: 108
+    example: "\uC5B8\uC5B4\uB294 \uC6B0\uB9AC\uC758 \uAE30\uC5B5\uC744 \uC0B4\uC544
+      \uC788\uAC8C \uD55C\uB2E4."
+    exampleMeaning: Language keeps our memories alive.
+    story: 4
     storyHeading: 
-  - id: value
-    english: value
-    meaning: "\uAC00\uCE58"
+    romanization: uri
+  - id: ko_iyagi
+    english: "\uC774\uC57C\uAE30"
+    meaning: story, talk
     partOfSpeech: n
-    example: Even a small word has value to someone.
-    exampleMeaning: "\uC791\uC740 \uB9D0 \uD558\uB098\uB3C4 \uB204\uAD70\uAC00\uC5D0\uAC8C\uB294
+    example: "\uB9C8\uC744 \uC0AC\uB78C\uC740 \uB204\uAD6C\uB098 \uC774\uB984\uACFC
+      \uC774\uC57C\uAE30\uB97C \uAC00\uC9C0\uACE0 \uC788\uB2E4."
+    exampleMeaning: Every person in the village has a name and a story.
+    story: 5
+    storyHeading: 
+    romanization: iyagi
+  - id: ko_jakda
+    english: "\uC791\uB2E4"
+    meaning: small
+    partOfSpeech: adj
+    example: "\uC791\uC740 \uB9D0 \uD558\uB098\uB3C4 \uB204\uAD70\uAC00\uC5D0\uAC8C\uB294
       \uAC00\uCE58\uAC00 \uC788\uB2E4."
+    exampleMeaning: Even a small word has value to someone.
     story: 6
     storyHeading: 
-  - id: various
-    english: various
-    meaning: "\uB2E4\uC591\uD55C, \uC5EC\uB7EC \uAC00\uC9C0\uC758"
+    romanization: jakda
+  - id: ko_gilda
+    english: "\uAE38\uB2E4"
+    meaning: long
     partOfSpeech: adj
-    example: 'Various things lost their names: birds, bread, and even rain.'
-    exampleMeaning: "\uC0C8\uC640 \uBE75, \uC2EC\uC9C0\uC5B4 \uBE44\uAE4C\uC9C0 \uC5EC\uB7EC
-      \uAC00\uC9C0\uAC00 \uC774\uB984\uC744 \uC783\uC5C8\uB2E4."
-    story: 89
+    example: "\uB0B4 \uC81C\uC790 \uBAA9\uB85D\uC740 \uD574\uB9C8\uB2E4 \uAE38\uC5B4\uC9C4\uB2E4."
+    exampleMeaning: My list of students grows longer every year.
+    story: 7
     storyHeading: 
-  - id: version
-    english: version
-    meaning: "\uD310, \uBC84\uC804"
+    romanization: gilda
+  - id: ko_jeon
+    english: "\uC804"
+    meaning: before, earlier
     partOfSpeech: n
-    example: Even the oldest version of the story had disappeared.
-    exampleMeaning: "\uADF8 \uC774\uC57C\uAE30\uC758 \uAC00\uC7A5 \uC624\uB798\uB41C
-      \uD310\uBCF8\uB9C8\uC800 \uC0AC\uB77C\uC838 \uC788\uC5C8\uB2E4."
-    story: 116
+    example: "\uB0B4 \uADDC\uCE59\uC740 \uAC04\uB2E8\uD558\uB2E4. \uC0AC\uB77C\uC9C0\uAE30
+      \uC804\uC5D0 \uAE30\uB85D\uD560 \uAC83."
+    exampleMeaning: 'My rule is simple: write things down before they fade.'
+    story: 8
     storyHeading: 
-  - id: view
-    english: view
-    meaning: "\uACBD\uCE58, \uACAC\uD574"
+    romanization: jeon
+  - id: ko_hakgyo
+    english: "\uD559\uAD50"
+    meaning: school
     partOfSpeech: n
-    example: The view from the hill includes the old library.
-    exampleMeaning: "\uC5B8\uB355\uC5D0\uC11C \uBC14\uB77C\uBCF4\uBA74 \uC624\uB798\uB41C
+    example: "\uC5B4\uB9B0 \uB3D9\uC0DD\uC740 \uB098\uB97C \uB530\uB77C \uD559\uAD50\uC5D0
+      \uC624\uB294 \uAC83\uC744 \uC88B\uC544\uD55C\uB2E4."
+    exampleMeaning: My little sister likes to follow me to school.
+    story: 9
+    storyHeading: 
+    romanization: hakgyo
+  - id: ko_bakda
+    english: "\uBC1D\uB2E4"
+    meaning: bright, cheerful
+    partOfSpeech: adj
+    example: "\uB3D9\uC0DD\uC740 \uC131\uACA9\uC774 \uBC1D\uC9C0\uB9CC \uB9D0\uC740
+      \uAF64 \uB0A0\uCE74\uB86D\uB2E4."
+    exampleMeaning: My sister has a cheerful character and a sharp tongue.
+    story: 10
+    storyHeading: 
+    romanization: bakda
+  - id: ko_sajeon
+    english: "\uC0AC\uC804"
+    meaning: dictionary
+    partOfSpeech: n
+    example: "\uC606\uC9D1 \uC5B4\uB974\uC2E0\uC740 \uCEE4\uB2E4\uB780 \uC0AC\uC804\uC744
+      \uAC00\uC9C0\uACE0 \uC788\uB2E4."
+    exampleMeaning: Our old neighbor owns a huge dictionary.
+    story: 11
+    storyHeading: 
+    romanization: sajeon
+  - id: ko_cheoncheonhi
+    english: "\uCC9C\uCC9C\uD788"
+    meaning: slowly
+    partOfSpeech: adv
+    example: "\uC606\uC9D1 \uC5B4\uB974\uC2E0\uC740 \uD55C \uAC78\uC74C\uC529 \uCC9C\uCC9C\uD788
+      \uC0D8\uAE4C\uC9C0 \uAC78\uC5B4\uAC04\uB2E4."
+    exampleMeaning: Our neighbor walks to the spring one step at a time.
+    story: 12
+    storyHeading: 
+    romanization: cheoncheonhi
+  - id: ko_yeokhal
+    english: "\uC5ED\uD560"
+    meaning: role, part
+    partOfSpeech: n
+    example: "\uC774 \uB9C8\uC744\uC5D0\uC11C \uC6B0\uB9AC \uBAA8\uB450\uB294 \uC800\uB9C8\uB2E4
+      \uB9E1\uC740 \uC5ED\uD560\uC774 \uC788\uB2E4."
+    exampleMeaning: Each of us has a role to play in this village.
+    story: 13
+    storyHeading: 
+    romanization: yeokhal
+  - id: ko_ppang
+    english: "\uBE75"
+    meaning: bread
+    partOfSpeech: n
+    example: "\uBC24\uC774\uBA74 \uC6B0\uB9AC\uB294 \uBE75\uACFC \uC774\uC57C\uAE30\uB97C
+      \uB098\uB208\uB2E4."
+    exampleMeaning: We share our bread and our stories at night.
+    story: 14
+    storyHeading: 
+    romanization: ppang
+  - id: ko_deo
+    english: "\uB354"
+    meaning: more
+    partOfSpeech: adv
+    example: "\uB098\uB294 \uB0B4 \uAE30\uC5B5\uBCF4\uB2E4 \uB3D9\uC0DD\uC744 \uB354
+      \uBBFF\uB294\uB2E4."
+    exampleMeaning: I trust my sister more than my own memory.
+    story: 15
+    storyHeading: 
+    romanization: deo
+  - id: ko_jogeum
+    english: "\uC870\uAE08"
+    meaning: a little, a bit
+    partOfSpeech: adv
+    example: "\uB3D9\uC0DD\uC740 \uC5B4\uB460\uC744 \uC870\uAE08 \uBB34\uC11C\uC6CC\uD558\uB294\uB370,
+      \uB098\uB294 \uADF8\uAC8C \uAF64 \uC6B0\uC2B5\uB2E4."
+    exampleMeaning: My sister is a bit afraid of the dark, which I find rather funny.
+    story: 16
+    storyHeading: 
+    romanization: jogeum
+  - id: ko_manta
+    english: "\uB9CE\uB2E4"
+    meaning: many, much
+    partOfSpeech: adj
+    example: "\uC606\uC9D1 \uC5B4\uB974\uC2E0\uC740 \uB9C8\uC744 \uC544\uC774\uB4E4\uC5D0\uAC8C
+      \uC778\uAE30\uAC00 \uB9CE\uB2E4."
+    exampleMeaning: Our neighbor is popular with the children in the village.
+    story: 17
+    storyHeading: 
+    romanization: manta
+  - id: ko_saenggakada
+    english: "\uC0DD\uAC01\uD558\uB2E4"
+    meaning: to think
+    partOfSpeech: v
+    example: "\uB3D9\uC0DD\uC740 \uC0C8\uB85C\uC6B4 \uB2E8\uC5B4\uB77C\uBA74 \uBB34\uC5C7\uC774\uB4E0
+      \uAD49\uC7A5\uD558\uB2E4\uACE0 \uC0DD\uAC01\uD55C\uB2E4."
+    exampleMeaning: My sister thinks every new word is super.
+    story: 18
+    storyHeading: 
+    romanization: saenggakada
+  - id: ko_salda
+    english: "\uC0B4\uB2E4"
+    meaning: to live
+    partOfSpeech: v
+    example: "\uC6B0\uB9AC\uC758 \uC791\uC740 \uACF5\uB3D9\uCCB4\uB294 \uD478\uB978
+      \uCD08\uC6D0\uC5D0 \uC0B0\uB2E4."
+    exampleMeaning: Our small community lives on a green meadow.
+    story: 19
+    storyHeading: 
+    romanization: salda
+  - id: ko_baeuda
+    english: "\uBC30\uC6B0\uB2E4"
+    meaning: to learn
+    partOfSpeech: v
+    example: "\uB9C8\uC744 \uC544\uC774\uB4E4\uC740 \uB0B4\uAC8C \uC77D\uACE0 \uC4F0\uB294
+      \uBC95\uC744 \uBC30\uC6B4\uB2E4."
+    exampleMeaning: The local children learn to read and write from me.
+    story: 20
+    storyHeading: 
+    romanization: baeuda
+  - id: ko_sseuda
+    english: "\uC4F0\uB2E4"
+    meaning: to write
+    partOfSpeech: v
+    example: "\uC544\uC774\uB4E4\uC740 \uB9C9\uB300\uAE30\uB85C \uD759\uBC14\uB2E5\uC5D0
+      \uC790\uAE30 \uC774\uB984\uC744 \uC4F0\uBA70 \uC5F0\uC2B5\uD55C\uB2E4."
+    exampleMeaning: They practice writing their names in the dirt with sticks.
+    story: 21
+    storyHeading: 
+    romanization: sseuda
+  - id: ko_ai
+    english: "\uC544\uC774"
+    meaning: child
+    partOfSpeech: n
+    example: "\uB098\uB294 \uBAA8\uB4E0 \uC544\uC774\uC5D0\uAC8C \uC7A0\uC7AC\uB825\uC774
+      \uC788\uB2E4\uACE0 \uBBFF\uB294\uB2E4."
+    exampleMeaning: I believe every child has potential.
+    story: 22
+    storyHeading: 
+    romanization: ai
+  - id: ko_mal
+    english: "\uB9D0"
+    meaning: speech, language
+    partOfSpeech: n
+    example: "\uADF8 \uC2DC\uC808 \uB9D0\uC740 \uD480\uCC98\uB7FC \uD754\uD588\uB2E4."
+    exampleMeaning: In those days, words were as common as grass.
+    story: 23
+    storyHeading: 
+    romanization: mal
+  - id: ko_deureooda
+    english: "\uB4E4\uC5B4\uC624\uB2E4"
+    meaning: to come in, to enter
+    partOfSpeech: v
+    example: "\uC5B8\uB355\uC5D0\uC11C \uBC14\uB77C\uBCF4\uBA74 \uC624\uB798\uB41C
       \uC11C\uACE0\uB3C4 \uD55C\uB208\uC5D0 \uB4E4\uC5B4\uC628\uB2E4."
+    exampleMeaning: The view from the hill includes the old library.
     story: 24
     storyHeading: 
-  - id: vote
-    english: vote
-    meaning: "\uD22C\uD45C\uD558\uB2E4"
+    romanization: deureooda
+  - id: ko_itda
+    english: "\uC788\uB2E4"
+    meaning: to be (there), to have
     partOfSpeech: v
-    example: They decided to vote on what to do.
-    exampleMeaning: "\uADF8\uB4E4\uC740 \uC5B4\uB5BB\uAC8C \uD560\uC9C0 \uD22C\uD45C\uD558\uAE30\uB85C
+    example: "\uB9C8\uC744 \uD55C\uAC00\uC6B4\uB370 \uB465\uADFC \uC0D8\uC774 \uC788\uB2E4."
+    exampleMeaning: A round spring sits in the middle of the village.
+    story: 25
+    storyHeading: 
+    romanization: itda
+  - id: ko_swida
+    english: "\uC26C\uB2E4"
+    meaning: to rest
+    partOfSpeech: v
+    example: "\uBAA8\uB450 \uC26C\uB7EC \uC0D8\uC73C\uB85C \uC628\uB2E4."
+    exampleMeaning: Everyone comes to the spring for a rest.
+    story: 26
+    storyHeading: 
+    romanization: swida
+  - id: ko_eonjena
+    english: "\uC5B8\uC81C\uB098"
+    meaning: always
+    partOfSpeech: adv
+    example: "\uAC70\uB798\uB294 \uD65C\uBC1C\uD588\uACE0 \uC7A5\uD130\uB294 \uC5B8\uC81C\uB098
+      \uC2DC\uB04C\uBC85\uC801\uD588\uB2E4."
+    exampleMeaning: Trade was brisk, and the market was always bustling.
+    story: 27
+    storyHeading: 
+    romanization: eonjena
+  - id: ko_jota
+    english: "\uC88B\uB2E4"
+    meaning: good
+    partOfSpeech: adj
+    example: "\uC88B\uC740 \uC774\uC57C\uAE30\uC758 \uAC12\uC740 \uB530\uB73B\uD55C
+      \uBC25 \uD55C \uB07C\uC600\uB2E4."
+    exampleMeaning: The price of a good story was one warm meal.
+    story: 28
+    storyHeading: 
+    romanization: jota
+  - id: ko_eopda
+    english: "\uC5C6\uB2E4"
+    meaning: to not be (there), to not have
+    partOfSpeech: v
+    example: "\uB9D0\uC774 \uC5C6\uB294 \uC0AC\uD68C\uB294 \uADF8\uC800 \uAD70\uC911\uC5D0
+      \uC9C0\uB098\uC9C0 \uC54A\uB294\uB2E4."
+    exampleMeaning: A society without words is nothing more than a crowd.
+    story: 29
+    storyHeading: 
+    romanization: eopda
+  - id: ko_geongang
+    english: "\uAC74\uAC15"
+    meaning: health
+    partOfSpeech: n
+    example: "\uC6B0\uB9AC\uB294 \uC544\uCE68\uB9C8\uB2E4 \uC11C\uB85C\uC758 \uAC74\uAC15\uC744
+      \uBB3C\uC5C8\uB2E4."
+    exampleMeaning: We asked about each other's health every morning.
+    story: 30
+    storyHeading: 
+    romanization: geongang
+  - id: ko_gajang
+    english: "\uAC00\uC7A5"
+    meaning: most
+    partOfSpeech: adv
+    example: "\uC218\uD655 \uCD95\uC81C\uB294 \uD55C \uD574 \uC911 \uAC00\uC7A5 \uD070
+      \uD589\uC0AC\uC600\uB2E4."
+    exampleMeaning: The harvest festival was the biggest event of the year.
+    story: 31
+    storyHeading: 
+    romanization: gajang
+  - id: ko_ikda
+    english: "\uC77D\uB2E4"
+    meaning: to read
+    partOfSpeech: v
+    example: "\uC791\uC740 \uBB34\uB300\uC5D0\uC11C \uC544\uC774\uB4E4\uC774 \uC790\uAE30
+      \uC774\uB984\uC744 \uC18C\uB9AC \uB0B4\uC5B4 \uC77D\uC5C8\uB2E4."
+    exampleMeaning: On a small stage, the children read their names aloud.
+    story: 32
+    storyHeading: 
+    romanization: ikda
+  - id: ko_ireonada
+    english: "\uC77C\uC5B4\uB098\uB2E4"
+    meaning: to happen, to get up
+    partOfSpeech: v
+    example: "\uADF8\uB7EC\uB2E4 \uC774\uC0C1\uD55C \uC77C\uC774 \uC77C\uC5B4\uB098\uAE30
+      \uC2DC\uC791\uD588\uB2E4."
+    exampleMeaning: Then something strange began to happen.
+    story: 33
+    storyHeading: "\uCCAB \uBE48\uCE78"
+    romanization: ireonada
+  - id: ko_achim
+    english: "\uC544\uCE68"
+    meaning: morning
+    partOfSpeech: n
+    example: "\uC5B4\uB290 \uC544\uCE68, \uB3D9\uC0DD\uC758 \uC774\uB984\uC774 \uB4E4\uB9AC\uC9C0
+      \uC54A\uC558\uB2E4."
+    exampleMeaning: One morning, I could not hear my sister's name.
+    story: 34
+    storyHeading: 
+    romanization: achim
+  - id: ko_wi
+    english: "\uC704"
+    meaning: top, above
+    partOfSpeech: n
+    example: "\uCCAB \uC9D5\uC870\uB294 \uB0B4 \uC77C\uAE30\uC7A5 \uC704\uC758 \uC791\uC740
+      \uBE48\uCE78\uC774\uC5C8\uB2E4."
+    exampleMeaning: The first sign was a small blank on my page.
+    story: 35
+    storyHeading: 
+    romanization: wi
+  - id: ko_jari
+    english: "\uC790\uB9AC"
+    meaning: seat, spot
+    partOfSpeech: n
+    example: "\uCD5C\uADFC\uC5D0 \uC4F4 \uC77C\uAE30\uC7A5 \uCABD\uC5D0\uB294 \uB9D0\uC774
+      \uC788\uC5B4\uC57C \uD560 \uC790\uB9AC\uAC00 \uB6AB\uB824 \uC788\uC5C8\uB2E4."
+    exampleMeaning: The recent pages of my diary had holes where words should have
+      been.
+    story: 36
+    storyHeading: 
+    romanization: jari
+  - id: ko_bam
+    english: "\uBC24"
+    meaning: night
+    partOfSpeech: n
+    example: "\uAE00\uC790\uB4E4\uC774 \uBC24\uC0AC\uC774 \uB179\uC544 \uC5C6\uC5B4\uC9C0\uB294
+      \uAC83 \uAC19\uB2E4."
+    exampleMeaning: The letters seem to melt away overnight.
+    story: 37
+    storyHeading: 
+    romanization: bam
+  - id: ko_ilta
+    english: "\uC783\uB2E4"
+    meaning: to lose
+    partOfSpeech: v
+    example: "\uB9D0\uC744 \uD558\uB098 \uC783\uC73C\uBA74, \uAE30\uC5B5\uB3C4 \uD558\uB098
+      \uC783\uB294\uB2E4."
+    exampleMeaning: If we lose a word, we lose a memory too.
+    story: 38
+    storyHeading: 
+    romanization: ilta
+  - id: ko_cheoeum
+    english: "\uCC98\uC74C"
+    meaning: first time
+    partOfSpeech: n
+    example: "\uCC98\uC74C\uC5D0\uB294 \uC190\uC2E4\uC774 \uC791\uC558\uB2E4. \uB9D0
+      \uD55C\uB450 \uAC1C\uBFD0\uC774\uC5C8\uB2E4."
+    exampleMeaning: The loss was small at first, just a word or two.
+    story: 39
+    storyHeading: 
+    romanization: cheoeum
+  - id: ko_sijak
+    english: "\uC2DC\uC791"
+    meaning: start
+    partOfSpeech: n
+    example: "\uB9E4\uC8FC \uBE48\uCE78\uC774 \uB298\uC5B4\uB098\uAE30 \uC2DC\uC791\uD588\uB2E4."
+    exampleMeaning: Each week, the blanks began to increase.
+    story: 40
+    storyHeading: 
+    romanization: sijak
+  - id: ko_gonggan
+    english: "\uACF5\uAC04"
+    meaning: space
+    partOfSpeech: n
+    example: "\uB098\uB294 \uCABD\uB9C8\uB2E4 \uBE44\uC5B4 \uC788\uB294 \uACF5\uAC04\uC758
+      \uC591\uC744 \uC7AC\uC5B4 \uBCF4\uC558\uB2E4."
+    exampleMeaning: I measured the amount of blank space on each page.
+    story: 41
+    storyHeading: 
+    romanization: gonggan
+  - id: ko_haru
+    english: "\uD558\uB8E8"
+    meaning: a day, one day
+    partOfSpeech: n
+    example: "\uD3C9\uADE0\uC801\uC73C\uB85C \uD558\uB8E8\uC5D0 \uC138 \uB2E8\uC5B4\uAC00
+      \uC0AC\uB77C\uC84C\uB2E4."
+    exampleMeaning: On average, three words vanished every day.
+    story: 42
+    storyHeading: 
+    romanization: haru
+  - id: ko_itda_2
+    english: "\uC78A\uB2E4"
+    meaning: to forget
+    partOfSpeech: v
+    example: "\uC774 \uC18D\uB3C4\uB77C\uBA74 \uB9C8\uC744\uC740 \uC790\uAE30 \uC774\uB984\uB3C4
+      \uC78A\uC744 \uAC83\uC774\uB2E4."
+    exampleMeaning: At this rate, the village will forget its own name.
+    story: 43
+    storyHeading: 
+    romanization: itda
+  - id: ko_gyeoul
+    english: "\uACA8\uC6B8"
+    meaning: winter
+    partOfSpeech: n
+    example: "\uACA8\uC6B8\uC774 \uB418\uC790 \uBB38\uC81C\uAC00 \uC2EC\uAC01\uD574\uC84C\uB2E4.
+      \uC0AC\uB78C\uB4E4\uC774 \uC774\uC6C3\uC744 \uC78A\uAE30 \uC2DC\uC791\uD588\uB2E4."
+    exampleMeaning: 'By winter, the problem had become serious: people were forgetting
+      their neighbors.'
+    story: 44
+    storyHeading: "\uACA8\uC6B8"
+    romanization: gyeoul
+  - id: ko_munje
+    english: "\uBB38\uC81C"
+    meaning: problem, question
+    partOfSpeech: n
+    example: "\uC544\uBB34\uB3C4 \uADF8 \uBB38\uC81C\uB97C \uC785\uC5D0 \uC62C\uB9AC\uACE0
+      \uC2F6\uC5B4 \uD558\uC9C0 \uC54A\uC558\uB2E4."
+    exampleMeaning: Nobody wanted to talk about the matter.
+    story: 45
+    storyHeading: 
+    romanization: munje
+  - id: ko_chatda
+    english: "\uCC3E\uB2E4"
+    meaning: to look for, to find
+    partOfSpeech: v
+    example: "\uC544\uBB34\uB3C4 \uC6D0\uC778\uC744 \uCC3E\uC9C0 \uBABB\uD588\uB2E4."
+    exampleMeaning: Nobody could find the cause.
+    story: 46
+    storyHeading: 
+    romanization: chatda
+  - id: ko_duda
+    english: "\uB450\uB2E4"
+    meaning: to put, to place
+    partOfSpeech: v
+    example: "\uB098\uB294 \uBE48 \uCABD\uC744 \uBAA8\uB450 \uC99D\uAC70\uB85C \uB0A8\uACA8
+      \uB450\uC5C8\uB2E4."
+    exampleMeaning: I kept every blank page as evidence.
+    story: 47
+    storyHeading: 
+    romanization: duda
+  - id: ko_gajeogada
+    english: "\uAC00\uC838\uAC00\uB2E4"
+    meaning: to take (away)
+    partOfSpeech: v
+    example: "\uB098\uB294 \uBCF4\uACE0\uC11C\uB97C \uC368\uC11C \uC758\uD68C\uC5D0
+      \uAC00\uC838\uAC14\uB2E4."
+    exampleMeaning: I wrote a report and took it to the council.
+    story: 48
+    storyHeading: 
+    romanization: gajeogada
+  - id: ko_baro
+    english: "\uBC14\uB85C"
+    meaning: right away, directly
+    partOfSpeech: adv
+    example: "\uB9C8\uC744 \uC758\uD68C\uB294 \uBC14\uB85C \uADF8\uB0A0 \uBC24 \uBAA8\uC600\uB2E4."
+    exampleMeaning: The village council met that very night.
+    story: 49
+    storyHeading: 
+    romanization: baro
+  - id: ko_mot
+    english: "\uBABB"
+    meaning: cannot
+    partOfSpeech: adv
+    example: "\uCD0C\uC7A5\uC740 \uB0B4 \uC774\uB984\uC744 \uAE30\uC5B5\uD558\uC9C0
+      \uBABB\uD588\uB2E4."
+    exampleMeaning: The chief of the village could not remember my name.
+    story: 50
+    storyHeading: 
+    romanization: mot
+  - id: ko_eotteota
+    english: "\uC5B4\uB5BB\uB2E4"
+    meaning: how (is it)
+    partOfSpeech: adj
+    example: "\uADF8\uB4E4\uC740 \uC5B4\uB5BB\uAC8C \uD560\uC9C0 \uD22C\uD45C\uD558\uAE30\uB85C
       \uD588\uB2E4."
+    exampleMeaning: They decided to vote on what to do.
     story: 51
     storyHeading: 
-  - id: whole
-    english: whole
-    meaning: "\uC804\uCCB4\uC758, \uBAA8\uB4E0"
+    romanization: eotteota
+  - id: ko_wae
+    english: "\uC65C"
+    meaning: why
+    partOfSpeech: adv
+    example: "\uC704\uC6D0\uD68C\uAC00 \uAFB8\uB824\uC84C\uC9C0\uB9CC, \uACE7 \uC704\uC6D0\uB4E4\uC740
+      \uC65C \uBAA8\uC600\uB294\uC9C0 \uC78A\uC5B4\uBC84\uB838\uB2E4."
+    exampleMeaning: A committee was formed, but soon its members forgot why they
+      had gathered.
+    story: 52
+    storyHeading: 
+    romanization: wae
+  - id: ko_sae
+    english: "\uC0C8"
+    meaning: new
     partOfSpeech: adj
-    example: When I opened a book, a whole page was gone.
-    exampleMeaning: "\uCC45\uC744 \uD3BC\uCE58\uC790 \uD55C \uCABD\uC774 \uD1B5\uC9F8\uB85C
+    example: "\uC0C8 \uBC95\uC774 \uC0DD\uACBC\uB2E4. \uBB38\uC5D0 \uC790\uAE30 \uC774\uB984\uC744
+      \uC801\uC744 \uAC83."
+    exampleMeaning: 'A new law said: write your name on your door.'
+    story: 53
+    storyHeading: 
+    romanization: sae
+  - id: ko_mun
+    english: "\uBB38"
+    meaning: door
+    partOfSpeech: n
+    example: "\uC6B0\uB9AC\uB294 \uBAA8\uB4E0 \uBB38\uACFC \uBCBD\uC5D0 \uC774\uB984\uC744
+      \uBD99\uC5EC \uB454\uB2E4."
+    exampleMeaning: We post names on every door and wall.
+    story: 54
+    storyHeading: 
+    romanization: mun
+  - id: ko_yeop
+    english: "\uC606"
+    meaning: side, next to
+    partOfSpeech: n
+    example: "\uC606\uC9D1 \uC5B4\uB974\uC2E0\uC740 \uC774\uC57C\uAE30\uB97C \uC774\uC5B4
+      \uAC00\uC9C0 \uBABB\uD588\uB2E4."
+    exampleMeaning: Our neighbor could not continue the story.
+    story: 55
+    storyHeading: 
+    romanization: yeop
+  - id: ko_isanghada
+    english: "\uC774\uC0C1\uD558\uB2E4"
+    meaning: strange, odd
+    partOfSpeech: adj
+    example: "\uC5B4\uB974\uC2E0\uC740 \uB9D0\uC774 \uC5C6\uACE0 \uCC3D\uBC31\uD55C
+      \uC774\uC0C1\uD55C \uC0C1\uD0DC\uB85C \uBC1C\uACAC\uB418\uC5C8\uB2E4."
+    exampleMeaning: 'I found our neighbor in a strange state: silent and pale.'
+    story: 56
+    storyHeading: 
+    romanization: isanghada
+  - id: ko_nugu
+    english: "\uB204\uAD6C"
+    meaning: who
+    partOfSpeech: n
+    example: "\uC5B4\uB974\uC2E0\uC740 \uC6B0\uB9AC\uAC00 \uB204\uAD6C\uC778\uC9C0
+      \uC804\uD600 \uC54C\uC544\uBCF4\uC9C0 \uBABB\uD588\uB2E4."
+    exampleMeaning: The old man had no sense of who we were.
+    story: 57
+    storyHeading: 
+    romanization: nugu
+  - id: ko_hana
+    english: "\uD558\uB098"
+    meaning: one
+    partOfSpeech: n
+    example: "\uC774\uB984\uC740 \uC790\uC544\uB97C \uD558\uB098\uB85C \uBD99\uB4E4\uC5B4
+      \uC8FC\uB294 \uC5ED\uD560\uC744 \uD55C\uB2E4."
+    exampleMeaning: A name helps hold the self together.
+    story: 58
+    storyHeading: 
+    romanization: hana
+  - id: ko_majimak
+    english: "\uB9C8\uC9C0\uB9C9"
+    meaning: last, final
+    partOfSpeech: n
+    example: "\uD55C\uC21C\uAC04\uC5D0 \uC5B4\uB974\uC2E0\uC758 \uB9C8\uC9C0\uB9C9
+      \uB9D0\uC774 \uC0AC\uB77C\uC84C\uB2E4."
+    exampleMeaning: In a moment, the old man's final word vanished.
+    story: 59
+    storyHeading: 
+    romanization: majimak
+  - id: ko_jaesan
+    english: "\uC7AC\uC0B0"
+    meaning: property, fortune
+    partOfSpeech: n
+    example: "\uADF8 \uC0AC\uC804\uC740 \uC5B4\uB974\uC2E0\uC758 \uC720\uC77C\uD55C
+      \uC7AC\uC0B0\uC774\uC5C8\uB2E4."
+    exampleMeaning: The dictionary was the old man's only property.
+    story: 60
+    storyHeading: 
+    romanization: jaesan
+  - id: ko_neota
+    english: "\uB123\uB2E4"
+    meaning: to put in
+    partOfSpeech: v
+    example: "\uC6B0\uB9AC\uB294 \uADF8\uAC83\uC744 \uB9C8\uC744 \uC704\uCABD\uC5D0
+      \uC788\uB294 \uAC1C\uC778 \uBCF4\uAD00\uD568\uC5D0 \uB123\uC5B4 \uC7A0\uAC00
+      \uB450\uC5C8\uB2E4."
+    exampleMeaning: We locked it away in a private chest above the village.
+    story: 61
+    storyHeading: 
+    romanization: neota
+  - id: ko_gyehoek
+    english: "\uACC4\uD68D"
+    meaning: plan
+    partOfSpeech: n
+    example: "\uB0B4 \uACC4\uD68D\uC744 \uC9C0\uC9C0\uD574 \uC900 \uAC83\uC740 \uB3D9\uC0DD\uBFD0\uC774\uC5C8\uB2E4."
+    exampleMeaning: Only my sister would support my plan.
+    story: 62
+    storyHeading: "\uB5A0\uB098\uB294 \uB0A0"
+    romanization: gyehoek
+  - id: ko_gyeolguk
+    english: "\uACB0\uAD6D"
+    meaning: in the end, finally
+    partOfSpeech: adv
+    example: "\uACB0\uAD6D \uC6B0\uB9AC\uC5D0\uAC8C\uB294 \uC120\uD0DD\uC9C0\uAC00
+      \uD558\uB098\uBFD0\uC774\uC5C8\uB2E4."
+    exampleMeaning: In the end, we had only one choice.
+    story: 63
+    storyHeading: 
+    romanization: gyeolguk
+  - id: ko_tteonada
+    english: "\uB5A0\uB098\uB2E4"
+    meaning: to leave, to depart
+    partOfSpeech: v
+    example: "\uC6B0\uB9AC\uB294 \uC774\uB984\uC774 \uD750\uB824\uC9C0\uAE30 \uC804\uC5D0
+      \uC0C8\uBCBD\uC5D0 \uB5A0\uB098\uAE30\uB85C \uD588\uB2E4."
+    exampleMeaning: We would leave at dawn, before the names faded.
+    story: 64
+    storyHeading: 
+    romanization: tteonada
+  - id: ko_saram
+    english: "\uC0AC\uB78C"
+    meaning: person, people
+    partOfSpeech: n
+    example: "\uB9C8\uC744 \uC0AC\uB78C\uB4E4\uC758 \uC808\uBC18\uC774 \uBC30\uC6C5\uD558\uB7EC
+      \uB098\uC654\uB2E4."
+    exampleMeaning: Half the village came out to say goodbye.
+    story: 65
+    storyHeading: 
+    romanization: saram
+  - id: ko_gil
+    english: "\uAE38"
+    meaning: road, way
+    partOfSpeech: n
+    example: "\uC6B0\uB9AC\uB294 \uBD81\uCABD\uC73C\uB85C \uB09C \uACE7\uC740 \uAE38\uC744
+      \uD0DD\uD588\uB2E4."
+    exampleMeaning: We took the straight road north.
+    story: 66
+    storyHeading: 
+    romanization: gil
+  - id: ko_dongsaeng
+    english: "\uB3D9\uC0DD"
+    meaning: younger sibling
+    partOfSpeech: n
+    example: "\uB3D9\uC0DD\uC774 \uC624\uB798\uB41C \uC11C\uACE0\uAE4C\uC9C0 \uC6B0\uB9AC\uB97C
+      \uC548\uB0B4\uD558\uAE30\uB85C \uD588\uB2E4."
+    exampleMeaning: My sister would lead the way to the old library.
+    story: 67
+    storyHeading: 
+    romanization: dongsaeng
+  - id: ko_nunmul
+    english: "\uB208\uBB3C"
+    meaning: tears
+    partOfSpeech: n
+    example: "\uB208\uBB3C \uB54C\uBB38\uC5D0 \uB9C8\uC744\uC744 \uB9C8\uC9C0\uB9C9\uC73C\uB85C
+      \uBC14\uB77C\uBCF8 \uD48D\uACBD\uC740 \uD750\uB9BF\uD588\uB2E4."
+    exampleMeaning: My final glimpse of the village was blurred by tears.
+    story: 68
+    storyHeading: 
+    romanization: nunmul
+  - id: ko_gwageo
+    english: "\uACFC\uAC70"
+    meaning: past
+    partOfSpeech: n
+    example: "\uC774\uC81C \uACFC\uAC70\uB294 \uB0B4\uAC00 \uC9CA\uC5B4\uC9C0\uACE0
+      \uAC00\uC57C \uD560 \uAC83\uC774 \uB418\uC5C8\uB2E4."
+    exampleMeaning: The past was now something I had to carry with me.
+    story: 69
+    storyHeading: 
+    romanization: gwageo
+  - id: ko_ganeunghada
+    english: "\uAC00\uB2A5\uD558\uB2E4"
+    meaning: possible
+    partOfSpeech: adj
+    example: "\uC774\uB984\uC744 \uC78A\uC5B4\uBC84\uB9B0 \uC0AC\uB78C\uC744 \uADF8\uB9AC\uC6CC\uD558\uB294
+      \uAC83\uC774 \uAC00\uB2A5\uD560\uAE4C?"
+    exampleMeaning: Is it possible to miss someone whose name you have forgotten?
+    story: 70
+    storyHeading: 
+    romanization: ganeunghada
+  - id: ko_iut
+    english: "\uC774\uC6C3"
+    meaning: neighbor
+    partOfSpeech: n
+    example: "\uC815\uC624\uC5D0 \uC6B0\uB9AC\uB294 \uC774\uC6C3 \uACE0\uC744\uB85C
+      \uB118\uC5B4\uAC14\uB2E4."
+    exampleMeaning: We crossed into the neighboring county at noon.
+    story: 71
+    storyHeading: "\uAE38 \uC704\uC5D0\uC11C"
+    romanization: iut
+  - id: ko_ttokgatda
+    english: "\uB611\uAC19\uB2E4"
+    meaning: exactly the same
+    partOfSpeech: adj
+    example: "\uC9C0\uB098\uB294 \uAD6C\uC5ED\uB9C8\uB2E4 \uD45C\uC9C0\uD310\uC774
+      \uB611\uAC19\uC774 \uBE44\uC5B4 \uC788\uC5C8\uB2E4."
+    exampleMeaning: Every district we passed had the same blank signs.
+    story: 72
+    storyHeading: 
+    romanization: ttokgatda
+  - id: ko_got
+    english: "\uACE7"
+    meaning: soon
+    partOfSpeech: adv
+    example: "\uBB38\uC9C0\uAE30\uB294 \uC138\uAE08\uC744 \uB0B4\uB77C\uACE0 \uC694\uAD6C\uD558\uB354\uB2C8,
+      \uACE7 \uADF8 \uB9D0\uC870\uCC28 \uC78A\uC5B4\uBC84\uB838\uB2E4."
+    exampleMeaning: A man at the gate demanded a tax, then forgot the word.
+    story: 73
+    storyHeading: 
+    romanization: got
+  - id: ko_dari
+    english: "\uB2E4\uB9AC"
+    meaning: bridge
+    partOfSpeech: n
+    example: "\uB2E4\uB9AC \uC704\uC758 \uAD00\uB9AC\uB294 \uB354 \uC774\uC0C1 \uAE00\uC790\uB97C
+      \uC77D\uC9C0 \uBABB\uD588\uB2E4."
+    exampleMeaning: The officer at the bridge could no longer read.
+    story: 74
+    storyHeading: 
+    romanization: dari
+  - id: ko_jongi
+    english: "\uC885\uC774"
+    meaning: paper
+    partOfSpeech: n
+    example: "\uBCBD\uC5D0 \uBD99\uC740 \uBA85\uB839\uC11C\uB294 \uAE00\uC790 \uD558\uB098
+      \uC5C6\uB294 \uBE48 \uC885\uC774\uC77C \uBFD0\uC774\uC5C8\uB2E4."
+    exampleMeaning: The order posted on the wall was nothing but a blank sheet.
+    story: 75
+    storyHeading: 
+    romanization: jongi
+  - id: ko_jasin
+    english: "\uC790\uC2E0"
+    meaning: oneself, self
+    partOfSpeech: n
+    example: "\uACBD\uBE44\uBCD1\uB4E4\uC740 \uC790\uC2E0\uB4E4\uC774 \uC65C \uADF8\uACF3\uC5D0
+      \uC11C \uC788\uB294\uC9C0 \uC78A\uC5B4\uBC84\uB838\uAE30\uC5D0 \uC6B0\uB9AC\uB97C
+      \uD1B5\uACFC\uC2DC\uCF30\uB2E4."
+    exampleMeaning: The guards let us pass because they had forgotten why they were
+      standing there.
+    story: 76
+    storyHeading: 
+    romanization: jasin
+  - id: ko_sarajida
+    english: "\uC0AC\uB77C\uC9C0\uB2E4"
+    meaning: to disappear
+    partOfSpeech: v
+    example: "\uAD70\uC601\uC740 \uD145 \uBE44\uC5B4 \uC788\uC5C8\uACE0, \uAE43\uBC1C\uC5D0
+      \uC801\uD600 \uC788\uB358 \uAE00\uC790\uB3C4 \uBAA8\uB450 \uC0AC\uB77C\uC838
+      \uC788\uC5C8\uB2E4."
+    exampleMeaning: A military camp stood empty, its flags stripped of all lettering.
+    story: 77
+    storyHeading: 
+    romanization: sarajida
+  - id: ko_ssauda
+    english: "\uC2F8\uC6B0\uB2E4"
+    meaning: to fight
+    partOfSpeech: v
+    example: "\uAD70\uB300\uB294 \uC790\uC2E0\uB4E4\uC774 \uC5B4\uB290 \uD3B8\uC744
+      \uC704\uD574 \uC2F8\uC6B0\uB294\uC9C0 \uC78A\uC5B4\uBC84\uB838\uB2E4."
+    exampleMeaning: The army had forgotten which side it was fighting for.
+    story: 78
+    storyHeading: 
+    romanization: ssauda
+  - id: ko_yeohaeng
+    english: "\uC5EC\uD589"
+    meaning: travel, trip
+    partOfSpeech: n
+    example: "\uC791\uC740 \uB3C4\uAE68\uBE44\uB4E4\uC774 \uC5EC\uD589\uC790\uB4E4\uC758
+      \uB9D0\uC744 \uBE7C\uC557\uC73C\uB824\uACE0 \uACF5\uACA9\uD558\uAE30 \uC2DC\uC791\uD588\uB2E4."
+    exampleMeaning: Small goblins began to attack travelers, trying to steal their
+      words.
+    story: 79
+    storyHeading: 
+    romanization: yeohaeng
+  - id: ko_him
+    english: "\uD798"
+    meaning: strength, power
+    partOfSpeech: n
+    example: "\uC5B4\uB5A4 \uC5B4\uB460\uC758 \uD798\uC774 \uAE00\uC790\uB4E4\uC744
+      \uC870\uAE08\uC529 \uAC09\uC544\uBA39\uACE0 \uC788\uC5C8\uB2E4."
+    exampleMeaning: Some dark force was eating away at the letters.
+    story: 80
+    storyHeading: 
+    romanization: him
+  - id: ko_bada
+    english: "\uBC14\uB2E4"
+    meaning: sea
+    partOfSpeech: n
+    example: "\uD55C \uC678\uAD6D \uC0C1\uC778\uC740 \uBC14\uB2E4 \uAC74\uB108\uC5D0\uC11C\uB3C4
+      \uB611\uAC19\uC740 \uC77C\uC774 \uBC8C\uC5B4\uC9C0\uACE0 \uC788\uB2E4\uACE0
+      \uB9D0\uD588\uB2E4."
+    exampleMeaning: A foreign trader told us the same thing was happening across
+      the sea.
+    story: 81
+    storyHeading: 
+    romanization: bada
+  - id: ko_hada
+    english: "\uD558\uB2E4"
+    meaning: to do
+    partOfSpeech: v
+    example: "\uB300\uCCB4\uC801\uC778 \uBD84\uC704\uAE30\uB294 \uC544\uBB34\uAC83\uB3C4
+      \uD560 \uC218 \uC5C6\uB2E4\uB294 \uAC83\uC774\uC5C8\uB2E4."
+    exampleMeaning: The general feeling was that nothing could be done.
+    story: 82
+    storyHeading: 
+    romanization: hada
+  - id: ko_gatda
+    english: "\uAC19\uB2E4"
+    meaning: same, alike
+    partOfSpeech: adj
+    example: "\uB3D9\uC0DD\uC740 \uC774 \uAE38\uC774 \uC9C0\uC625 \uAC19\uB2E4\uACE0
+      \uB9D0\uD588\uB2E4."
+    exampleMeaning: My sister said this road felt like hell.
+    story: 83
+    storyHeading: 
+    romanization: gatda
+  - id: ko_chuwi
+    english: "\uCD94\uC704"
+    meaning: the cold
+    partOfSpeech: n
+    example: "\uC6B0\uB9AC\uB294 \uAD76\uC8FC\uB9BC\uACFC \uCD94\uC704\uC5D0 \uB300\uCC98\uD558\uB294
+      \uBC95\uC744 \uC775\uD614\uB2E4."
+    exampleMeaning: We learned to deal with hunger and cold.
+    story: 84
+    storyHeading: 
+    romanization: chuwi
+  - id: ko_anta
+    english: "\uC54A\uB2E4"
+    meaning: to not (do)
+    partOfSpeech: v
+    example: "\uC6B0\uB9AC\uB294 \uB9CE\uC774 \uAC78\uC5C8\uACE0 \uB9D0\uC740 \uAC70\uC758
+      \uD558\uC9C0 \uC54A\uC558\uB2E4."
+    exampleMeaning: We walked a lot and spoke very little.
+    story: 85
+    storyHeading: 
+    romanization: anta
+  - id: ko_kyeoda
+    english: "\uCF1C\uB2E4"
+    meaning: to turn on, to light
+    partOfSpeech: v
+    example: "\uB9C8\uC9C0\uB9C9 \uC131\uB0E5\uC744 \uCF1C\uC11C \uADF8 \uBE5B\uC73C\uB85C
+      \uAE00\uC744 \uC77D\uC5C8\uB2E4."
+    exampleMeaning: I lit our last match and read by its light.
+    story: 86
+    storyHeading: 
+    romanization: kyeoda
+  - id: ko_natda
+    english: "\uB0AE\uB2E4"
+    meaning: low
+    partOfSpeech: adj
+    example: "\uBB3C\uBCD1 \uC18D \uC218\uC704\uB294 \uACC4\uC18D \uB0AE\uC544\uC84C\uB2E4."
+    exampleMeaning: The level of water in our bottle kept dropping.
+    story: 87
+    storyHeading: 
+    romanization: natda
+  - id: ko_saekkkal
+    english: "\uC0C9\uAE54"
+    meaning: color
+    partOfSpeech: n
+    example: "\uC0AC\uB77C\uC9C0\uB294 \uB2E8\uC5B4\uC758 \uBC94\uC704\uB294 \uC774\uB984\uC5D0\uC11C
+      \uC0C9\uAE54\uB85C\uAE4C\uC9C0 \uB113\uC5B4\uC84C\uB2E4."
+    exampleMeaning: The range of missing words expanded from names to colors.
+    story: 88
+    storyHeading: 
+    romanization: saekkkal
+  - id: ko_bi
+    english: "\uBE44"
+    meaning: rain
+    partOfSpeech: n
+    example: "\uC0C8\uC640 \uBE75, \uC2EC\uC9C0\uC5B4 \uBE44\uAE4C\uC9C0 \uC5EC\uB7EC
+      \uAC00\uC9C0\uAC00 \uC774\uB984\uC744 \uC783\uC5C8\uB2E4."
+    exampleMeaning: 'Various things lost their names: birds, bread, and even rain.'
+    story: 89
+    storyHeading: 
+    romanization: bi
+  - id: ko_bureuda
+    english: "\uBD80\uB974\uB2E4"
+    meaning: to call, to sing
+    partOfSpeech: v
+    example: "\uB3D9\uC0DD\uC740 \uBB34\uC5C7\uC774\uB4E0 '\uADF8\uAC70'\uB77C\uACE0
+      \uBD80\uB974\uAE30 \uC2DC\uC791\uD588\uB2E4."
+    exampleMeaning: My sister started calling everything stuff.
+    story: 90
+    storyHeading: 
+    romanization: bureuda
+  - id: ko_eolgul
+    english: "\uC5BC\uAD74"
+    meaning: face
+    partOfSpeech: n
+    example: "\uBAA8\uB4E0 \uC5BC\uAD74\uC774 \uB0B4\uAC8C \uBE44\uC2B7\uBE44\uC2B7\uD558\uAC8C
+      \uBCF4\uC774\uAE30 \uC2DC\uC791\uD588\uB2E4."
+    exampleMeaning: All the faces began to look similar to me.
+    story: 91
+    storyHeading: 
+    romanization: eolgul
+  - id: ko_maeil
+    english: "\uB9E4\uC77C"
+    meaning: every day
+    partOfSpeech: adv
+    example: "\uB098\uB294 \uB9E4\uC77C \uBC24 \uB2E8 \uD55C \uB2E8\uC5B4\uB97C \uC801\uC5C8\uB2E4.
+      \uBC14\uB85C \uB3D9\uC0DD\uC758 \uC774\uB984\uC774\uC5C8\uB2E4."
+    exampleMeaning: 'Every night, I wrote down a single word: my sister''s name.'
+    story: 92
+    storyHeading: 
+    romanization: maeil
+  - id: ko_mueot
+    english: "\uBB34\uC5C7"
+    meaning: what
+    partOfSpeech: n
+    example: "\uC544\uBB34\uB3C4 \uBD80\uB97C \uC218 \uC5C6\uB2E4\uBA74 \uC774\uB984\uC740
+      \uBB34\uC5C7\uC744 \uC758\uBBF8\uD560\uAE4C?"
+    exampleMeaning: What does a name mean if no one can say it?
+    story: 93
+    storyHeading: 
+    romanization: mueot
+  - id: ko_dareuda
+    english: "\uB2E4\uB974\uB2E4"
+    meaning: different
+    partOfSpeech: adj
+    example: "\uB2E4\uB978 \uB204\uAD6C\uB3C4 \uAE30\uC5B5\uD558\uC9C0 \uBABB\uD55C\uB2E4\uBA74
+      \uB0B4 \uAE30\uC5B5\uC740 \uC9C4\uC9DC\uC77C\uAE4C?"
+    exampleMeaning: Are my memories real if no one else remembers them?
+    story: 94
+    storyHeading: 
+    romanization: dareuda
+  - id: ko_il
+    english: "\uC77C"
+    meaning: work, matter
+    partOfSpeech: n
+    example: "\uB0B4 \uACBD\uD5D8 \uC5B4\uB514\uC5D0\uB3C4 \uC774\uB7F0 \uC77C\uC740
       \uC5C6\uC5C8\uB2E4."
+    exampleMeaning: Nothing in my experience had prepared me for this.
+    story: 95
+    storyHeading: 
+    romanization: il
+  - id: ko_eoneu
+    english: "\uC5B4\uB290"
+    meaning: which, a certain
+    partOfSpeech: adj
+    example: "\uC5B4\uB290 \uACF5\uACF5 \uAD11\uC7A5\uC5D0\uC11C\uB294 \uC0AC\uB78C\uB4E4\uC774
+      \uB3CC\uCC98\uB7FC \uB9D0\uC5C6\uC774 \uC11C \uC788\uC5C8\uB2E4."
+    exampleMeaning: In one public square, people stood silently like stones.
+    story: 96
+    storyHeading: 
+    romanization: eoneu
+  - id: ko_piryohada
+    english: "\uD544\uC694\uD558\uB2E4"
+    meaning: necessary
+    partOfSpeech: adj
+    example: "\uC778\uAC04\uC740 \uC11C\uB85C \uC5F0\uACB0\uB418\uAE30 \uC704\uD574
+      \uB9D0\uC774 \uD544\uC694\uD55C \uC0AC\uD68C\uC801 \uC874\uC7AC\uB2E4."
+    exampleMeaning: Humans are social creatures who need words to stay connected.
+    story: 97
+    storyHeading: 
+    romanization: piryohada
+  - id: ko_geotda
+    english: "\uAC77\uB2E4"
+    meaning: to walk
+    partOfSpeech: v
+    example: "\uC6B0\uB9AC\uC758 \uC720\uC77C\uD55C \uBC29\uCE68\uC740 \uACC4\uC18D
+      \uBD81\uCABD\uC73C\uB85C \uAC77\uB294 \uAC83\uC774\uC5C8\uB2E4."
+    exampleMeaning: Our only policy was to keep walking north.
+    story: 98
+    storyHeading: 
+    romanization: geotda
+  - id: ko_yennal
+    english: "\uC61B\uB0A0"
+    meaning: long ago, old days
+    partOfSpeech: n
+    example: "\uC61B\uB0A0\uC5D0\uB294 \uC0C1\uC778 \uC5F0\uB9F9\uC774 \uC774 \uAE38\uC744
+      \uB2E4\uC2A4\uB838\uB2E4."
+    exampleMeaning: A league of traders once ruled this road.
+    story: 99
+    storyHeading: 
+    romanization: yennal
+  - id: ko_orae
+    english: "\uC624\uB798"
+    meaning: (for) a long time
+    partOfSpeech: adv
+    example: "\uC774 \uB9C8\uC744\uC758 \uC885\uC774 \uC0B0\uC5C5\uC740 \uC624\uB798\uC804\uC5D0
+      \uBA48\uCDB0 \uC788\uC5C8\uB2E4."
+    exampleMeaning: The paper industry in this town had stopped long ago.
+    story: 100
+    storyHeading: 
+    romanization: orae
+  - id: ko_wanjeonhi
+    english: "\uC644\uC804\uD788"
+    meaning: completely
+    partOfSpeech: adv
+    example: "\uC758\uD559 \uCC45 \uD55C \uAD8C\uC774 \uD3BC\uCCD0\uC838 \uC788\uC5C8\uC9C0\uB9CC
+      \uD398\uC774\uC9C0\uB294 \uC644\uC804\uD788 \uBE44\uC5B4 \uC788\uC5C8\uB2E4."
+    exampleMeaning: A medical book lay open, its pages completely blank.
+    story: 101
+    storyHeading: 
+    romanization: wanjeonhi
+  - id: ko_juda
+    english: "\uC8FC\uB2E4"
+    meaning: to give
+    partOfSpeech: v
+    example: "\uD55C \uC5EC\uD589\uC790\uAC00 \uC11C\uACE0\uC5D0 \uB300\uD574 \uC124\uBA85\uD574
+      \uC8FC\uC5C8\uB2E4."
+    exampleMeaning: A traveler gave us an account of the library.
+    story: 102
+    storyHeading: 
+    romanization: juda
+  - id: ko_gwi
+    english: "\uADC0"
+    meaning: ear
+    partOfSpeech: n
+    example: "\uB3D9\uC0DD\uC740 \uD070 \uD765\uBBF8\uB97C \uBCF4\uC774\uBA70 \uADC0\uB97C
+      \uAE30\uC6B8\uC600\uB2E4."
+    exampleMeaning: My sister listened with great interest.
+    story: 103
+    storyHeading: 
+    romanization: gwi
+  - id: ko_seoda
+    english: "\uC11C\uB2E4"
+    meaning: to stand
+    partOfSpeech: v
+    example: "\uC11C\uACE0\uB294 \uC61B \uC131\uD130\uC5D0 \uC11C \uC788\uB2E4."
+    exampleMeaning: The library stands on the site of an old castle.
+    story: 104
+    storyHeading: 
+    romanization: seoda
+  - id: ko_moida
+    english: "\uBAA8\uC774\uB2E4"
+    meaning: to gather
+    partOfSpeech: v
+    example: "\uC624\uB798\uC804 \uD559\uC790\uB4E4\uC774 \uBAA8\uC5EC \uC11C\uACE0\uB97C
+      \uC138\uC6E0\uB2E4."
+    exampleMeaning: Scholars came together to found the library long ago.
+    story: 105
+    storyHeading: "\uC11C\uACE0"
+    romanization: moida
+  - id: ko_baek
+    english: "\uBC31"
+    meaning: hundred
+    partOfSpeech: n
+    example: "\uC11C\uACE0\uB294 \uBC31 \uB144 \uB118\uAC8C \uBAA8\uB4E0 \uB9D0\uC744
+      \uC9C0\uCF1C \uC654\uB2E4."
+    exampleMeaning: It has guarded every word for more than a century.
+    story: 106
+    storyHeading: 
+    romanization: baek
+  - id: ko_keuda
+    english: "\uD06C\uB2E4"
+    meaning: big
+    partOfSpeech: adj
+    example: "\uC218\uB3C4\uC758 \uC5B4\uB5A4 \uAC74\uBB3C\uBCF4\uB2E4\uB3C4 \uD06C\uB2E4."
+    exampleMeaning: It is bigger than any building in the capital.
+    story: 107
+    storyHeading: 
+    romanization: keuda
+  - id: ko_haksaeng
+    english: "\uD559\uC0DD"
+    meaning: student
+    partOfSpeech: n
+    example: "\uB300\uD559\uAD50\uC5D0\uC11C\uB3C4 \uD559\uC0DD\uB4E4\uC744 \uC774\uACF3\uC73C\uB85C
+      \uBCF4\uB0B8\uB2E4."
+    exampleMeaning: Even the university sends its students here.
+    story: 108
+    storyHeading: 
+    romanization: haksaeng
+  - id: ko_yeolda
+    english: "\uC5F4\uB2E4"
+    meaning: to open
+    partOfSpeech: v
+    example: "\uC815\uBB38\uC740 \uC5F4\uB824 \uC788\uC5C8\uACE0 \uCC28\uAC00\uC6B4
+      \uC548\uAC1C\uAC00 \uD758\uB7EC\uB098\uC654\uB2E4."
+    exampleMeaning: The main door was open, and cold fog rolled out.
+    story: 109
+    storyHeading: 
+    romanization: yeolda
+  - id: ko_chaek
+    english: "\uCC45"
+    meaning: book
+    partOfSpeech: n
+    example: "\uC8FC\uC694 \uCC45\uC7A5\uB4E4\uC774 \uAE34 \uBBF8\uB85C\uCC98\uB7FC
+      \uC11C \uC788\uC5C8\uB2E4."
+    exampleMeaning: Every major shelf stood in a long maze.
+    story: 110
+    storyHeading: 
+    romanization: chaek
+  - id: ko_hayata
+    english: "\uD558\uC597\uB2E4"
+    meaning: white
+    partOfSpeech: adj
+    example: "\uCC45\uC73C\uB85C \uAC00\uB4DD\uD55C \uBCBD \uC804\uCCB4\uAC00 \uD558\uC597\uAC8C
+      \uBCC0\uD574 \uC788\uC5C8\uB2E4."
+    exampleMeaning: An entire wall of books had gone white.
+    story: 111
+    storyHeading: 
+    romanization: hayata
+  - id: ko_jjok
+    english: "\uCABD"
+    meaning: page
+    partOfSpeech: n
+    example: "\uCC45\uC744 \uD3BC\uCE58\uC790 \uD55C \uCABD\uC774 \uD1B5\uC9F8\uB85C
+      \uC5C6\uC5C8\uB2E4."
+    exampleMeaning: When I opened a book, a whole page was gone.
     story: 112
     storyHeading: 
-  - id: worth
-    english: worth
-    meaning: "~\uC758 \uAC00\uCE58\uAC00 \uC788\uB294"
+    romanization: jjok
+  - id: ko_gisa
+    english: "\uAE30\uC0AC"
+    meaning: (news) article
+    partOfSpeech: n
+    example: "\uCCAB \uBE48 \uCABD\uB4E4\uC5D0 \uAD00\uD55C \uC624\uB798\uB41C \uAE30\uC0AC\uB97C
+      \uCC3E\uC558\uB2E4."
+    exampleMeaning: I found an old article about the first blank pages.
+    story: 113
+    storyHeading: 
+    romanization: gisa
+  - id: ko_naeyong
+    english: "\uB0B4\uC6A9"
+    meaning: content
+    partOfSpeech: n
+    example: "\uBAA8\uB4E0 \uCC45\uC758 \uB0B4\uC6A9\uC774 \uB9C8\uC9C0\uB9C9 \uCABD\uBD80\uD130
+      \uC0AC\uB77C\uC9C0\uACE0 \uC788\uC5C8\uB2E4."
+    exampleMeaning: The content of every book was fading from the last page.
+    story: 114
+    storyHeading: 
+    romanization: naeyong
+  - id: ko_yeoksa
+    english: "\uC5ED\uC0AC"
+    meaning: history
+    partOfSpeech: n
+    example: "\uBC29\uB300\uD55C \uC5ED\uC0AC\uCC45 \uC2DC\uB9AC\uC988\uC5D0\uB294
+      \uC774\uC81C \uC81C\uBAA9\uB9CC \uB0A8\uC544 \uC788\uC5C8\uB2E4."
+    exampleMeaning: A long series of history books had been reduced to their titles.
+    story: 115
+    storyHeading: 
+    romanization: yeoksa
+  - id: ko_oraedoeda
+    english: "\uC624\uB798\uB418\uB2E4"
+    meaning: to be old (long-standing)
+    partOfSpeech: v
+    example: "\uADF8 \uC774\uC57C\uAE30\uC758 \uAC00\uC7A5 \uC624\uB798\uB41C \uD310\uBCF8\uB9C8\uC800
+      \uC0AC\uB77C\uC838 \uC788\uC5C8\uB2E4."
+    exampleMeaning: Even the oldest version of the story had disappeared.
+    story: 116
+    storyHeading: 
+    romanization: oraedoeda
+  - id: ko_byeong
+    english: "\uBCD1"
+    meaning: illness, disease
+    partOfSpeech: n
+    example: "\uB098\uB294 \uC774 \uBCD1\uC758 \uC6D0\uCC9C\uC744 \uCC3E\uC558\uB2E4."
+    exampleMeaning: I searched for the source of the sickness.
+    story: 117
+    storyHeading: 
+    romanization: byeong
+  - id: ko_josa
+    english: "\uC870\uC0AC"
+    meaning: investigation, survey
+    partOfSpeech: n
+    example: "\uB0B4 \uC870\uC0AC\uB294 \uC5F4\uB78C\uC2E4\uC5D0\uC11C \uC2DC\uC791\uB418\uC5C8\uB2E4."
+    exampleMeaning: My research began in the reading room.
+    story: 118
+    storyHeading: 
+    romanization: josa
+  - id: ko_dongan
+    english: "\uB3D9\uC548"
+    meaning: during, for (a while)
+    partOfSpeech: n
+    example: "\uCC45\uC744 \uC77D\uB294 \uB3D9\uC548\uC5D0\uB3C4 \uAE00\uC790\uAC00
+      \uC0AC\uB77C\uC84C\uAE30 \uB54C\uBB38\uC5D0 \uC870\uC0AC \uACFC\uC815\uC740
+      \uB354\uB3A0\uB2E4."
+    exampleMeaning: The process was slow because each book faded as I read it.
+    story: 119
+    storyHeading: 
+    romanization: dongan
+  - id: ko_daneo
+    english: "\uB2E8\uC5B4"
+    meaning: word
+    partOfSpeech: n
+    example: "\uB098\uB294 \uD2B9\uC815\uD55C \uB2E8\uC5B4 \uD558\uB098\uB97C \uCC3E\uC544
+      \uD5E4\uB9F8\uB2E4. \uBC14\uB85C \uB3D9\uC0DD\uC758 \uC774\uB984\uC774\uC5C8\uB2E4."
+    exampleMeaning: 'I searched for one specific word: my sister''s name.'
+    story: 120
+    storyHeading: 
+    romanization: daneo
+  - id: ko_bimil
+    english: "\uBE44\uBC00"
+    meaning: secret
+    partOfSpeech: n
+    example: "\uC0AC\uC11C\uB4E4\uC740 \uBA87\uBA87 \uCC45\uC744 \uBE44\uBC00 \uC554\uD638\uB85C
+      \uC228\uACA8 \uB450\uC5C8\uB2E4."
+    exampleMeaning: The librarians had hidden some books in a secret code.
+    story: 121
+    storyHeading: 
+    romanization: bimil
+  - id: ko_uimi
+    english: "\uC758\uBBF8"
+    meaning: meaning
+    partOfSpeech: n
+    example: "\uC624\uB798\uB41C \uCC45\uC7A5 \uBC30\uCE58 \uCCB4\uACC4\uB294 \uB354
+      \uC774\uC0C1 \uC758\uBBF8\uAC00 \uC5C6\uC5C8\uB2E4."
+    exampleMeaning: The old shelving system no longer made any sense.
+    story: 122
+    storyHeading: 
+    romanization: uimi
+  - id: ko_jukda
+    english: "\uC8FD\uB2E4"
+    meaning: to die
+    partOfSpeech: v
+    example: "\uC5B4\uB5A4 \uAE30\uC900\uC73C\uB85C \uBCF4\uC544\uB3C4 \uC11C\uACE0\uB294
+      \uC8FD\uC5B4 \uAC00\uACE0 \uC788\uC5C8\uB2E4."
+    exampleMeaning: By any standard, the library was dying.
+    story: 123
+    storyHeading: 
+    romanization: jukda
+  - id: ko_modu
+    english: "\uBAA8\uB450"
+    meaning: all, everyone
+    partOfSpeech: n
+    example: "\uC789\uD06C\uC758 \uD488\uC9C8\uC740 \uC544\uBB34\uB7F0 \uC0C1\uAD00\uC774
+      \uC5C6\uC5C8\uB2E4. \uC789\uD06C\uB294 \uBAA8\uB450 \uBC14\uB798 \uBC84\uB838\uB2E4."
+    exampleMeaning: The quality of the ink made no difference; it all faded away.
+    story: 124
+    storyHeading: 
+    romanization: modu
+  - id: ko_jada
+    english: "\uC790\uB2E4"
+    meaning: to sleep
+    partOfSpeech: v
+    example: "\uC7A0\uAE50 \uB3D9\uC548 \uC6B0\uB9AC\uB294 \uCC45\uC7A5 \uC0AC\uC774\uC5D0\uC11C
+      \uC7A4\uB2E4."
+    exampleMeaning: For a short period, we slept between the shelves.
+    story: 125
+    storyHeading: 
+    romanization: jada
+  - id: ko_meonjeo
+    english: "\uBA3C\uC800"
+    meaning: first, ahead
+    partOfSpeech: adv
+    example: "\uD604\uB300\uC758 \uCC45\uB4E4\uC774 \uBA3C\uC800 \uC0AC\uB77C\uC84C\uACE0,
+      \uC624\uB798\uB41C \uCC45\uB4E4\uC740 \uB354 \uC624\uB798 \uBC84\uD17C\uB2E4."
+    exampleMeaning: Modern books faded first, while the older ones lasted longer.
+    story: 126
+    storyHeading: 
+    romanization: meonjeo
+  - id: ko_ppareuda
+    english: "\uBE60\uB974\uB2E4"
+    meaning: fast
     partOfSpeech: adj
-    example: One word is worth the whole journey.
-    exampleMeaning: "\uB2E8\uC5B4 \uD558\uB098\uB294 \uC774 \uAE34 \uC5EC\uC815 \uC804\uCCB4\uB9CC\uD07C\uC758
+    example: "\uC5B4\uB5A4 \uAE30\uC220\uB85C\uB3C4 \uAE00\uC790\uB4E4\uC744 \uCDA9\uBD84\uD788
+      \uBE60\uB974\uAC8C \uBCF5\uC0AC\uD560 \uC218 \uC5C6\uC5C8\uB2E4."
+    exampleMeaning: No technology could copy the words quickly enough.
+    story: 127
+    storyHeading: 
+    romanization: ppareuda
+  - id: ko_munjang
+    english: "\uBB38\uC7A5"
+    meaning: sentence
+    partOfSpeech: n
+    example: "\uB9C8\uC9C0\uB9C9\uC73C\uB85C \uD76C\uBBF8\uD558\uAC8C \uB0A8\uC740
+      \uBB38\uC7A5\uB4E4\uC744 \uC77D\uC73C\uB824\uACE0 \uD398\uC774\uC9C0\uB97C
+      \uAFB9 \uB20C\uB7EC \uD3B8\uB2E4."
+    exampleMeaning: I press each page flat to make out the last faint lines.
+    story: 128
+    storyHeading: 
+    romanization: munjang
+  - id: ko_geuncheo
+    english: "\uADFC\uCC98"
+    meaning: nearby, vicinity
+    partOfSpeech: n
+    example: "\uCC22\uC5B4\uC9C4 \uAC00\uC7A5\uC790\uB9AC \uADFC\uCC98\uC5D0\uC11C
+      \uC6A9\uC758 \uBE44\uB298\uCC98\uB7FC \uC0DD\uAE34 \uC790\uAD6D\uC744 \uBC1C\uACAC\uD588\uB2E4."
+    exampleMeaning: Near the torn edge, I found a mark that looked like a dragon's
+      scale.
+    story: 129
+    storyHeading: 
+    romanization: geuncheo
+  - id: ko_alda
+    english: "\uC54C\uB2E4"
+    meaning: to know
+    partOfSpeech: v
+    example: "\uB204\uAC00 \uADF8 \uD398\uC774\uC9C0\uB4E4\uC744 \uCC22\uC5B4 \uAC14\uC744\uAE4C?
+      \uC774\uC720\uB97C \uC54C \uC218 \uC5C6\uB2E4."
+    exampleMeaning: Who tore those pages out? I cannot find the reason.
+    story: 130
+    storyHeading: 
+    romanization: alda
+  - id: ko_doseogwan
+    english: "\uB3C4\uC11C\uAD00"
+    meaning: library
+    partOfSpeech: n
+    example: "\uB3C4\uC11C\uAD00 \uCC45\uC5D0\uC11C \uD398\uC774\uC9C0\uB97C \uCC22\uC5B4
+      \uB0B4\uB294 \uC77C\uC740 \uACB0\uCF54 \uD569\uBC95\uC774 \uC544\uB2C8\uC5C8\uB2E4."
+    exampleMeaning: Tearing pages out of a library book was never legal.
+    story: 131
+    storyHeading: 
+    romanization: doseogwan
+  - id: ko_chaegim
+    english: "\uCC45\uC784"
+    meaning: responsibility
+    partOfSpeech: n
+    example: "\uC11C\uACE0 \uCC45\uC784\uC790\uB294 \uC0AC\uB77C\uC9C0\uACE0 \uC5C6\uC5C8\uB2E4."
+    exampleMeaning: The person in charge of the library had vanished.
+    story: 132
+    storyHeading: 
+    romanization: chaegim
+  - id: ko_nai
+    english: "\uB098\uC774"
+    meaning: age
+    partOfSpeech: n
+    example: "\uC11C\uB958\uC5D0\uB294 \uC774\uB984, \uB098\uC774, \uC131\uBCC4\uC744
+      \uC801\uB294 \uCE78\uC774 \uC788\uC5C8\uC9C0\uB9CC \uBAA8\uB450 \uBE44\uC5B4
+      \uC788\uC5C8\uB2E4."
+    exampleMeaning: The form asked for a name, age, and sex, but every field was
+      blank.
+    story: 133
+    storyHeading: 
+    romanization: nai
+  - id: ko_ttae
+    english: "\uB54C"
+    meaning: time, when
+    partOfSpeech: n
+    example: "\uC8FC\uC758\uD560 \uAC83. \uC18C\uB9AC \uB0B4\uC5B4 \uC77D\uC744 \uB54C\uB9C8\uB2E4
+      \uB3C4\uAE68\uBE44\uB4E4\uC774 \uB098\uD0C0\uB09C\uB2E4."
+    exampleMeaning: 'Pay attention: the goblins appear whenever you read aloud.'
+    story: 134
+    storyHeading: 
+    romanization: ttae
+  - id: ko_doeda
+    english: "\uB418\uB2E4"
+    meaning: to become
+    partOfSpeech: v
+    example: "\uADF8 \uCC45\uB4E4\uC740 \uBC31 \uB144 \uC804\uC5D0 \uBC18\uB0A9\uD558\uAE30\uB85C
+      \uB418\uC5B4 \uC788\uC5C8\uB2E4."
+    exampleMeaning: The books were due back a hundred years ago.
+    story: 135
+    storyHeading: 
+    romanization: doeda
+  - id: ko_ap
+    english: "\uC55E"
+    meaning: front
+    partOfSpeech: n
+    example: "\uAC70\uB300\uD55C \uD615\uCCB4 \uD558\uB098\uAC00 \uC6B0\uB9AC \uC55E\uC744
+      \uC9C0\uB098\uAC14\uACE0, \uB3D9\uC0DD\uC740 \uADF8\uAC83\uC744 \uCAD3\uC544
+      \uB2EC\uB824\uAC14\uB2E4."
+    exampleMeaning: A huge figure moved past us, and my sister ran after it.
+    story: 136
+    storyHeading: 
+    romanization: ap
+  - id: ko_gada
+    english: "\uAC00\uB2E4"
+    meaning: to go
+    partOfSpeech: v
+    example: "\uC774\uC81C \uC7A0\uAE34 \uBB38\uC774 \uB3D9\uC0DD\uC5D0\uAC8C \uAC00\uB294
+      \uAE38\uC744 \uB9C9\uACE0 \uC788\uB2E4."
+    exampleMeaning: A locked gate now blocked my access to my sister.
+    story: 137
+    storyHeading: 
+    romanization: gada
+  - id: ko_kkeut
+    english: "\uB05D"
+    meaning: end
+    partOfSpeech: n
+    example: "\uB0B4\uAC00 \uADF8\uD1A0\uB85D \uCC3E\uC544 \uD5E4\uB9E8 \uB05D\uC5D0
+      \uC5BB\uC740 \uACB0\uACFC\uB294 \uBE48 \uD398\uC774\uC9C0 \uD55C \uC7A5\uBFD0\uC774\uC5C8\uB2E4."
+    exampleMeaning: The result of all my searching was a single blank page.
+    story: 138
+    storyHeading: 
+    romanization: kkeut
+  - id: ko_jigeum
+    english: "\uC9C0\uAE08"
+    meaning: now
+    partOfSpeech: n
+    example: "\uC9C0\uAE08 \uB0B4\uAC00 \uB450\uB824\uC6CC\uD558\uB294 \uAC83\uC740
+      \uB0B4\uAC00 \uC65C \uC774\uACF3\uC5D0 \uC654\uB294\uC9C0 \uC78A\uC5B4\uBC84\uB9AC\uB294
+      \uAC83\uC774\uB2E4."
+    exampleMeaning: My current fear is that I will forget why I came here.
+    story: 139
+    storyHeading: 
+    romanization: jigeum
+  - id: ko_oneul
+    english: "\uC624\uB298"
+    meaning: today
+    partOfSpeech: n
+    example: "\uC624\uB298 \uB098\uB294 \uB3D9\uC0DD\uC758 \uC774\uB984\uC744 \uB9D0\uD560
+      \uC218 \uC5C6\uC5C8\uB2E4."
+    exampleMeaning: I was not able to say my sister's name today.
+    story: 140
+    storyHeading: "\uB9C8\uC9C0\uB9C9 \uCABD"
+    romanization: oneul
+  - id: ko_moreuda
+    english: "\uBAA8\uB974\uB2E4"
+    meaning: to not know
+    partOfSpeech: v
+    example: "\uC774 \uAE30\uBD84\uC744 \uBD80\uB974\uB294 \uB9D0\uC744 \uB098\uB294
+      \uB354 \uC774\uC0C1 \uBAA8\uB978\uB2E4."
+    exampleMeaning: I no longer know the term for this feeling.
+    story: 141
+    storyHeading: 
+    romanization: moreuda
+  - id: ko_ajik
+    english: "\uC544\uC9C1"
+    meaning: yet, still
+    partOfSpeech: adv
+    example: "\uB0B4 \uBAA9\uB85D\uC5D0\uB294 \uC544\uC9C1 \uAE30\uC5B5\uD560 \uC218
+      \uC788\uB294 \uBAA8\uB4E0 \uC0AC\uB78C\uC744 \uD3EC\uD568\uD574\uC57C \uD55C\uB2E4."
+    exampleMeaning: My list must include everyone I can still remember.
+    story: 142
+    storyHeading: 
+    romanization: ajik
+  - id: ko_sutja
+    english: "\uC22B\uC790"
+    meaning: number
+    partOfSpeech: n
+    example: "\uC22B\uC790\uB294 \uC5BC\uB9C8 \uB418\uC9C0 \uC54A\uC558\uB2E4. \uB3D9\uC0DD
+      \uD55C \uBA85, \uC5B4\uB974\uC2E0 \uD55C \uBA85, \uB9C8\uC744 \uD558\uB098."
+    exampleMeaning: 'The total was small: one sister, one old man, and one village.'
+    story: 143
+    storyHeading: 
+    romanization: sutja
+  - id: ko_gieok
+    english: "\uAE30\uC5B5"
+    meaning: memory
+    partOfSpeech: n
+    example: "\uB0B4 \uAE30\uC5B5\uC740 \uC644\uBCBD\uD558\uC9C0 \uC54A\uC558\uC9C0\uB9CC
+      \uB0B4 \uAC83\uC774\uC5C8\uB2E4."
+    exampleMeaning: My memory was never perfect, but it was mine.
+    story: 144
+    storyHeading: 
+    romanization: gieok
+  - id: ko_jeonche
+    english: "\uC804\uCCB4"
+    meaning: the whole
+    partOfSpeech: n
+    example: "\uB2E8\uC5B4 \uD558\uB098\uB294 \uC774 \uAE34 \uC5EC\uC815 \uC804\uCCB4\uB9CC\uD07C\uC758
       \uAC00\uCE58\uAC00 \uC788\uB2E4."
+    exampleMeaning: One word is worth the whole journey.
     story: 145
     storyHeading: 
+    romanization: jeonche
+  - id: ko_mianhada
+    english: "\uBBF8\uC548\uD558\uB2E4"
+    meaning: sorry
+    partOfSpeech: adj
+    example: "\uC774 \uC77C\uAE30\uB294 \uC644\uC131\uB418\uC9C0 \uBABB\uD588\uB2E4.
+      \uBBF8\uC548\uD558\uB2E4."
+    exampleMeaning: This diary is not complete, and I am sorry.
+    story: 146
+    storyHeading: 
+    romanization: mianhada
+  - id: ko_jangso
+    english: "\uC7A5\uC18C"
+    meaning: place, location
+    partOfSpeech: n
+    example: "\uC774 \uC0C1\uC790\uB294 \uB0B4 \uC77C\uAE30\uB97C \uC548\uC804\uD558\uAC8C
+      \uBCF4\uAD00\uD560 \uC7A5\uC18C\uAC00 \uB418\uC5B4 \uC904 \uAC83\uC774\uB2E4."
+    exampleMeaning: This chest will provide a safe place for my diary.
+    story: 147
+    storyHeading: 
+    romanization: jangso
+  - id: ko_jip
+    english: "\uC9D1"
+    meaning: house, home
+    partOfSpeech: n
+    example: "\uB9D0\uC744 \uD480\uC5B4 \uC8FC\uBA74 \uC2A4\uC2A4\uB85C \uC9D1\uC744
+      \uCC3E\uC544\uAC08 \uAC83\uC774\uB2E4."
+    exampleMeaning: Release the words, and they will find their way home.
+    story: 148
+    storyHeading: 
+    romanization: jip
+  - id: ko_dangsin
+    english: "\uB2F9\uC2E0"
+    meaning: you
+    partOfSpeech: n
+    example: "\uB2F9\uC2E0\uC774 \uB204\uAD6C\uB4E0, \uB2F9\uC2E0\uC774 \uCC3E\uC740
+      \uB9D0\uC744 \uC874\uC911\uD574 \uC8FC\uAE38."
+    exampleMeaning: Whoever you are, respect the words you find.
+    story: 149
+    storyHeading: 
+    romanization: dangsin
+  - id: ko_ilgi
+    english: "\uC77C\uAE30"
+    meaning: diary
+    partOfSpeech: n
+    example: "\uC774 \uBB38\uC7A5\uC744 \uC77D\uC744 \uC218 \uC788\uB2E4\uBA74, \uB0B4
+      \uC77C\uAE30\uB294 \uC131\uACF5\uD55C \uAC83\uC774\uB2E4."
+    exampleMeaning: If you can read this line, my diary was a success.
+    story: 150
+    storyHeading: 
+    romanization: ilgi

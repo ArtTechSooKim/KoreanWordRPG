@@ -141,7 +141,7 @@ namespace WordRPG.UI
         {
             var row = AddRow("Line");
             var text = new StringBuilder();
-            var (start, length) = Journals.WordSpan(word.Example, word.English);
+            var (start, length) = Journals.WordSpan(word.Example, word.English, word.PartOfSpeech);
             if (start >= 0)
             {
                 text.Append(word.Example, 0, start);

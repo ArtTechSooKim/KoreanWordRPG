@@ -21,6 +21,8 @@ Korean Word RPG — 같은 저작권자의 영단어RPG에서 파생한 게임�
 - 글꼴 Jua, Noto Sans KR: SIL Open Font License 1.1
   Assets/Resources/UI/Fonts/OFL-Jua.txt, OFL-NotoSansKR.txt, Tools/FontSource/OFL-NotoSansKR.txt
 - 단어 목록: 교육부 2022 개정 교육과정 영어과 기본 어휘
+- 한국어 단어 고르기·등급: 국립국어원 「한국어 학습용 어휘 목록」(2003), 공공누리 제1유형(출처표시)
+  출처: 국립국어원 https://www.korean.go.kr — Docs/한국어_학습용_어휘목록_국립국어원2003.tsv
 - Unity 엔진과 패키지: 각 제공자의 약관
 
 ------------------------------------------------------------------------

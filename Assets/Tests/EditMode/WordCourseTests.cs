@@ -91,14 +91,14 @@ namespace WordRPG.Tests
             var database = RealDatabase();
             // 1.3까지의 세이브: course 칸이 없음 + 이미 단어를 만남
             var old = GameSession.NewGame(Hero(), 1);
-            old.Vocabulary.RecordAnswer("access", true, Now, new MasteryRules());
+            old.Vocabulary.RecordAnswer("ko_ireum", true, Now, new MasteryRules());
             var data = old.ToSaveData(Now);
             Assert.AreEqual("", data.Course);
 
             var loaded = GameSession.FromSaveData(SaveRoundTrip(data), database, Hero());
             Assert.IsFalse(loaded.NeedsCourseChoice, "하던 사람에게는 묻지 않음");
             Assert.AreEqual(WordCourses.DefaultId, loaded.CourseId);
-            Assert.AreEqual("access", database.FindArea("meadow").Words.Words.First(w => w.Id == "access").Id, "수능·내신 단어 그대로");
+            Assert.AreEqual("ko_ireum", database.FindArea("meadow").Words.Words.First(w => w.Id == "ko_ireum").Id, "기본 단어 그대로");
             Assert.AreEqual(0, loaded.LoadWarnings.Count);
         }
 

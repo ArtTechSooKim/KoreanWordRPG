@@ -1,0 +1,301 @@
+# story|단어|목록 키(- = 목록 밖)|품사|영어 뜻|로마자   (story 0 = 기록 밖 단어: 뒤에 |한국어 예문|영어 해석)
+1|학원|학원02|n|academy, cram school|hagwon
+2|법|법01:명|n|law, how to|beop
+3|뛰어나다|뛰어나다|adj|excellent, outstanding|ttwieonada
+4|숲|숲01|n|forest|sup
+5|임무|임무01|n|mission, duty|immu
+6|몹시|몹시|adv|very, extremely|mopsi
+7|장비|장비07|n|equipment|jangbi
+8|보험|보험|n|insurance|boheom
+9|점심|점심|n|lunch|jeomsim
+10|약속|약속|n|promise|yaksok
+11|잡다|잡다01|v|to catch, to grab|japda
+12|따라가다|따라가다|v|to follow (along)|ttaragada
+13|푸르다|푸르다|adj|blue, green|pureuda
+14|시골|시골|n|countryside|sigol
+15|돌|돌02|n|stone|dol
+16|글자|글자|n|character (written)|geulja
+17|저녁|저녁|n|evening|jeonyeok
+18|놓다|놓다01:동|v|to put, to place|nota
+19|방향|방향01|n|direction|banghyang
+20|시간|시간04:명|n|hour, time|sigan
+21|사흘|사흘|n|three days|saheul
+22|북쪽|북쪽|n|north|bukjjok
+23|어디|어디01:대|n|where|eodi
+24|심각하다|심각하다02|adj|serious|simgakada
+25|나누다|나누다|v|to divide, to share|nanuda
+26|먹다|먹다02:동|v|to eat|meokda
+27|줄이다|줄이다|v|to reduce|jurida
+28|신경|신경04|n|nerves|singyeong
+29|보고서|보고서|n|report|bogoseo
+30|제출하다|제출하다02|v|to submit|jechulhada
+31|바라다|바라다01|v|to hope, to wish|barada
+32|맞추다|맞추다01|v|to fit, to match|matchuda
+33|혼자|혼자01|n|alone|honja
+34|삶다|삶다|v|to boil|samda
+35|실수|실수01|n|mistake|silsu
+36|씹다|씹다01|v|to chew|ssipda
+37|맛|맛01|n|taste|mat
+38|검다|검다02|adj|black|geomda
+39|깨끗하다|깨끗하다|adj|clean|kkaekkeutada
+40|마시다|마시다|v|to drink|masida
+41|젖다|젖다01|v|to get wet|jeotda
+42|나쁘다|나쁘다01|adj|bad|nappeuda
+43|아무것|아무것|n|anything|amugeot
+44|빼다|빼다01|v|to take out, to remove|ppaeda
+45|묶다|묶다|v|to tie|mukda
+46|달다|달다03|v|to hang, to attach|dalda
+47|번호|번호02|n|number (ID)|beonho
+48|간단하다|간단하다02|adj|simple|gandanhada
+49|걸음|걸음|n|step|georeum
+50|보이다|보이다01|v|to be seen, to look|boida
+51|소용없다|소용없다|adj|useless|soyongeopda
+52|아끼다|아끼다|v|to save, to spare|akkida
+53|지도|지도03|n|map|jido
+54|마주치다|마주치다|v|to run into|majuchida
+55|거꾸로|거꾸로|adv|backward, upside down|geokkuro
+56|전부|전부05:명|n|all, everything|jeonbu
+57|아마|아마01|adv|maybe, probably|ama
+58|버섯|버섯02|n|mushroom|beoseot
+59|뜨다|뜨다01|v|to float|tteuda
+60|괴물|-|n|monster|goemul
+61|뱀|뱀|n|snake|baem
+62|자|자01|n|ruler (for measuring)|ja
+63|이기다|이기다01|v|to win|igida
+64|쉽다|쉽다|adj|easy|swipda
+65|쓰러지다|쓰러지다|v|to collapse, to fall down|sseureojida
+66|충격|충격02|n|shock|chunggyeok
+67|불안|불안01|n|anxiety|buran
+68|절반|절반|n|half|jeolban
+69|움직이다|움직이다|v|to move|umjigida
+70|바뀌다|바뀌다|v|to be changed|bakkwida
+71|통하다|통하다|v|to get through, to make sense|tonghada
+72|믿다|믿다|v|to believe|mitda
+73|증거|증거|n|evidence|jeunggeo
+74|소금|소금01|n|salt|sogeum
+75|규칙|규칙02|n|rule|gyuchik
+76|앉다|앉다|v|to sit|anda
+77|그|그01:관|adj|that|geu
+78|돌리다|돌리다04|v|to turn|dollida
+79|침묵|침묵|n|silence|chimmuk
+80|두|두01|adj|two|du
+81|씻다|씻다|v|to wash|ssitda
+82|나뭇가지|나뭇가지|n|branch, twig|namutgaji
+83|숟가락|숟가락|n|spoon|sutgarak
+84|갑자기|갑자기|adv|suddenly|gapjagi
+85|주장하다|주장하다01|v|to claim, to insist|jujanghada
+86|건너다|건너다|v|to cross|geonneoda
+87|피|피02|n|blood|pi
+88|사무실|사무실|n|office|samusil
+89|서류|서류02|n|document|seoryu
+90|버릇|버릇01|n|habit|beoreut
+91|악마|-|n|devil, demon|angma
+92|후회하다|후회하다|v|to regret|huhoehada
+93|대하다|대하다02|v|to treat, to face|daehada
+94|나타나다|나타나다|v|to appear|natanada
+95|없애다|없애다|v|to get rid of|eopsaeda
+96|닦다|닦다01|v|to wipe, to polish|dakda
+97|감사하다|감사하다05:동|v|to thank|gamsahada
+98|푹|푹01|adv|soundly, deeply|puk
+99|가방|가방01|n|bag|gabang
+100|고향|고향02|n|hometown|gohyang
+101|노래하다|노래하다|v|to sing|noraehada
+102|늙다|늙다|v|to grow old|neukda
+103|진짜|진짜:명|n|the real thing, really|jinjja
+104|여기|여기01|n|here|yeogi
+105|하늘|하늘01|n|sky|haneul
+106|너무|너무01|adv|too (much)|neomu
+107|깊다|깊다|adj|deep|gipda
+108|위험하다|위험하다|adj|dangerous|wiheomhada
+109|땅|땅01|n|land, ground|ttang
+110|범위|범위|n|range, scope|beomwi
+111|강|강01|n|river|gang
+112|계속|계속04|adv|continuously|gyesok
+113|승리|승리|n|victory|seungni
+114|축하|축하|n|celebration, congratulations|chukha
+115|식사|식사03|n|meal|siksa
+116|변화|변화|n|change|byeonhwa
+117|공기|공기06|n|air|gonggi
+118|모으다|모으다|v|to gather, to collect|moeuda
+119|새벽|새벽01|n|dawn|saebyeok
+120|승객|승객|n|passenger|seunggaek
+121|흙|흙01|n|soil, dirt|heuk
+122|양옆|양옆|n|both sides|yangnyeop
+123|때문|때문|n|because of|ttaemun
+124|뒤쪽|뒤쪽01|n|back, rear|dwijjok
+125|물론|물론01|adv|of course|mullon
+126|목소리|목소리|n|voice|moksori
+127|듣다|듣다01|v|to hear, to listen|deutda
+128|냄새|냄새|n|smell|naemsae
+129|수단|수단01|n|means|sudan
+130|이제|이제01:부|adv|now|ije
+131|냄비|냄비|n|pot|naembi
+132|시설|시설03|n|facility|siseol
+133|주인|주인01|n|owner, master|juin
+134|부처|부처04|n|ministry|bucheo
+135|한때|한때|n|once, at one time|hanttae
+136|안|안02|adv|not|an
+137|전혀|전혀01|adv|not at all|jeonhyeo
+138|울다|울다01|v|to cry|ulda
+139|적당하다|적당하다02|adj|suitable, moderate|jeokdanghada
+140|개구리|개구리|n|frog|gaeguri
+141|달리다|달리다04|v|to run|dallida
+142|방법|방법|n|method|bangbeop
+143|후보|후보04|n|candidate|hubo
+144|바위|바위01|n|rock|bawi
+145|오다|오다01:동|v|to come|oda
+146|첫|첫|adj|first|cheot
+147|빼앗다|빼앗다|v|to take away, to rob|ppaeatda
+148|들다|들다04|v|to carry, to lift|deulda
+149|물다|물다02|v|to bite|mulda
+150|조약|-|n|treaty|joyak
+151|공화국|-|n|republic|gonghwaguk
+152|깨다|깨다01|v|to wake up|kkaeda
+153|반대하다|반대하다01|v|to oppose|bandaehada
+154|어려워지다|어려워지다|v|to become difficult|eoryeowojida
+155|상황|상황02|n|situation|sanghwang
+156|업무|업무02|n|work, duties|eommu
+157|열매|열매01|n|fruit|yeolmae
+158|회사|회사04|n|company|hoesa
+159|사업|사업04|n|business|saeop
+160|그립다|그립다|adj|to miss (someone)|geuripda
+161|나무|나무01|n|tree, wood|namu
+162|양파|양파|n|onion|yangpa
+163|모자|모자08|n|hat|moja
+164|금지|금지04|n|ban, prohibition|geumji
+165|위치|위치01|n|location|wichi
+166|대표|대표|n|representative|daepyo
+167|대신|대신03|n|instead|daesin
+168|모양|모양02|n|shape|moyang
+169|유명|유명01|n|fame|yumyeong
+170|기대하다|기대하다|v|to expect|gidaehada
+171|공부|공부01|n|study|gongbu
+172|오르다|오르다|v|to climb, to rise|oreuda
+173|꼭대기|꼭대기|n|top, peak|kkokdaegi
+174|속|속01|n|inside|sok
+175|사원|-|n|temple|sawon
+176|벗다|벗다|v|to take off|beotda
+177|비다|비다01|v|to be empty|bida
+178|오래전|오래전|n|long ago|oraejeon
+179|종교|종교|n|religion|jonggyo
+180|가운데|가운데|n|middle|gaunde
+181|빠지다|빠지다01|v|to fall out, to be missing|ppajida
+182|아니다|아니다|adj|to not be|anida
+183|시대|시대02|n|era, age|sidae
+184|수십|수십|adj|dozens of|susip
+185|음식|음식|n|food|eumsik
+186|농업|농업|n|agriculture|nongeop
+187|기술|기술01|n|skill, technique|gisul
+188|찍다|찍다02|v|to stamp, to take (a photo)|jjikda
+189|방|방07|n|room|bang
+190|선생님|선생님|n|teacher|seonsaengnim
+191|싫다|싫다01|adj|to dislike, unpleasant|silta
+192|전설|전설04|n|legend|jeonseol
+193|적다|적다01|v|to write down|jeokda
+194|소설|소설03|n|novel|soseol
+195|저자|저자05|n|author|jeoja
+196|배고프다|배고프다|adj|hungry|baegopeuda
+197|주제|주제04|n|subject, theme|juje
+198|마르다|마르다01|v|to dry|mareuda
+199|잘못|잘못:명|n|wrongdoing, fault|jalmot
+200|탓|탓|n|blame|tat
+201|최악|최악|n|the worst|choeak
+202|말하다|말하다|v|to speak, to say|malhada
+203|거대하다|거대하다|adj|huge|geodaehada
+204|대단하다|대단하다|adj|great, amazing|daedanhada
+205|용기|용기02|n|courage|yonggi
+206|최고|최고02|n|the best|choego
+207|잘|잘02|adv|well|jal
+208|똑똑하다|똑똑하다|adj|smart|ttokttokada
+209|여전히|여전히|adv|still|yeojeonhi
+210|아무|아무01:관|adj|any|amu
+211|약간|약간:부|adv|a little, slightly|yakgan
+212|틀림없다|틀림없다|adj|certain, without doubt|teullimeopda
+213|원하다|원하다02|v|to want|wonhada
+214|정부|정부08|n|government|jeongbu
+215|눈|눈01|n|eye|nun
+216|온통|온통|adv|entirely, all over|ontong
+217|교수|교수06|n|professor|gyosu
+218|편지|편지02|n|letter (mail)|pyeonji
+219|연구소|연구소|n|research institute|yeonguso
+220|기관|기관11|n|institution|gigwan
+221|사이|사이01|n|between, gap|sai
+222|받다|받다01|v|to receive|batda
+223|이상|이상05|n|more than, beyond|isang
+224|임시|임시02|n|temporary|imsi
+225|묻다|묻다01|v|to get stained|mutda
+226|당기다|당기다01|v|to pull|danggida
+227|기계|기계07|n|machine|gigye
+228|그냥|그냥|adv|just|geunyang
+229|사용|사용04|n|use|sayong
+230|아프다|아프다|adj|to hurt, sick|apeuda
+231|맞다|맞다01|v|to be right|matda
+232|물|물01|n|water|mul
+233|기본|기본|n|basics, foundation|gibon
+234|만들다|만들다|v|to make|mandeulda
+235|이전|이전03|n|previous, before|ijeon
+236|어떤|어떤|adj|some, what kind of|eotteon
+237|의자|의자03|n|chair|uija
+238|도시|도시03|n|city|dosi
+239|세상|세상01|n|world|sesang
+240|양말|양말01|n|socks|yangmal
+241|고르다|고르다01|v|to choose|goreuda
+242|포함|포함02|n|inclusion|poham
+243|구체적|구체적|adj|specific, concrete|guchejeok
+244|목표|목표|n|goal|mokpyo
+245|결과|결과02|n|result|gyeolgwa
+246|키우다|키우다|v|to raise, to grow|kiuda
+247|요즘|요즘|n|these days|yojeum
+248|떨어지다|떨어지다|v|to fall, to drop|tteoreojida
+249|물건|물건|n|thing, item|mulgeon
+250|점점|점점01|adv|gradually|jeomjeom
+251|스스로|스스로:부|adv|by oneself|seuseuro
+252|줄|줄01|n|line, row|jul
+253|소리|소리01|n|sound|sori
+254|백만|-|n|a million|baengman
+255|벌레|벌레01|n|bug, insect|beolle
+256|구멍|구멍|n|hole|gumeong
+257|바꾸다|바꾸다|v|to exchange, to swap|bakkuda
+258|수술|수술05|n|surgery|susul
+259|글|글|n|writing, text|geul
+260|퍼지다|퍼지다|v|to spread|peojida
+261|덮다|덮다|v|to cover|deopda
+262|번|번04|n|times (counter)|beon
+263|틀리다|틀리다01|v|to be wrong|teullida
+264|밥|밥01|n|cooked rice|bap
+265|부분|부분01|n|part|bubun
+266|끝나다|끝나다|v|to end, to finish|kkeunnada
+267|나다|나다01:동|v|to occur, to come out|nada
+268|좁다|좁다01|adj|narrow|jopda
+269|바깥|바깥|n|outside|bakkat
+270|아래|아래01|n|below, under|arae
+271|화학|화학01|n|chemistry|hwahak
+272|작용하다|작용하다01|v|to act (on), to work|jagyonghada
+273|어둠|어둠|n|darkness|eodum
+274|관심|관심01|n|interest|gwansim
+275|떠올리다|떠올리다|v|to recall|tteoollida
+276|빛|빛|n|light|bit
+277|손|손01|n|hand|son
+278|발견하다|발견하다01|v|to discover|balgyeonhada
+279|가득|가득01|adv|full|gadeuk
+280|갇히다|갇히다|v|to be trapped|gachida
+281|없이|없이|adv|without|eopsi
+282|운명|운명01|n|fate, destiny|unmyeong
+283|장례식|장례식|n|funeral|jangnyesik
+284|지키다|지키다01|v|to keep, to protect|jikida
+285|한|한01|adj|one, a|han
+286|글씨|글씨|n|handwriting|geulssi
+287|사막|-|n|desert|samak
+288|내려가다|내려가다|v|to go down|naeryeogada
+289|돌아가다|돌아가다|v|to go back|doragada
+290|증인|-|n|witness|jeungin
+0|친구|친구02|n|friend|chingu|나는 친구와 함께 시장에 갔다.|I went to the market with a friend.
+0|날씨|날씨01|n|weather|nalssi|오늘은 날씨가 정말 좋다.|The weather is really nice today.
+0|아름답다|아름답다|adj|beautiful|areumdapda|이 정원은 정말 아름답다.|This garden is truly beautiful.
+0|행복하다|행복하다|adj|happy|haengbokada|가족과 함께 있어서 행복하다.|I am happy to be with my family.
+0|사랑|사랑01|n|love|sarang|어머니의 사랑에는 끝이 없다.|A mother's love has no end.
+0|여름|여름01|n|summer|yeoreum|여름에는 바다에 간다.|In summer, I go to the sea.
+0|가을|가을01|n|autumn, fall|gaeul|가을이 되면 나뭇잎이 붉게 물든다.|When autumn comes, the leaves turn red.
+0|봄|봄01|n|spring (season)|bom|봄이 오면 들판이 푸르게 변한다.|When spring comes, the fields turn green.
+0|꽃|꽃01|n|flower|kkot|길가에 작은 꽃이 피었다.|A small flower bloomed by the road.
+0|음악|음악01|n|music|eumak|나는 매일 아침 음악을 듣는다.|I listen to music every morning.
