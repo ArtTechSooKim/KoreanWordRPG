@@ -40,7 +40,7 @@ namespace WordRPG.UI
         private Transform hero;
         private Image icon;
         private RectTransform textRoot, body, tail;
-        private Text head, main, sub, foot;
+        private Text head, main, roman, sub, foot;
         private Icon shownIcon;
         private float hideAt = -1f;
         private Sprite[] iconSprites;
@@ -92,6 +92,7 @@ namespace WordRPG.UI
             bubble.head = UiKit.Display(UiKit.OneLine(UiKit.Label("Head", bubble.body, "", 38, HeadColor, 0, 1, 1, 1)));
             bubble.main = UiKit.Display(UiKit.OneLine(UiKit.Label("Main", bubble.body, "", 72, MainColor, 0, 1, 1, 1, TextAnchor.MiddleCenter,
                 FontStyle.Normal, true, 36)));
+            bubble.roman = UiKit.OneLine(UiKit.Label("Roman", bubble.body, "", 30, FootColor, 0, 1, 1, 1)); // 단어 아래 로마자 (Korean Word RPG #8)
             bubble.sub = UiKit.OneLine(UiKit.Label("Sub", bubble.body, "", 36, SubColor, 0, 1, 1, 1)); // 줄 높이가 커서 잘리지 않게
             bubble.foot = UiKit.OneLine(UiKit.Label("Foot", bubble.body, "", 26, FootColor, 0, 1, 1, 1));
 
@@ -131,18 +132,21 @@ namespace WordRPG.UI
         }
 
         // 새 단어 (주인공): 머리말 · 영어 · 뜻 · 아래 작은 글씨. seconds ≤ 0 이면 움직일 때까지
-        public void ShowWord(string headline, string english, string meaning, string footnote, float seconds)
+        // roman = 단어 아래 로마자 (Korean Word RPG #8, 없으면 그 줄 없음)
+        public void ShowWord(string headline, string english, string meaning, string footnote, float seconds, string roman = null)
         {
             Speaker = hero;
-            ShowText(headline, english, meaning, footnote, seconds);
+            ShowText(headline, english, meaning, footnote, seconds, roman);
         }
 
-        private void ShowText(string headline, string mainText, string subText, string footnote, float seconds)
+        public string Roman => roman != null && roman.gameObject.activeSelf ? roman.text : ""; // 테스트용
+
+        private void ShowText(string headline, string mainText, string subText, string footnote, float seconds, string romanText = null)
         {
             const float padX = 44f, padTop = 30f, padBottom = 30f, gap = 2f, inset = padX - 8f;
             var lines = new (Text label, string text, float height)[]
             {
-                (head, headline, 50f), (main, mainText, 86f), (sub, subText, 0f), (foot, footnote, 0f),
+                (head, headline, 50f), (main, mainText, 86f), (roman, romanText, 42f), (sub, subText, 0f), (foot, footnote, 0f),
             };
             float width = 0f;
             foreach (var (label, text, _) in lines)

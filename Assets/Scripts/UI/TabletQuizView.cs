@@ -78,7 +78,7 @@ namespace WordRPG.UI
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 48)));
             view.blank = UiKit.Display(UiKit.Label("Blank", carved.transform, "", 68, Palette.Gold, 0.04f, 0.27f, 0.96f, 0.52f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 36));
-            view.ask = UiKit.OneLine(UiKit.Label("Ask", carved.transform, "빈칸에 들어갈 영단어는?", 32, Palette.TextDim, 0.04f, 0.06f, 0.96f, 0.25f,
+            view.ask = UiKit.OneLine(UiKit.Label("Ask", carved.transform, "빈칸에 들어갈 한국어 단어는?", 32, Palette.TextDim, 0.04f, 0.06f, 0.96f, 0.25f,
                 TextAnchor.MiddleCenter, FontStyle.Bold));
             view.note = UiKit.OneLine(UiKit.Label("Note", slab.transform, "", 26, Palette.TextDim, 0.043f, 0.02f, 0.957f, 0.11f,
                 TextAnchor.MiddleLeft));
@@ -125,7 +125,7 @@ namespace WordRPG.UI
             meaning.text = question.Prompt;
             meaning.fontSize = 100;
             blank.text = BlankFor(question.CorrectAnswer);
-            ask.text = "빈칸에 들어갈 영단어는?";
+            ask.text = "빈칸에 들어갈 한국어 단어는?";
             note.text = footnote;
             SetProgress(solved, solved + 1);
             stamp.gameObject.SetActive(false);
@@ -137,6 +137,7 @@ namespace WordRPG.UI
                 choices[i].gameObject.SetActive(used);
                 if (!used) continue;
                 UiKit.LabelOf(choices[i]).text = question.Choices[i];
+                RomanLabels.OnButton(choices[i], question.ChoiceRomanization(i), 24); // 한국어 보기 아래 로마자 (Korean Word RPG #8)
                 choices[i].image.color = Palette.Button;
                 choices[i].interactable = true;
             }

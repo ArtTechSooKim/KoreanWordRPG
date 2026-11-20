@@ -155,7 +155,7 @@ namespace WordRPG.UI
             var progress = Dex.GetProgress(area.Words, session.Vocabulary);
             Sound.Play(Sfx.NewWord);
             bubble.ShowWord("새로운 단어를 발견했다!", word.English, word.Meaning,
-                $"{area.Words.RegionName} 도감 {progress.Discovered} / {progress.Total}", 12f);
+                $"{area.Words.RegionName} 도감 {progress.Discovered} / {progress.Total}", 12f, word.Romanization);
             transitioning = false;
             IsReadingDictionary = false;
             var completed = session.ClaimDexRewards(new[] { area.Words });

@@ -28,7 +28,7 @@ namespace WordRPG.UI
         private Image vignette, lines, flash, slash;
         private UiRing closing, target;
         private TargetLock lockMark;
-        private Text word, stampTitle, stampSub, damage;
+        private Text word, roman, stampTitle, stampSub, damage;
         private readonly List<Button> choices = new List<Button>();
         private QuizQuestion question;
         private Action<int> answered;
@@ -42,6 +42,7 @@ namespace WordRPG.UI
         public bool IsOpen => root != null && root.activeSelf;
         public QuizQuestion Question => question;
         public string WordText => IsOpen ? word.text : "";
+        public string RomanText => IsOpen && roman.gameObject.activeSelf ? roman.text : ""; // 테스트용
         public string StampText => IsOpen && stamp.gameObject.activeSelf ? stampTitle.text : ""; // 테스트용
         public RectTransform Root => rootRect;
 
@@ -98,8 +99,9 @@ namespace WordRPG.UI
 
             // 영단어 (이미 본 단어)
             UiKit.OneLine(UiKit.Label("Ask", view.rootRect, "이 단어의 뜻은?", 32, Palette.TextDim, 0.04f, 0.45f, 0.96f, 0.474f));
-            view.word = Outlined(UiKit.Display(UiKit.Label("Word", view.rootRect, "", 132, Palette.Text, 0.04f, 0.36f, 0.96f, 0.447f,
+            view.word = Outlined(UiKit.Display(UiKit.Label("Word", view.rootRect, "", 132, Palette.Text, 0.04f, 0.375f, 0.96f, 0.447f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 56)));
+            view.roman = Outlined(RomanLabels.Under("Roman", view.rootRect, 40, 0.04f, 0.333f, 0.96f, 0.377f, RomanLabels.OnButtonColor)); // 필드·번쩍임 위라 흰색 // 단어 아래 로마자 (Korean Word RPG #8)
             view.wordRect = view.word.rectTransform;
 
             // 2×2 선택지 (Figma 'Answer Choice', 엄지가 닿는 아래쪽)
@@ -149,6 +151,7 @@ namespace WordRPG.UI
             lastFocus = new Vector2(0f, rootRect.rect.height * 0.15f);
 
             word.text = quiz.Prompt;
+            RomanLabels.Show(roman, quiz.PromptRomanization);
             for (int i = 0; i < choices.Count; i++)
             {
                 bool has = i < quiz.Choices.Count;

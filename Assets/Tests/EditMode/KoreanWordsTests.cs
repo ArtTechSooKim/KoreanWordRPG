@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEditor;
@@ -48,6 +49,44 @@ namespace WordRPG.Tests
         {
             Assert.AreEqual(10, Journals.WordSpan("I was not able to say it.", "able").start);
             Assert.AreEqual(-1, Journals.WordSpan("I was unable to say it.", "able").start);
+        }
+
+        // #8: 문제마다 한국어 쪽의 로마자 — 단어 → 뜻이면 문제 단어, 뜻 → 단어면 보기마다 (화면은 그 아래 로마자 한 줄)
+        [Test]
+        public void QuizQuestionsKnowTheRomanizationOfTheirKoreanSide()
+        {
+            var pool = new List<WordEntry>
+            {
+                new WordEntry("ko_hakgyo", "학교", "school", "n", romanization: "hakgyo"),
+                new WordEntry("ko_saram", "사람", "person", "n", romanization: "saram"),
+                new WordEntry("ko_ijeon", "이전", "before, earlier", "n", romanization: "ijeon"),
+                new WordEntry("ko_chaek", "책", "book", "n", romanization: "chaek"),
+                new WordEntry("ko_bam", "밤", "night", "n", romanization: "bam"),
+            };
+            var target = pool[2];
+            for (int seed = 0; seed < 20; seed++)
+            {
+                var toMeaning = QuizGenerator.Create(target, QuizDirection.EnglishToMeaning, pool, new System.Random(seed));
+                Assert.AreEqual("ijeon", toMeaning.PromptRomanization);
+                for (int i = 0; i < toMeaning.Choices.Count; i++)
+                {
+                    Assert.AreEqual(toMeaning.ChoiceWords[i].Meaning, toMeaning.Choices[i], "보기와 같은 순서");
+                    Assert.AreEqual("", toMeaning.ChoiceRomanization(i), "영어 뜻 보기엔 없음");
+                }
+
+                var toWord = QuizGenerator.Create(target, QuizDirection.MeaningToEnglish, pool, new System.Random(seed));
+                Assert.AreEqual("", toWord.PromptRomanization, "문제 글자가 영어 뜻이면 없음");
+                Assert.AreSame(target, toWord.ChoiceWords[toWord.CorrectIndex]);
+                for (int i = 0; i < toWord.Choices.Count; i++)
+                {
+                    Assert.AreEqual(toWord.ChoiceWords[i].English, toWord.Choices[i]);
+                    Assert.AreEqual(toWord.ChoiceWords[i].Romanization, toWord.ChoiceRomanization(i));
+                }
+            }
+            // 보기 단어를 모르는 문제(테스트·시뮬레이션용 생성자)는 로마자 없음
+            var bare = new QuizQuestion(target, QuizDirection.MeaningToEnglish, false, "before", new[] { "이전", "학교" }, 0);
+            Assert.AreEqual("", bare.ChoiceRomanization(0));
+            Assert.AreEqual("", bare.ChoiceRomanization(5));
         }
 
         // 기본 단어장 = 한국어 단어 + 영어 뜻 + 로마자 (단어장 고르기는 끔 — 이 두 권이 게임의 단어 전부)

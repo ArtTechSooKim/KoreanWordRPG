@@ -90,6 +90,7 @@ namespace WordRPG.UI
         private static readonly Color[] IntensityColors = { Palette.Button, Palette.Guard, Palette.Evolve, Palette.Confirm };
 
         private Text quizPrompt, quizHint;
+        private Text quizRoman, cardRoman;                  // 한국어 단어 아래 로마자 (Korean Word RPG #8)
         private RectTransform timerFill;
         private Image timerFillImage;
         private readonly List<Button> choiceButtons = new List<Button>();
@@ -141,6 +142,9 @@ namespace WordRPG.UI
         private bool rematchBattle; // 이긴 보스와 다시 싸우는 중 (#236)
         private readonly System.Random blankRng = new System.Random(); // 빈칸 자리 (전투 규칙의 rng와 따로 — #237)
         public string ShownPrompt => quizPrompt != null ? quizPrompt.text : ""; // 테스트용
+        public string ShownPromptRoman => quizRoman != null && quizRoman.gameObject.activeSelf ? quizRoman.text : ""; // 테스트용
+        public string ShownCardRoman => cardRoman != null && cardRoman.gameObject.activeSelf ? cardRoman.text : "";   // 테스트용
+        public string ShownChoiceRoman(int index) => RomanLabels.OnButtonText(choiceButtons[index]);                      // 테스트용
         private Image finisherFlash, finisherShade;
         private Text finisherStamp;
         private int enemyAreaIndex = -1; // 결정타 동안 적 칸을 어두운 막 위로 올렸다가 되돌릴 자리
@@ -537,7 +541,8 @@ namespace WordRPG.UI
             ShowPanel(quizPanel);
             bool blanked = engine != null && engine.WordsBlanked && !engine.IsFleeQuiz; // 빈칸두꺼비와 싸우는 동안 (#237·#245)
             quizPrompt.text = blanked && question.Direction == QuizDirection.EnglishToMeaning ? WordBlanks.Mask(question.Prompt, blankRng) : question.Prompt;
-            string hint = (blanked ? "빈칸 단어 — " : "") + (quizHintPrefix ?? "") + (question.Direction == QuizDirection.EnglishToMeaning ? "이 단어의 뜻은?" : "알맞은 영단어는?");
+            ShowPromptRoman(blanked ? "" : question.PromptRomanization); // 빈칸 동안은 로마자를 숨김 — 빈칸의 답을 알려 주므로 (#8)
+            string hint = (blanked ? "빈칸 단어 — " : "") + (quizHintPrefix ?? "") + (question.Direction == QuizDirection.EnglishToMeaning ? "이 단어의 뜻은?" : "알맞은 한국어 단어는?");
             if (blanked) GimmickHits++;
             for (int i = 0; i < choiceButtons.Count; i++)
             {
@@ -547,6 +552,7 @@ namespace WordRPG.UI
                 var choiceLabel = UiKit.LabelOf(choiceButtons[i]);
                 // 한→영 문제는 영어 보기에 빈칸 (#237)
                 choiceLabel.text = blanked && question.Direction == QuizDirection.MeaningToEnglish ? WordBlanks.Mask(question.Choices[i], blankRng) : question.Choices[i];
+                RomanLabels.OnButton(choiceButtons[i], blanked ? "" : question.ChoiceRomanization(i)); // 한국어 보기 아래 로마자 (#8)
                 choiceLabel.color = Palette.Text;
                 UiKit.SetColor(choiceButtons[i], Palette.Button);
                 choiceButtons[i].interactable = true;
@@ -629,9 +635,23 @@ namespace WordRPG.UI
         private void ShowFilledWords(QuizQuestion question)
         {
             if (question.Direction == QuizDirection.EnglishToMeaning)
+            {
                 quizPrompt.text = WordBlanks.Filled(question.Prompt, quizPrompt.text, ColorUtility.ToHtmlStringRGB(Palette.Gold));
+                ShowPromptRoman(question.PromptRomanization); // 채운 단어와 함께 로마자도 (#8)
+            }
             else
-                for (int i = 0; i < question.Choices.Count; i++) UiKit.LabelOf(choiceButtons[i]).text = question.Choices[i];
+                for (int i = 0; i < question.Choices.Count; i++)
+                {
+                    UiKit.LabelOf(choiceButtons[i]).text = question.Choices[i];
+                    RomanLabels.OnButton(choiceButtons[i], question.ChoiceRomanization(i));
+                }
+        }
+
+        // 문제 단어 아래 로마자 (#8): 있으면 단어 칸을 조금 올리고 그 아래 한 줄, 없으면(뜻이 문제일 때) 원래 자리
+        private void ShowPromptRoman(string roman)
+        {
+            RomanLabels.Show(quizRoman, roman);
+            quizPrompt.rectTransform.anchorMin = new Vector2(0, string.IsNullOrEmpty(roman) ? PromptBottom : PromptBottomWithRoman);
         }
 
         // 살아 있는 적 중 그 기믹을 가진 몬스터 (#236)
@@ -748,6 +768,7 @@ namespace WordRPG.UI
             cardTitle.text = title;
             cardTitle.color = titleColor;
             cardWord.text = word.English;
+            RomanLabels.Show(cardRoman, word.Romanization);
             cardMeaning.text = word.Meaning;
             var extra = new StringBuilder();
             if (word.PartOfSpeech.Length > 0) extra.Append($"({word.PartOfSpeech})");

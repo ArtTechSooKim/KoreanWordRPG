@@ -20,7 +20,7 @@ namespace WordRPG.UI
 
         private GameObject root;
         private Image edge;
-        private Text counter, word, meaning, ask, note;
+        private Text counter, word, roman, meaning, ask, note;
         private Outline glow;
         private readonly List<Button> choices = new List<Button>();
         private Button done;
@@ -35,6 +35,7 @@ namespace WordRPG.UI
         public bool IsLit => IsOpen && lit;               // 맞혀서 밝아진 모습 (테스트용)
         public string Word => IsOpen ? word.text : "";
         public string Meaning => IsOpen ? meaning.text : "";
+        public string Roman => IsOpen && roman.gameObject.activeSelf ? roman.text : ""; // 테스트용
         public string Counter => IsOpen ? counter.text : "";
         public string Note => IsOpen ? note.text : "";
 
@@ -63,11 +64,13 @@ namespace WordRPG.UI
 
             var stone = UiKit.RoundPanel("Stone", slab.transform, StoneDark, UiKit.RadiusMd, 0.043f, 0.156f, 0.957f, 0.79f);
             stone.raycastTarget = false;
-            view.word = UiKit.Display(UiKit.Label("Word", stone.transform, "", 104, FaintWord, 0.04f, 0.45f, 0.96f, 0.95f,
+            // 글자 → 아래 로마자 (Korean Word RPG #8: 글자 칸을 0.45 → 0.55로 올림) → 밝히면 뜻
+            view.word = UiKit.Display(UiKit.Label("Word", stone.transform, "", 104, FaintWord, 0.04f, 0.55f, 0.96f, 0.95f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 48));
             view.glow = view.word.gameObject.AddComponent<Outline>(); // 글자 둘레 청록 빛
             view.glow.effectDistance = new Vector2(4f, -4f);
-            view.meaning = UiKit.Display(UiKit.Label("Meaning", stone.transform, "", 60, Palette.Gold, 0.04f, 0.27f, 0.96f, 0.48f,
+            view.roman = RomanLabels.Under("Roman", stone.transform, 40, 0.04f, 0.455f, 0.96f, 0.555f);
+            view.meaning = UiKit.Display(UiKit.Label("Meaning", stone.transform, "", 60, Palette.Gold, 0.04f, 0.27f, 0.96f, 0.465f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 32));
             view.ask = UiKit.OneLine(UiKit.Label("Ask", stone.transform, "", 32, Palette.TextDim, 0.04f, 0.06f, 0.96f, 0.25f,
                 TextAnchor.MiddleCenter, FontStyle.Bold));
@@ -104,6 +107,7 @@ namespace WordRPG.UI
             time = 0f;
             counter.text = $"밝힌 반딧돌 {litCount} / {total}";
             word.text = question.Prompt;
+            RomanLabels.Show(roman, question.PromptRomanization);
             word.color = FaintWord;
             meaning.text = "";
             ask.text = "반딧돌에 떠오른 글자 — 뜻은?";

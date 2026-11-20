@@ -37,7 +37,7 @@ namespace WordRPG.UI
         private Image introGift;
         private Text introTag, introTitle, introBody, introNote, mysteryRule;
         private readonly List<GameObject> mysteryBoxes = new List<GameObject>();
-        private Text quizTag, counter, word, meaning, ask, quizNote;
+        private Text quizTag, counter, word, roman, meaning, ask, quizNote;
         private readonly List<Slot> quizSlots = new List<Slot>();
         private readonly List<Button> choices = new List<Button>();
         private Button next;
@@ -65,6 +65,7 @@ namespace WordRPG.UI
         public string Counter => counter.text;
         public string Word => word.text;
         public string Meaning => meaning.text;
+        public string Roman => roman.gameObject.activeSelf ? roman.text : ""; // 테스트용
         public string Ask => ask.text;
         public string Note => Current == Stage.Intro ? introNote.text : Current == Stage.Result ? resultNote.text : quizNote.text;
         public string Rewards => string.Join(" / ", resultLabels.ConvertAll(l => l.gameObject.activeSelf ? l.text : "").FindAll(s => s != ""));
@@ -175,9 +176,11 @@ namespace WordRPG.UI
             var box = UiKit.RoundPanel("Word", panel, Palette.Track, UiKit.RadiusMd);
             Place(box.rectTransform, PanelW, QuizH, 56, 308, 848, 300);
             box.raycastTarget = false;
-            word = UiKit.Display(UiKit.Label("English", box.transform, "", 104, Palette.Text, 0.03f, 0.55f, 0.97f, 0.95f,
+            // 단어 → 아래 로마자 (Korean Word RPG #8: 로마자가 없는 단어면 그 줄은 비어 있음) → 답하면 뜻
+            word = UiKit.Display(UiKit.Label("English", box.transform, "", 104, Palette.Text, 0.03f, 0.6f, 0.97f, 0.95f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 48));
-            meaning = UiKit.Display(UiKit.Label("Meaning", box.transform, "", 60, Palette.Gold, 0.03f, 0.3f, 0.97f, 0.55f,
+            roman = RomanLabels.Under("Roman", box.transform, 40, 0.03f, 0.5f, 0.97f, 0.61f);
+            meaning = UiKit.Display(UiKit.Label("Meaning", box.transform, "", 60, Palette.Gold, 0.03f, 0.29f, 0.97f, 0.5f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 30));
             ask = UiKit.OneLine(UiKit.Label("Ask", box.transform, "", 32, Palette.TextDim, 0.03f, 0.06f, 0.97f, 0.28f,
                 TextAnchor.MiddleCenter, FontStyle.Bold, true, 22));
@@ -291,6 +294,7 @@ namespace WordRPG.UI
             counter.text = $"{giftQuiz.Index + 1} / {giftQuiz.Count}";
             FillSlots(quizSlots, giftQuiz);
             word.text = question.Prompt;
+            RomanLabels.Show(roman, question.PromptRomanization);
             meaning.text = "";
             ask.text = "뜻은?";
             ask.color = Palette.TextDim;

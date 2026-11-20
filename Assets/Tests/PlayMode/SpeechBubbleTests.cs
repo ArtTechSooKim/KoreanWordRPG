@@ -58,6 +58,21 @@ namespace WordRPG.Tests
         [TearDown]
         public void TearDown() => Object.Destroy(root);
 
+        // Korean Word RPG #8: 사전에서 찾은 단어 아래 로마자 한 줄 — 로마자가 없으면 그 줄이 없고 말풍선도 그만큼 낮음
+        [UnityTest]
+        public IEnumerator DictionaryWordShowsTheRomanizationUnderTheWord()
+        {
+            bubble.ShowWord("새로운 단어를 발견했다!", "학교", "school", "초원 도감 9 / 150", 5f, "hakgyo");
+            yield return null;
+            Assert.AreEqual("hakgyo", bubble.Roman);
+            var body = (RectTransform)bubble.Root.Find("TextBubble");
+            float withRoman = body.rect.height;
+            bubble.ShowWord("새로운 단어를 발견했다!", "학교", "school", "초원 도감 9 / 150", 5f);
+            yield return null;
+            Assert.AreEqual("", bubble.Roman);
+            Assert.Greater(withRoman, body.rect.height, "로마자 줄만큼 높음");
+        }
+
         // 한 칸(16px) 그림의 캐릭터를 화면의 그 자리(0~1)에
         private Transform Character(string name, Vector2 viewport)
         {

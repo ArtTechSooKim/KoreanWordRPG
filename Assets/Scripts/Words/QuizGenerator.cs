@@ -49,7 +49,7 @@ namespace WordRPG.Words
             }
 
             string prompt = direction == QuizDirection.EnglishToMeaning ? target.English : target.Meaning;
-            return new QuizQuestion(target, direction, isNewWord, prompt, choices, correctIndex);
+            return new QuizQuestion(target, direction, isNewWord, prompt, choices, correctIndex, choiceWords);
         }
 
         // 뜻 조각 중 하나라도 같으면 겹침. "(가격이) 적당한"과 "적당한"도 같은 뜻으로 본다

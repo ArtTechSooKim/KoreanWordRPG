@@ -198,6 +198,7 @@ namespace WordRPG.UI
                 discovered ? Palette.Text : Palette.TextDim, 0.13f, 0, wrong ? 0.5f : 0.66f, 1, TextAnchor.MiddleLeft,
                 discovered ? FontStyle.Bold : FontStyle.Normal, true, 22);
             if (!discovered) UiKit.Display(name);
+            else RomanLabels.After(name, word.Romanization, 26, RomanLabels.OnButtonColor); // 단어 오른쪽에 작은 로마자 (Korean Word RPG #8)
             // 오답 노트에 있는 단어: 빨간 '오답' 알약 (맞히면 사라짐, #48)
             if (wrong)
             {
@@ -241,7 +242,7 @@ namespace WordRPG.UI
             }
 
             var text = new StringBuilder();
-            text.Append($"{word.English}");
+            text.Append(RomanLabels.Inline(word.English, word.Romanization, 28)); // 단어 오른쪽에 작은 로마자 (#8)
             if (word.PartOfSpeech.Length > 0) text.Append($"  ({word.PartOfSpeech})");
             text.Append($"\n{word.Meaning}");
             if (word.Example.Length > 0)

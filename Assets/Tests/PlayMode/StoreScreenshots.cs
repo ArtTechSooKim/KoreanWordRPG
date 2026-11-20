@@ -29,7 +29,7 @@ namespace WordRPG.Tests
         private const int W = 1320, H = 2868;
         private static string Out => Path.Combine(Application.dataPath, "..", "Builds", "store", "raw");
 
-        private static IEnumerator Shot(string name)
+        internal static IEnumerator Shot(string name)
         {
             yield return null;
             Directory.CreateDirectory(Out);
@@ -68,10 +68,10 @@ namespace WordRPG.Tests
             Object.Destroy(rt);
         }
 
-        private static T Private<T>(object owner, string field) =>
+        internal static T Private<T>(object owner, string field) =>
             (T)owner.GetType().GetField(field, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(owner);
 
-        private static Camera MakeCamera()
+        internal static Camera MakeCamera()
         {
             var cam = new GameObject("Main Camera", typeof(Camera)) { tag = "MainCamera" }.GetComponent<Camera>();
             cam.clearFlags = CameraClearFlags.SolidColor;
@@ -80,7 +80,7 @@ namespace WordRPG.Tests
         }
 
         // 튜토리얼은 다 본 것으로, 성유물 두 개 더, 전투 몇 번 한 상태
-        private static GameSession Session(HeroData heroData, GameDatabase db, int level)
+        internal static GameSession Session(HeroData heroData, GameDatabase db, int level)
         {
             var session = GameSession.NewGame(heroData, level);
             foreach (var id in new[] { TutorialProgress.Field, TutorialProgress.Confirm, TutorialProgress.Grass, TutorialProgress.Skill,
@@ -93,7 +93,7 @@ namespace WordRPG.Tests
             return session;
         }
 
-        private static FieldScreen Field(FieldArea area, GameSession session, GameDatabase db)
+        internal static FieldScreen Field(FieldArea area, GameSession session, GameDatabase db)
         {
             var field = new GameObject("CaptureField").AddComponent<FieldScreen>();
             field.Configure(area, session, () => { }, step: 0.2f, animScale: 1f, gameDatabase: db, tutorials: false);

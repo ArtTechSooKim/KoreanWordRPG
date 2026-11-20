@@ -179,11 +179,15 @@ namespace WordRPG.UI
             }
         }
 
+        // 문제 단어 칸의 아래 끝 — 로마자가 있으면 단어를 조금 올리고 그 아래(0.805~0.855)에 로마자 한 줄 (Korean Word RPG #8)
+        private const float PromptBottom = 0.8f, PromptBottomWithRoman = 0.85f;
+
         private void BuildQuizPanel(Transform parent)
         {
             quizPanel = UiKit.Stretch("QuizPanel", parent).gameObject;
-            quizPrompt = UiKit.Display(UiKit.Label("Prompt", quizPanel.transform, "", 84, Palette.Text, 0, 0.8f, 1, 1,
+            quizPrompt = UiKit.Display(UiKit.Label("Prompt", quizPanel.transform, "", 84, Palette.Text, 0, PromptBottom, 1, 1,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 30));
+            quizRoman = RomanLabels.Under("PromptRoman", quizPanel.transform, 30, 0, 0.805f, 1, 0.855f);
             quizHint = UiKit.OneLine(UiKit.Label("Hint", quizPanel.transform, "", 30, Palette.TextDim, 0, 0.735f, 1, 0.8f)); // 줄 높이 때문에 잘리지 않게
 
             var timerBack = UiKit.Pill(UiKit.Panel("TimerBack", quizPanel.transform, Palette.Track,
@@ -248,9 +252,12 @@ namespace WordRPG.UI
             cardBorder.raycastTarget = false;
             cardTitle = UiKit.Display(UiKit.Label("Title", cardPanel.transform, "", 44, Palette.Gold, 0, 0.8f, 1, 0.97f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 24));
-            cardWord = UiKit.Display(UiKit.Label("Word", cardPanel.transform, "", 92, Palette.Text, 0.03f, 0.56f, 0.97f, 0.8f,
+            // 단어 → 바로 아래 로마자 → 뜻 (Korean Word RPG #8: 단어 칸을 조금 올리고 로마자 한 줄)
+            cardWord = UiKit.Display(UiKit.Label("Word", cardPanel.transform, "", 92, Palette.Text, 0.03f, 0.62f, 0.97f, 0.8f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 36));
-            cardMeaning = UiKit.Display(UiKit.Label("Meaning", cardPanel.transform, "", 56, Palette.Gold, 0.03f, 0.38f, 0.97f, 0.57f,
+            cardRoman = RomanLabels.Under("Roman", cardPanel.transform, 34, 0.03f, 0.555f, 0.97f, 0.625f,
+                RomanLabels.OnButtonColor); // 새 단어 카드는 금빛 뒤라 회색보다 흰색 75%가 잘 보임
+            cardMeaning = UiKit.Display(UiKit.Label("Meaning", cardPanel.transform, "", 56, Palette.Gold, 0.03f, 0.39f, 0.97f, 0.56f,
                 TextAnchor.MiddleCenter, FontStyle.Normal, true, 26));
             cardExtra = UiKit.Label("Extra", cardPanel.transform, "", 30, Palette.TextDim, 0.05f, 0.2f, 0.95f, 0.38f,
                 TextAnchor.UpperCenter, FontStyle.Normal, true, 20);

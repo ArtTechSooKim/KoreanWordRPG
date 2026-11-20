@@ -331,6 +331,8 @@ namespace WordRPG.UI
             mvpDetail.text = $"피해 {damage}   ·   이번 전투 피해의 {percent}%";
         }
 
+        private const float WordColumn = 0.5f; // 결산 단어 줄: 단어 + 로마자 칸 너비 (나머지는 뜻)
+
         private void FillWords(RectTransform card, IReadOnlyList<WordEntry> list, string header, Color color, int maxRows, ref float y)
         {
             card.gameObject.SetActive(list.Count > 0);
@@ -344,10 +346,12 @@ namespace WordRPG.UI
             {
                 var row = UiKit.Rect($"Word_{i}", card, 0, 1, 1, 1);
                 PinTop(row, 28, rowY, 28, 56);
-                var english = UiKit.Display(UiKit.OneLine(UiKit.Label("English", row, list[i].English, 46, Palette.Text, 0, 0, 0.38f, 1,
+                // 한국어 단어 + 오른쪽에 작은 로마자 (Korean Word RPG #8) — 로마자 자리만큼 뜻 칸을 0.38 → 0.5로
+                var english = UiKit.Display(UiKit.OneLine(UiKit.Label("English", row, list[i].English, 46, Palette.Text, 0, 0, WordColumn, 1,
                     TextAnchor.MiddleLeft, FontStyle.Normal, true, 26)));
                 english.rectTransform.offsetMax = new Vector2(-12, 0);
-                UiKit.OneLine(UiKit.Label("Meaning", row, list[i].Meaning, 36, Palette.TextDim, 0.38f, 0, 1, 1, TextAnchor.MiddleLeft,
+                RomanLabels.After(english, list[i].Romanization, 26, Palette.TextDim, 12f);
+                UiKit.OneLine(UiKit.Label("Meaning", row, list[i].Meaning, 36, Palette.TextDim, WordColumn, 0, 1, 1, TextAnchor.MiddleLeft,
                     FontStyle.Normal, true, 22));
                 resultDynamic.Add(row.gameObject);
                 rowY += 60f;
